@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://chuzihang714.github.io</id>
     <title>chuzihang714&apos;s bog</title>
-    <updated>2021-03-19T10:21:43.289Z</updated>
+    <updated>2021-03-19T10:45:04.893Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://chuzihang714.github.io"/>
     <link rel="self" href="https://chuzihang714.github.io/atom.xml"/>
@@ -10,6 +10,32 @@
     <logo>https://chuzihang714.github.io/images/avatar.png</logo>
     <icon>https://chuzihang714.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, chuzihang714&apos;s bog</rights>
+    <entry>
+        <title type="html"><![CDATA[一些好图]]></title>
+        <id>https://chuzihang714.github.io/post/yi-xie-hao-tu/</id>
+        <link href="https://chuzihang714.github.io/post/yi-xie-hao-tu/">
+        </link>
+        <updated>2021-03-19T10:43:35.000Z</updated>
+        <content type="html"><![CDATA[<p>一些好的场景图，其实就是封面...需要的自取。👽</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[一些好句]]></title>
+        <id>https://chuzihang714.github.io/post/yi-xie-hao-ju/</id>
+        <link href="https://chuzihang714.github.io/post/yi-xie-hao-ju/">
+        </link>
+        <updated>2021-03-19T10:32:21.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="sth"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>t</mi><mi>h</mi></mrow><annotation encoding="application/x-tex">sth</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span></span></span></span>:</h2>
+<ol>
+<li>
+<p>“每个人看来都自得其乐，而我则因此而感到了平时所没有感到过的孤寂，觉得惟独我自己与这光景格格不入。”——村上春树《挪威的森林》</p>
+</li>
+<li>
+<p>“北风毫不留情  把叶子吹落  脆弱的她选择了逃脱  叶子失去消息   风才感觉寂寞  整个冬天  北风的痛没人能说”——王力宏《爱错》</p>
+</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[洛谷题解P6418 [COCI2014-2015#1] ZABAVA]]></title>
         <id>https://chuzihang714.github.io/post/luo-gu-ti-jie-p6418-coci2014-20151-zabava/</id>
