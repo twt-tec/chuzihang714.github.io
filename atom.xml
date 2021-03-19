@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://chuzihang714.github.io</id>
     <title>chuzihang714&apos;s blog</title>
-    <updated>2021-03-19T13:03:06.648Z</updated>
+    <updated>2021-03-19T23:57:19.468Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://chuzihang714.github.io"/>
     <link rel="self" href="https://chuzihang714.github.io/atom.xml"/>
@@ -274,6 +274,9 @@ signed main()
 </li>
 <li>
 <p>”这份名单…就是生命。“——《辛德勒的名单》</p>
+</li>
+<li>
+<p>“死并非生的对立面，而是作为生的一部分永存。”——《挪威的森林》</p>
 </li>
 </ol>
 ]]></content>
