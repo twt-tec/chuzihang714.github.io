@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://chuzihang714.github.io</id>
-    <title>chuzihang714&apos;s bog</title>
-    <updated>2021-03-19T10:51:39.580Z</updated>
+    <title>chuzihang714&apos;s blog</title>
+    <updated>2021-03-19T10:56:28.713Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://chuzihang714.github.io"/>
     <link rel="self" href="https://chuzihang714.github.io/atom.xml"/>
     <subtitle>Something for nothing.</subtitle>
     <logo>https://chuzihang714.github.io/images/avatar.png</logo>
     <icon>https://chuzihang714.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, chuzihang714&apos;s bog</rights>
+    <rights>All rights reserved 2021, chuzihang714&apos;s blog</rights>
     <entry>
         <title type="html"><![CDATA[一些好图]]></title>
         <id>https://chuzihang714.github.io/post/yi-xie-hao-tu/</id>
