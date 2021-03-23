@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://chuzihang714.github.io</id>
     <title>chuzihang714&apos;s blog</title>
-    <updated>2021-03-23T10:23:51.380Z</updated>
+    <updated>2021-03-23T12:40:23.614Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://chuzihang714.github.io"/>
     <link rel="self" href="https://chuzihang714.github.io/atom.xml"/>
@@ -10,6 +10,110 @@
     <logo>https://chuzihang714.github.io/images/avatar.png</logo>
     <icon>https://chuzihang714.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, chuzihang714&apos;s blog</rights>
+    <entry>
+        <title type="html"><![CDATA[【OI】线段树笔记]]></title>
+        <id>https://chuzihang714.github.io/post/oi-xian-duan-shu-bi-ji/</id>
+        <link href="https://chuzihang714.github.io/post/oi-xian-duan-shu-bi-ji/">
+        </link>
+        <updated>2021-03-23T12:27:39.000Z</updated>
+        <summary type="html"><![CDATA[<h2 id="用法">用法</h2>
+<p>是什么，干什么用的就不写了，每篇都有...都看烦了...</p>
+]]></summary>
+        <content type="html"><![CDATA[<h2 id="用法">用法</h2>
+<p>是什么，干什么用的就不写了，每篇都有...都看烦了...</p>
+<!-- more -->
+<h2 id="过程">过程</h2>
+<p>主要过程就是 <strong>建树 -&gt; 更新 -&gt; 查询输出</strong></p>
+<!-- more -->
+<h2 id="板子code">板子code</h2>
+<pre><code class="language-c++">#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#define int long long
+using namespace std;
+int n,m,a[100001],tree[1000001],lazy[1000001],mid,b,c,d,e,f,a1,i;
+
+void push_up(int p)
+{
+        tree[p]=tree[p*2]+tree[p*2+1];
+}
+
+void swa(int p, int l,int r, int k)
+{
+        lazy[p]+=k;
+        tree[p]=tree[p]+k*(r-l+1);
+}
+
+void push_down(int p, int l, int r)
+{
+        mid=(l+r) / 2;
+        swa(p*2,l,mid,lazy[p]);
+        swa(p*2+1,mid+1,r,lazy[p]);
+        lazy[p]=0;
+}
+
+void build(int p, int l, int r)
+{
+        lazy[p]=0;
+        if (l==r) {tree[p]=a[l]; return;}
+        int mid=(l+r)/2;
+        build(p*2,l,mid);
+        build(p*2+1,mid+1,r);
+        tree[p]=tree[p*2+1]+tree[p*2];
+}
+
+void update(int ll,int rr,int l,int r,int p,int k)
+{
+        if(ll&lt;=l&amp;&amp;r&lt;=rr)
+        {
+                tree[p]+=k*(r-l+1);
+                lazy[p]+=k;
+                return;
+        }
+
+        push_down(p,l,r);
+        int mid=(l+r) / 2;
+        if(ll&lt;=mid) update(ll,rr,l,mid,p*2,k);
+        if(rr&gt;mid) update(ll,rr,mid+1,r,p*2+1,k);
+        push_up(p);
+}
+
+int query(int xx,int yy,int l,int r,int p)
+{
+        int sum=0;
+        if(xx&lt;=l&amp;&amp;r&lt;=yy) return tree[p];
+        int mid=(l+r)&gt;&gt;1;
+        push_down(p,l,r);
+        if(xx&lt;=mid) sum+=query(xx,yy,l,mid,p*2);
+        if(yy&gt;mid) sum+=query(xx,yy,mid+1,r,p*2+1);
+        return sum;
+}
+signed main()
+{
+        cin &gt;&gt; n &gt;&gt; m;
+        for (i=1; i&lt;=n; i++) cin &gt;&gt; a[i];
+        build(1,1,n);
+        while (m--)
+        {
+                cin &gt;&gt; a1;
+                if (a1==1)
+                {
+                        cin &gt;&gt; b &gt;&gt; c &gt;&gt; d;
+                        update(b,c,1,n,1,d);
+                }
+                else
+                {
+                        cin &gt;&gt; e &gt;&gt; f;
+                        cout &lt;&lt; query(e,f,1,n,1) &lt;&lt; endl;
+                }
+        }
+}
+
+</code></pre>
+<!-- more -->
+<p>有点难懂的是懒标记，多看一会儿能理解。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[【影片】辛德勒的名单]]></title>
         <id>https://chuzihang714.github.io/post/ying-pian-xin-de-le-de-ming-dan/</id>
@@ -389,38 +493,6 @@ signed main()
 }
 
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hello Gridea导航页]]></title>
-        <id>https://chuzihang714.github.io/post/hello-gridea/</id>
-        <link href="https://chuzihang714.github.io/post/hello-gridea/">
-        </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <content type="html"><![CDATA[<!-- more -->
-<h1 id="2021-319开始使用">2021 3.19开始使用</h1>
-<!-- more -->
-<p>本博客包含题解，总结，和一些奇奇怪怪的东西（如：一些好图，好句等）。</p>
-<!-- more -->
-<p>想要快速精确查找请搜索</p>
-<ol>
-<li>题解......</li>
-<li>好句......</li>
-<li>好图......</li>
-<li>好诗......</li>
-<li>等等</li>
-</ol>
-<!-- more -->
-<p>也可按文章种类筛选：</p>
-<ol>
-<li>OI</li>
-<li>杂</li>
-<li>影片</li>
-</ol>
-<!-- more -->
-<p>在这里推广一下本公司：<br>
-<a href="https://twt-tec.github.io/"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathcolor="red"><mtext>twt-tec</mtext></mstyle></mrow><annotation encoding="application/x-tex">\text{\color{red}twt-tec}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord text"><span class="mord" style="color:red;">twt-tec</span></span></span></span></span></a></p>
-<p>😘 Enjoy~</p>
 ]]></content>
     </entry>
 </feed>

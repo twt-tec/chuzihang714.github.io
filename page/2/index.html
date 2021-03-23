@@ -3,11 +3,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/css/live2d.css">
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="https://chuzihang714.github.io/media/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/css/live2d.css">
     <link rel="stylesheet" href="https://chuzihang714.github.io/styles/main.css">
-    <link rel="stylesheet" href="https://chuzihang714.github.io/media/css/font-awesome.css">
+
+    <!-- pjax 加载valine文件 -->
+    <script src="https://chuzihang714.github.io/media/js/valine.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <meta name="description" content="At its summit goodbye." />
+    <meta http-equiv="x-pjax-version" content="v123">
     <title>chuzihang714's blog</title>
 </head>
 
@@ -17,6 +22,7 @@
     <div id="content">
         <div class="nav-large">
             <div class="row">
+                
                 <div class="side"><head>
     <link rel="stylesheet" href="https://chuzihang714.github.io/media/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://chuzihang714.github.io/styles/main.css">
@@ -859,7 +865,6 @@
         daovoice('update');
     </script>
     </div>
-                
                 <div id="tab1" class="tab">
                     <div class="bars">
                         <span></span>
@@ -994,44 +999,242 @@
         btstate = false;
       }
     }
-  </script> </div>
-                    <div id="main" class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
-                        <script>
-                            $(".tag").each(function () {
-                                var rgb = '#' + Math.floor((Math.random()) * 0xffffff).toString(16);;
-                                $(this).css('color', rgb);
-                            });
-                        </script>
-                        <div class="tagsbackgroundleft"></div>
-                        <div class="tags-container">
-                            
-                            <img class="tagsimg" src="https://img.imgdb.cn/item/60543341524f85ce29fc6297.jpg" alt="">
-                            
-                        
-                            <a data-pjax class="tag" href="https://chuzihang714.github.io/tag/gdmiEn7kC/"># 笔记</a>
-                            
-                            <a data-pjax class="tag" href="https://chuzihang714.github.io/tag/P7qZKKyVW/"># luogu</a>
-                            
-                            <a data-pjax class="tag" href="https://chuzihang714.github.io/tag/6kE3oW_Mk/"># 影音</a>
-                            
-                            <a data-pjax class="tag" href="https://chuzihang714.github.io/tag/XB3JfFJy3/"># 私</a>
-                            
-                            <a data-pjax class="tag" href="https://chuzihang714.github.io/tag/bKIck_4Ix/"># 题解</a>
-                            
-                            <a data-pjax class="tag" href="https://chuzihang714.github.io/tag/ZFCuHfpre/"># 定更</a>
-                            
-                            <a data-pjax class="tag" href="https://chuzihang714.github.io/tag/YVbwvfuYL/"># 模拟赛</a>
-                            
-                            <a data-pjax class="tag" href="https://chuzihang714.github.io/tag/CuMwABn7E/"># Gridea</a>
-                            
-                        </div>
+  </script> 
+                </div>
+                <div id="main" class="col-xs-12 col-sm-12 col-md-11 col-lg-7">
+                    <!-- 移动端 -->
+                    <div class="mobilebar">
+                        <!-- 移动端欢迎页 -->
+<div class="welcome">
+    <div class="avatar-border">
+        <img src="https://chuzihang714.github.io/images/avatar.png?v=1616503181208" class="avatar">
+    </div>
+    <span class="mobiledescribtion"></span>
+</div>
+
+    <div id="mobilebgurl" style="display:none">https://img.imgdb.cn/item/6057d5698322e6675c3d7b83.jpg</div>
+
+<script>
+    var welcome = $('.welcome');
+    var bgurl = document.getElementById("mobilebgurl").innerHTML;
+    for (var i = 0; i < 3; i++)
+        bgurl = bgurl.replace("\\", "/");
+    welcome.css("background", "url('" + bgurl + "')");
+    var mobiledes = document.querySelector(".mobiledescribtion");
+    var text = "At its summit goodbye.";
+    // 当前显示第几个字
+    var mobilecharIndex = 1;
+    // 每个字显示间隔默认是500毫秒
+    var mobiledelta = 500;
+
+    // 记录动画执行开始时间
+    var mobilestart = null;
+    // 是否为删除动画
+    var mobileisDeleting = false;
+
+    // 动画回调函数
+    function mobileLoadDes(time) {
+        window.requestAnimationFrame(mobileLoadDes);
+        // 初始化开始时间
+        if (!mobilestart) start = time;
+        // 获取时间间隔
+        var mobileprogress = time - mobilestart;
+        // 每隔一定的时间，打印出一个新的字符
+        if (mobileprogress > mobiledelta) {
+            // 如果是打字效果
+            if (!mobileisDeleting) {
+                // 给展示文字的span新增一个字符，使用innerHTML来替换，charIndex自增1，然后返回新的字符串子串
+                mobiledes.innerHTML = "&nbsp;" + text.slice(
+                    0,
+                    ++mobilecharIndex
+                );
+                mobiledelta = 500 - Math.random() * 400;
+            } else {
+                // 如果是删除效果，则把文字一个一个减掉
+                mobiledes.innerHTML = "&nbsp;" + text.slice(
+                    0,
+                    mobilecharIndex--
+                );
+            }
+            // 把star更新为当前时间，进行下一个周期
+            mobilestart = time;
+
+            // 如果文字已经全部打印完毕
+            if (mobilecharIndex === text.length) {
+                // 下次开始删除文字
+                mobileisDeleting = true;
+                // 删除文字的间隔为200毫秒
+                mobiledelta = 100;
+                // 额外等待1.2秒后再删除
+                mobilestart = time + 1000;
+            }
+
+            // 如果文字删除完毕
+            if (mobilecharIndex < 0) {
+                mobileisDeleting = false;
+                // 额外增加200毫秒延迟
+                mobilestart = time + 200;
+            }
+        }
+    }
+
+    window.requestAnimationFrame(mobileLoadDes);
+</script>
                     </div>
-                    <div class="col-lg-2"></div>
+                    <div style="display:none"><style>
+    @media screen and (min-width: 1300px) {
+        .veditor::placeholder {
+            color: #b3b3b3;
+            font-size: 18px;
+            text-align: center;
+            line-height: 3rem;
+            font-family: kaiti;
+        }
+    }
+</style>
+
+<body>
+    <div id="vcomments">
+    </div>
+    <script src="https://chuzihang714.github.io/media/js/valine.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var valine = new Valine();
+        var curpath = window.location.pathname;
+        if (curpath[curpath.length - 1] != '/')
+            curpath += '/'
+        valine.init({
+            el: '#vcomments',
+            appId: '7ce775939591c0210fba',
+            appKey: '0f07af801eb4b973a29f912064b52888c5e58b81',
+            notify: true,
+            verify: false,
+            avatar: 'retro',
+            pageSize: 10,
+            placeholder: '既然来了，何不畅所欲言呢？',
+            visitor: true, // 阅读量统计
+            recordIP: true,
+            path: curpath //[重点] 记得添加path路径
+        });
+    </script>
+    <script type="text/javascript">
+        var jrsc = '既然来了，何不畅所欲言呢？';
+        jinrishici.load(function (result) {
+            // 自己的处理逻辑
+            jrsc = result.data.content + "\n「" + result.data.origin.title + "」" + result.data.origin
+                .dynasty + " · " + result.data.origin.author;
+        });
+    </script>
+
+</body></div>
+                    <link rel="stylesheet" href="https://chuzihang714.github.io/media/css/font-awesome.css">
+<div id="post-container">
+    
+    <div class="postshow postlist">
+        
+        <a data-pjax href="https://chuzihang714.github.io/post/luo-gu-ti-jie-p6418-coci2014-20151-zabava/" class="apost">
+            <div id="post" style="width:100%">
+                <img src="https://img.imgdb.cn/item/60549ff6524f85ce293eb1cf.jpg" class="postimage">
+                <div class="posttitlebox">
+                    <div class="posttitle">
+                        【OI】洛谷题解P6418 [COCI2014-2015#1] ZABAVA
+                    </div>
+                </div>
+            </div>
+        </a>
+        <div class="postinfo">
+            <div class="postdate"><i class="fa fa-calendar"></i>2021-03-19</div>
+            <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 3 min read</div>
+            <div class="posttag">
+                
+                <a data-pjax href="https://chuzihang714.github.io/tag/P7qZKKyVW/" class="postlink">
+                    <i class="fa fa-tag"></i> luogu
+                </a>
+                
+                <a data-pjax href="https://chuzihang714.github.io/tag/bKIck_4Ix/" class="postlink">
+                    <i class="fa fa-tag"></i> 题解
+                </a>
+                
+            </div>
+        </div>
+        
+</div>
+
+</div>
+                    <div>
+                        <div class="pcpagi">
+    <div class="pagi">
+        <ul>
+            
+            <li><a data-pjax href="https://chuzihang714.github.io/" style="width:100px" id="prev">上一页</a></li>
+            
+                    <li><a id="page1">1</a></li>
+                    <li><a id="page2" class="active">2</a></li>
+                    <li><a id="page3">3</a></li>
                     
-                <div class="col-xs-6 col-sm-3"></div>
+            <li><a style="width:100px">&nbsp;</a></li>
+            
+                </ul>
+    </div>
+</div>
+
+<div id="pagination-prev" style="display:none"> https://chuzihang714.github.io/
+</div>
+<div id="pagination-next" style="display:none"> </div>
+
+<div class="pagination-container">
+    
+    <a data-pjax href="https://chuzihang714.github.io/" class="mobile-prevpage">上一页</a>
+      
+    
+</div>
+
+<script>
+    var prevstr = document.getElementById("pagination-prev").innerHTML;
+    var nextstr = document.getElementById("pagination-next").innerHTML;
+    var page1 = document.getElementById("page1");
+    var page2 = document.getElementById("page2");
+    var page3 = document.getElementById("page3");
+    page1.innerHTML = '-';
+    page2.innerHTML = '1';
+    page3.innerHTML = '-';
+    if (prevstr.length > 5) {
+        if (prevstr.indexOf("page/") != -1) {
+            var prevnum = parseInt(prevstr.split("page/")[1]);
+            page1.innerHTML = prevnum;
+            page2.innerHTML = prevnum + 1;
+        } else {
+            page1.innerHTML = 1;
+            page2.innerHTML = 2;
+        }
+    }
+    if (nextstr.indexOf("page/") != -1) {
+        var nextnum = parseInt(nextstr.split("page/")[1]);
+        page3.innerHTML = nextnum;
+        page2.innerHTML = nextnum - 1;
+    }
+</script>
+                    </div>
+                </div>
+                <div class="col-md-1 col-lg-2"></div>
+                
+                 
+                </div>
+            </div>
+            <div id="bg">
+            </div>
+            <div id="bgchoice" style="display: none">link
             </div>
             
-                        <head>
+            <div id="bgurl" style="display:none">https://img.imgdb.cn/item/6054a033524f85ce293ee23e.jpg</div>
+             
+        <div id="landlord">
+            <div class="message" style="opacity:0"></div>
+            <canvas id="live2d" width="240" height="250" class="live2d"></canvas>
+        </div>
+    </div>
+    
+            <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
 </head>
 
@@ -1093,44 +1296,20 @@
         }
     }
 </script>
-                        
-        </div></div>
-        <div id="bg">
+            
+    <div id="domainname" style="display:none">https://chuzihang714.github.io
         </div>
-        <div id="bgchoice" style="display: none">link
-                    </div>
-                    
-                    <div id="bgurl" style="display:none">https://img.imgdb.cn/item/6054a033524f85ce293ee23e.jpg</div>
-                       
-    </div>
-
-        <div id="landlord">
-            <div class="message" style="opacity:0"></div>
-            <canvas id="live2d" width="240" height="250" class="live2d"></canvas>
-        </div>
-        <div id="domainname" style="display:none">https://chuzihang714.github.io
-                </div>
-</body>
-
-</html>
-<script>
-    $(".tag").each(function () {
-        var rgb = '#' + Math.floor((Math.random()) * 0xffffff).toString(16);;
-        $(this).css('color', rgb);
-    });
-</script>
-
-
-<script type="text/javascript">
-    var message_Path = '/live2d/'
-    var home_Path = document.getElementById("domainname").innerHTML + "/"; //此处修改为你的域名，必须带斜杠
-</script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/js/live2d.js"></script>
-<script type="text/javascript" src="https://chuzihang714.github.io/media/live2d/js/message.js"></script>
-<script type="text/javascript">
-    loadlive2d("live2d", "https://chuzihang714.github.io/media/live2d/assets/tororo.model.json");
-</script>
-
+        
+        <script type="text/javascript">
+            var message_Path = '/live2d/'
+            var home_Path = document.getElementById("domainname").innerHTML + "/"; //此处修改为你的域名，必须带斜杠
+        </script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/live2d.js"></script>
+        <script type="text/javascript" src="https://chuzihang714.github.io/media/live2d/js/message.js"></script>
+        <script type="text/javascript">
+            loadlive2d("live2d", "https://chuzihang714.github.io/media/live2d/assets/tororo.model.json");
+        </script>
+        
 
 <script>
     var bgchoice = $('#bgchoice').html();
@@ -1145,5 +1324,11 @@
         aplayerbtnInit();
     }
 </script>
+<!-- 页内pjax刷新 -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.pjax/2.0.1/jquery.pjax.js"></script>
 
-<script src="https://chuzihang714.github.io/media/js/index.js"></script>
+        <script src="https://chuzihang714.github.io/media/js/index.js"></script>
+        
+</body>
+</html>
