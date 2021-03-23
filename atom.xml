@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://chuzihang714.github.io</id>
     <title>chuzihang714&apos;s blog</title>
-    <updated>2021-03-21T23:25:19.207Z</updated>
+    <updated>2021-03-23T06:46:52.659Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://chuzihang714.github.io"/>
     <link rel="self" href="https://chuzihang714.github.io/atom.xml"/>
@@ -16,11 +16,14 @@
         <link href="https://chuzihang714.github.io/post/ying-pian-xin-de-le-de-ming-dan/">
         </link>
         <updated>2021-03-20T03:33:02.000Z</updated>
-        <summary type="html"><![CDATA[<p>影片改编自一个发生在二战期间的历史故事。开幕时，一只（有颜色的）蜡烛出现在眼前，随后所有事物都变为黑白。</p>
-<h4 id="首先辛德勒是一个德国纳粹">首先，辛德勒是一个德国纳粹。</h4>
+        <summary type="html"><![CDATA[<h2 id="写在前面">写在前面：</h2>
+<p>本篇博客有剧透，介意者勿看。（顺便补充些历史故事...</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>影片改编自一个发生在二战期间的历史故事。开幕时，一只（有颜色的）蜡烛出现在眼前，随后所有事物都变为黑白。</p>
-<h4 id="首先辛德勒是一个德国纳粹">首先，辛德勒是一个德国纳粹。</h4>
+        <content type="html"><![CDATA[<h2 id="写在前面">写在前面：</h2>
+<p>本篇博客有剧透，介意者勿看。（顺便补充些历史故事...</p>
+<!-- more -->
+<p>影片改编自一个发生在二战期间的历史故事。开幕时，一只（有颜色的）蜡烛出现在眼前，随后所有事物都变为黑白。<br>
+<strong>首先，辛德勒是一个德国纳粹</strong>。</p>
 <h2 id="-more-"><!-- more --></h2>
 <h2 id="1">1</h2>
 <p>在此先将影片分成 两部分 ，在第一部分中，辛德勒无疑只是个商人，他买下那些犹太人为自己工作纯属是因为那时的犹太人身价低廉。在这期间他结识了他的秘书 · 伊萨克·斯特恩 · 。他们将搪瓷厂越办越大，实发了一笔“战争财”，辛德勒在此时已成了一个成功的商人并拥有丰厚的资金，他本人也过着十分奢侈的生活。<br>
@@ -322,6 +325,9 @@ signed main()
 <li>
 <p>“死并非生的对立面，而是作为生的一部分永存。”——《挪威的森林》</p>
 </li>
+<li>
+<p>“没有一颗心，会因为追求梦想而受伤，当你真心渴望某样东西时，整个宇宙都会来帮忙。“—— 《牧羊少年奇幻之旅》</p>
+</li>
 </ol>
 ]]></content>
     </entry>
@@ -412,6 +418,8 @@ signed main()
 <li>影片</li>
 </ol>
 <!-- more -->
+<p>在这里推广一下本公司：<br>
+<a href="https://twt-tec.github.io/"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathcolor="red"><mtext>twt-tec</mtext></mstyle></mrow><annotation encoding="application/x-tex">\text{\color{red}twt-tec}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord text"><span class="mord" style="color:red;">twt-tec</span></span></span></span></span></a></p>
 <p>😘 Enjoy~</p>
 ]]></content>
     </entry>

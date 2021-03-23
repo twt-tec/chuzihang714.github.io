@@ -41,7 +41,7 @@
         </script>
     
     
-    <script>(function (i, s, o, g, r, a, m) { i["DaoVoiceObject"] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; a.charset = "utf-8"; m.parentNode.insertBefore(a, m) })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/" + "" + ".js", "daovoice")</script>
+    <script>(function (i, s, o, g, r, a, m) { i["DaoVoiceObject"] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; a.charset = "utf-8"; m.parentNode.insertBefore(a, m) })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/" + "592ea505" + ".js", "daovoice")</script>
     
 </head>
 <style>
@@ -63,7 +63,7 @@
     
     
     <script>
-        let donateChoice = true
+        let donateChoice = false
     </script>
     
     
@@ -137,7 +137,7 @@
         <a onclick="showAaplayer()"><i style="font-size: 20px;"><img
                     src='https://chuzihang714.github.io/media/images/music.png' alt="音乐播放器" class="musicbtn"></i></a>
         <div class="avatar-border">
-            <img src="https://chuzihang714.github.io/images/avatar.png?v=1616369117274" class="avatar">
+            <img src="https://chuzihang714.github.io/images/avatar.png?v=1616481977753" class="avatar">
         </div>
         <div class="sitename">chuzihang714&#39;s blog</div>
         <span class="describtion" data-text='["At its summit goodbye."]'>&nbsp;</span>
@@ -454,7 +454,7 @@
         let talkindex = 0;
         get();
         function get() {
-            var t = JSON.parse('[{"author":"chuzihang714","img":"","text":"使用Gridea day 1！","time":"3/19/2021"}]');
+            var t = JSON.parse('[{"author":"chuzihang714","img":"","text":"使用Gridea day 1！","time":"3/19/2021"},{"author":"chuzihang714","img":"","text":"草注册valine要手机号...评论爆炸","time":"3/23/2021"}]');
             talkindex = t.length - 1;
             for (var i = 0; i <= t.length - 1; i++) {
                 var d = {};
@@ -486,7 +486,7 @@
                 <img src="' + talks[i].img + '" class="talkimg"> \
                 <div class="ainfo">\
                     <div class="ainfo-intro">\
-                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1616369117274">\
+                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1616481977753">\
                         <div class="author">' + talks[i].author + '</div>·\
                         <div class="time">' + talks[i].time + '</div>\
                     </div>\
@@ -499,7 +499,7 @@
             <div class="talk" v-for="t in talks"> \
                 <div class="ainfo">\
                     <div class="ainfo-intro">\
-                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1616369117274">\
+                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1616481977753">\
                         <div class="author">' + talks[i].author + '</div>·\
                         <div class="time">' + talks[i].time + '</div>\
                     </div>\
@@ -849,7 +849,7 @@
     
     <script>
         daovoice('init', {
-            app_id: ""
+            app_id: "592ea505"
         });
         daovoice('update');
     </script>
@@ -1003,13 +1003,15 @@
                             <img class="tagsimg" src="https://img.imgdb.cn/item/60543341524f85ce29fc6297.jpg" alt="">
                             
                         
+                            <a data-pjax class="tag" href="https://chuzihang714.github.io/tag/6kE3oW_Mk/"># 影音</a>
+                            
+                            <a data-pjax class="tag" href="https://chuzihang714.github.io/tag/XB3JfFJy3/"># 私</a>
+                            
                             <a data-pjax class="tag" href="https://chuzihang714.github.io/tag/P7qZKKyVW/"># luogu</a>
                             
                             <a data-pjax class="tag" href="https://chuzihang714.github.io/tag/bKIck_4Ix/"># 题解</a>
                             
                             <a data-pjax class="tag" href="https://chuzihang714.github.io/tag/ZFCuHfpre/"># 定更</a>
-                            
-                            <a data-pjax class="tag" href="https://chuzihang714.github.io/tag/XB3JfFJy3/"># 私</a>
                             
                             <a data-pjax class="tag" href="https://chuzihang714.github.io/tag/YVbwvfuYL/"># 模拟赛</a>
                             
@@ -1040,7 +1042,7 @@
         var aplayerid = "6227716607";
         var aplayerserver = "tencent";
         var aplayerorder = "default";
-        var aplayerautoplay = "true";
+        var aplayerautoplay = "false";
         var aplayer = $("#myaplayer");
         aplayer.attr("server", aplayerserver);
         aplayer.attr("id", aplayerid);

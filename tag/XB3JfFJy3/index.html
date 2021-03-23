@@ -40,7 +40,7 @@
         </script>
     
     
-    <script>(function (i, s, o, g, r, a, m) { i["DaoVoiceObject"] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; a.charset = "utf-8"; m.parentNode.insertBefore(a, m) })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/" + "" + ".js", "daovoice")</script>
+    <script>(function (i, s, o, g, r, a, m) { i["DaoVoiceObject"] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; a.charset = "utf-8"; m.parentNode.insertBefore(a, m) })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/" + "592ea505" + ".js", "daovoice")</script>
     
 </head>
 <style>
@@ -62,7 +62,7 @@
     
     
     <script>
-        let donateChoice = true
+        let donateChoice = false
     </script>
     
     
@@ -136,7 +136,7 @@
         <a onclick="showAaplayer()"><i style="font-size: 20px;"><img
                     src='https://chuzihang714.github.io/media/images/music.png' alt="音乐播放器" class="musicbtn"></i></a>
         <div class="avatar-border">
-            <img src="https://chuzihang714.github.io/images/avatar.png?v=1616369117274" class="avatar">
+            <img src="https://chuzihang714.github.io/images/avatar.png?v=1616481977753" class="avatar">
         </div>
         <div class="sitename">chuzihang714&#39;s blog</div>
         <span class="describtion" data-text='["At its summit goodbye."]'>&nbsp;</span>
@@ -453,7 +453,7 @@
         let talkindex = 0;
         get();
         function get() {
-            var t = JSON.parse('[{"author":"chuzihang714","img":"","text":"使用Gridea day 1！","time":"3/19/2021"}]');
+            var t = JSON.parse('[{"author":"chuzihang714","img":"","text":"使用Gridea day 1！","time":"3/19/2021"},{"author":"chuzihang714","img":"","text":"草注册valine要手机号...评论爆炸","time":"3/23/2021"}]');
             talkindex = t.length - 1;
             for (var i = 0; i <= t.length - 1; i++) {
                 var d = {};
@@ -485,7 +485,7 @@
                 <img src="' + talks[i].img + '" class="talkimg"> \
                 <div class="ainfo">\
                     <div class="ainfo-intro">\
-                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1616369117274">\
+                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1616481977753">\
                         <div class="author">' + talks[i].author + '</div>·\
                         <div class="time">' + talks[i].time + '</div>\
                     </div>\
@@ -498,7 +498,7 @@
             <div class="talk" v-for="t in talks"> \
                 <div class="ainfo">\
                     <div class="ainfo-intro">\
-                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1616369117274">\
+                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1616481977753">\
                         <div class="author">' + talks[i].author + '</div>·\
                         <div class="time">' + talks[i].time + '</div>\
                     </div>\
@@ -848,7 +848,7 @@
     
     <script>
         daovoice('init', {
-            app_id: ""
+            app_id: "592ea505"
         });
         daovoice('update');
     </script>
@@ -992,6 +992,36 @@
                         <link rel="stylesheet" href="https://chuzihang714.github.io/media/css/font-awesome.css">
 <div class="tag-container">
     
+    <div class="postshow">
+        
+        <a data-pjax href="https://chuzihang714.github.io/post/ying-pian-xin-de-le-de-ming-dan/">
+            <div id="post" style="width:100%">
+                <img src="https://img.imgdb.cn/item/60543369524f85ce29fc7701.jpg" class="postimage">
+                <div class="posttitlebox">
+                    <div class="posttitle">
+                        【影片】辛德勒的名单
+                    </div>
+                </div>
+            </div>
+            <div class="postinfo">
+                <div class="postdate"><i class="fa fa-calendar"></i>2021-03-20</div>
+                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 6 min read</div>
+                <div class="posttag">
+                    
+                    <a data-pjax href="https://chuzihang714.github.io/tag/6kE3oW_Mk/" class="postlink">
+                        <i class="fa fa-tag"></i> 影音
+                    </a>
+                    
+                    <a data-pjax href="https://chuzihang714.github.io/tag/XB3JfFJy3/" class="postlink">
+                        <i class="fa fa-tag"></i> 私
+                    </a>
+                    
+                </div>
+            </div>
+        </a>
+        
+</div>
+
     <div class="postshow">
         
         <a data-pjax href="https://chuzihang714.github.io/post/yi-xie-hao-shi/">
@@ -1159,7 +1189,7 @@
         var aplayerid = "6227716607";
         var aplayerserver = "tencent";
         var aplayerorder = "default";
-        var aplayerautoplay = "true";
+        var aplayerautoplay = "false";
         var aplayer = $("#myaplayer");
         aplayer.attr("server", aplayerserver);
         aplayer.attr("id", aplayerid);
