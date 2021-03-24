@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://chuzihang714.github.io</id>
     <title>chuzihang714&apos;s blog</title>
-    <updated>2021-03-24T11:17:47.625Z</updated>
+    <updated>2021-03-24T12:39:51.820Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://chuzihang714.github.io"/>
     <link rel="self" href="https://chuzihang714.github.io/atom.xml"/>
@@ -10,6 +10,23 @@
     <logo>https://chuzihang714.github.io/images/avatar.png</logo>
     <icon>https://chuzihang714.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, chuzihang714&apos;s blog</rights>
+    <entry>
+        <title type="html"><![CDATA[【整活】“chuzihang714” 与 “nottttttthy的读法”]]></title>
+        <id>https://chuzihang714.github.io/post/zheng-huo-chuzihang714-yu-nottttttthy-de-du-fa/</id>
+        <link href="https://chuzihang714.github.io/post/zheng-huo-chuzihang714-yu-nottttttthy-de-du-fa/">
+        </link>
+        <updated>2021-03-24T12:06:50.000Z</updated>
+        <content type="html"><![CDATA[<p><code>chuzihang</code> 中文是楚子航，是小说龙族中我喜欢的一个角色。<br>
+而<code>714</code> 是一个有特殊意义的数字.</p>
+<p><code>nottttttthy</code> 的正确发音应该是 <code>[ˈnɒθiː]</code>   没有别的特殊含义...只是因为原本名字是nothing2333 ...</p>
+<p>其他整活：</p>
+<ol>
+<li><a href="https://caixy06.blog.luogu.org/caixy06-di-du-fa"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathcolor="#ffE1F2"><mtext>鱼的</mtext></mstyle></mrow><annotation encoding="application/x-tex">\text{\color{#ffE1F2}鱼的}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord cjk_fallback" style="color:#ffE1F2;">鱼的</span></span></span></span></span></a></li>
+<li><a href="https://www.luogu.com.cn/blog/Acfboy/acfboy-di-du-fa"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathcolor="#5ac5ac"><mtext>Acfboy</mtext></mstyle></mrow><annotation encoding="application/x-tex">\text{\color{#5ac5ac}Acfboy}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord" style="color:#5ac5ac;">Acfboy</span></span></span></span></span></a></li>
+<li><a href="https://www.luogu.com.cn/blog/ZLY/life-di-du-fa-tai-wu-post"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathcolor="#1111cc"><mtext>_Life_</mtext></mstyle></mrow><annotation encoding="application/x-tex">\text{\color{#1111cc}\_Life\_}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.00444em;vertical-align:-0.31em;"></span><span class="mord text"><span class="mord" style="color:#1111cc;">_Life_</span></span></span></span></span></a></li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[【OI】线段树笔记]]></title>
         <id>https://chuzihang714.github.io/post/oi-xian-duan-shu-bi-ji/</id>
@@ -433,66 +450,6 @@ signed main()
 <p>“没有一颗心，会因为追求梦想而受伤，当你真心渴望某样东西时，整个宇宙都会来帮忙。“—— 《牧羊少年奇幻之旅》</p>
 </li>
 </ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【OI】洛谷题解P6418 [COCI2014-2015#1] ZABAVA]]></title>
-        <id>https://chuzihang714.github.io/post/luo-gu-ti-jie-p6418-coci2014-20151-zabava/</id>
-        <link href="https://chuzihang714.github.io/post/luo-gu-ti-jie-p6418-coci2014-20151-zabava/">
-        </link>
-        <updated>2021-03-19T05:20:15.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="sol">Sol</h2>
-<p>看到题目，我们首先想到dp，其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">f[i][j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span> 表示将前 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 栋楼中的学<br>
-生进行 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span> 次操作所得到的<strong>最小吵闹值</strong>。那么最终的答案就是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>m</mi><mo>]</mo><mo>[</mo><mi>k</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">f[m][k]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">m</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mclose">]</span></span></span></span> 。</p>
-<p>dp方程也很好推： <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo><mo>=</mo><mi>m</mi><mi>i</mi><mi>n</mi><mo>(</mo><mi>f</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo><mo separator="true">,</mo><mi>f</mi><mo>[</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo>]</mo><mo>[</mo><mi>k</mi><mo>]</mo><mo>+</mo><mi>s</mi><mi>o</mi><mi>l</mi><mo>(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo separator="true">,</mo><mi>k</mi><mi>k</mi><mo>)</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">f[i][j]=min(f[i][j],f[i-1][k]+sol(i,j,kk))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></p>
-<p><strong>dp部分代码：</strong></p>
-<pre><code class="language-cpp">    for (i=1; i&lt;=m; i++)
-      for (j=0; j&lt;=k; j++)
-         for (kk=0; kk&lt;=j; kk++)
-            f[i][j]=min(f[i][j],f[i-1][kk]+cmf(i,j,k));
-</code></pre>
-<p>那么本题的一个难点就是怎样进行操作是最优的，观察样例我们不难发现，<strong>将学生尽量均分是最优的</strong>。简化一下题目，进行 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span> 次操作，其实就是将学生分为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">k+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 分。不难发现均分后的最小值肯定是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mi>n</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{n}{k+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0987230000000001em;vertical-align:-0.403331em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.695392em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.403331em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> ， 那么最大值也就是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>+</mo><mfrac><mi>n</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></mfrac></mrow><annotation encoding="application/x-tex">1+\frac{n}{k+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.0987230000000001em;vertical-align:-0.403331em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.695392em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.403331em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> 这样计算起来就很简单了。</p>
-<p><strong>Tips:</strong><br>
-若使用子程序进行计算千万别忘了开 <code>long long</code> 否则会WA两个点。</p>
-<h2 id="code">Code</h2>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;cstdio&gt;
-#include &lt;algorithm&gt;
-#define int long long//别忘了
-using namespace std;
-int n,m,k,i,j,x,kk,kkk,num,sum,mon,a[555],f[555][555];
-
-int cmf(int i, int j, int kk)
-{
-        kkk=j-kk;
-        mon=a[i] / (kkk+1);//最小值
-        sum=(mon+1) * (kkk+1) - a[i];
-        num=(kkk+1) - sum;
-        sum=sum * mon * (mon+1) / 2 + num * (mon+1) * (mon+2) / 2;
-        return sum;
-}//计算sol
-
-signed main()
-{
-        cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
-        for (i=1; i&lt;=n; i++)
-        {
-                cin &gt;&gt; x;
-                a[x]++;
-        }
-
-        for (i=1; i&lt;=m; i++)
-                for (j=0; j&lt;=k; j++)
-                        f[i][j]=0x3f3f3f3f;//预处理
-
-        for (i=1; i&lt;=m; i++)
-                for (j=0; j&lt;=k; j++)
-                        for (kk=0; kk&lt;=j; kk++)
-                                f[i][j]=min(f[i][j],f[i-1][kk]+cmf(i,j,kk));//dp
-        cout &lt;&lt; f[m][k];
-}
-
-</code></pre>
 ]]></content>
     </entry>
 </feed>
