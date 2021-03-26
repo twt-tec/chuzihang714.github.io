@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://chuzihang714.github.io</id>
     <title>chuzihang714&apos;s blog</title>
-    <updated>2021-03-26T10:31:10.399Z</updated>
+    <updated>2021-03-26T10:40:23.064Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://chuzihang714.github.io"/>
     <link rel="self" href="https://chuzihang714.github.io/atom.xml"/>
@@ -76,6 +76,13 @@
 <h2 id="-more--5"><!-- more --></h2>
 <ol start="3">
 <li><a href="https://www.luogu.com.cn/blog/ZLY/life-di-du-fa-tai-wu-post"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathcolor="#1111cc"><mtext>_Life_</mtext></mstyle></mrow><annotation encoding="application/x-tex">\text{\color{#1111cc}\_Life\_}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.00444em;vertical-align:-0.31em;"></span><span class="mord text"><span class="mord" style="color:#1111cc;">_Life_</span></span></span></span></span></a></li>
+</ol>
+<hr>
+<h2 id="-more--6"><!-- more --></h2>
+<h2 id="-more--7"><!-- more --></h2>
+<h2 id="-more--8"><!-- more --></h2>
+<ol start="4">
+<li><a href="https://yifanlg.blog.luogu.org/post-long-qian-yue-shi-wu-di-du-fa"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathcolor="#dd11cc"><mtext>龙虾十三香</mtext></mstyle></mrow><annotation encoding="application/x-tex">\text{\color{#dd11cc}龙虾十三香}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord cjk_fallback" style="color:#dd11cc;">龙虾十三香</span></span></span></span></span></a></li>
 </ol>
 ]]></content>
     </entry>
