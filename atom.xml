@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://chuzihang714.github.io</id>
     <title>chuzihang714&apos;s blog</title>
-    <updated>2021-03-26T10:04:24.560Z</updated>
+    <updated>2021-03-26T10:28:09.668Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://chuzihang714.github.io"/>
     <link rel="self" href="https://chuzihang714.github.io/atom.xml"/>
@@ -10,6 +10,37 @@
     <logo>https://chuzihang714.github.io/images/avatar.png</logo>
     <icon>https://chuzihang714.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, chuzihang714&apos;s blog</rights>
+    <entry>
+        <title type="html"><![CDATA[【OI】膜你赛3.26小结]]></title>
+        <id>https://chuzihang714.github.io/post/oi/</id>
+        <link href="https://chuzihang714.github.io/post/oi/">
+        </link>
+        <updated>2021-03-26T10:06:59.000Z</updated>
+        <summary type="html"><![CDATA[<h3 id="野花终于良心地出了套模拟赛了啊普及"><strong>野花终于良心地出了套模拟赛了啊...(普及)</strong></h3>
+<h3 id="结果这个文件提交我真的赣了啊"><strong>结果这个文件提交我真的赣了啊...</strong></h3>
+<h3 id="t1t2"><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mn>1</mn><mi mathvariant="normal">/</mi><mi>T</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">T1/T2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">1</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">2</span></span></span></span></strong></h3>
+<p>这两题都很简单，找出其中的规律就行。<br>
+要注意的是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">T2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">2</span></span></span></span> 在没有一张卡牌是 奇/偶 的情况下是无解的，特判一下，比赛数据太水竟然给过了，但CF上过不了。</p>
+<h3 id="t3"><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mn>3</mn></mrow><annotation encoding="application/x-tex">T3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">3</span></span></span></span></strong></h3>
+<p>暴力就能过，如何判断形状相同这点有点难想，其实可以把形状转化成数字来做。（定一点 其他各点到这个点的距离和就可视为这个图案）</p>
+<h3 id="t4"><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mn>4</mn></mrow><annotation encoding="application/x-tex">T4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">4</span></span></span></span></strong></h3>
+<p>也是很水的一题，考场上以为是正解，结果只考虑了最后一个女生第一步需等待的情况... 再开一个数组记录每个连通块中最后的一个女生需等待多久并每次更新一下即可...</p>
+]]></summary>
+        <content type="html"><![CDATA[<h3 id="野花终于良心地出了套模拟赛了啊普及"><strong>野花终于良心地出了套模拟赛了啊...(普及)</strong></h3>
+<h3 id="结果这个文件提交我真的赣了啊"><strong>结果这个文件提交我真的赣了啊...</strong></h3>
+<h3 id="t1t2"><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mn>1</mn><mi mathvariant="normal">/</mi><mi>T</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">T1/T2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">1</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">2</span></span></span></span></strong></h3>
+<p>这两题都很简单，找出其中的规律就行。<br>
+要注意的是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">T2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">2</span></span></span></span> 在没有一张卡牌是 奇/偶 的情况下是无解的，特判一下，比赛数据太水竟然给过了，但CF上过不了。</p>
+<h3 id="t3"><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mn>3</mn></mrow><annotation encoding="application/x-tex">T3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">3</span></span></span></span></strong></h3>
+<p>暴力就能过，如何判断形状相同这点有点难想，其实可以把形状转化成数字来做。（定一点 其他各点到这个点的距离和就可视为这个图案）</p>
+<h3 id="t4"><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mn>4</mn></mrow><annotation encoding="application/x-tex">T4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">4</span></span></span></span></strong></h3>
+<p>也是很水的一题，考场上以为是正解，结果只考虑了最后一个女生第一步需等待的情况... 再开一个数组记录每个连通块中最后的一个女生需等待多久并每次更新一下即可...</p>
+<!-- more -->
+<p>sxyz2021求真班成员提醒您：<br>
+<strong>题目千万道，文件要交好；</strong><br>
+<strong>不检查文件，爆零两行泪。</strong></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[【整活】“chuzihang714” 与 “nottttttthy的读法”]]></title>
         <id>https://chuzihang714.github.io/post/zheng-huo-chuzihang714-yu-nottttttthy-de-du-fa/</id>
@@ -405,72 +436,6 @@ signed main()
         </link>
         <updated>2021-03-19T10:43:35.000Z</updated>
         <content type="html"><![CDATA[<p>一些好的场景图，其实就是封面...需要的自取。👽</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【杂】一些好句]]></title>
-        <id>https://chuzihang714.github.io/post/yi-xie-hao-ju/</id>
-        <link href="https://chuzihang714.github.io/post/yi-xie-hao-ju/">
-        </link>
-        <updated>2021-03-19T10:32:21.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="sth"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>t</mi><mi>h</mi></mrow><annotation encoding="application/x-tex">sth</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span></span></span></span>:</h2>
-<ol>
-<li>
-<p>“每个人看来都自得其乐，而我则因此而感到了平时所没有感到过的孤寂，觉得惟独我自己与这光景格格不入。”——村上春树《挪威的森林》</p>
-</li>
-<li>
-<p>“北风毫不留情  把叶子吹落  脆弱的她选择了逃脱  叶子失去消息   风才感觉寂寞  整个冬天  北风的痛没人能说”——王力宏《爱错》</p>
-</li>
-<li>
-<p>”最短暂的幸福感和最漫长的余韵，在到达最顶峰的时候迫近死亡，每个人的生命中都有一段summer time。”</p>
-</li>
-<li>
-<p>”人生很吊诡的那个地方在于，你往往很动心的那个时刻，都是在你还没准备好的时候遇到。当你准备好一切，却很难找回当初动心的那个瞬间了。“ ——花希</p>
-</li>
-<li>
-<p>”要自由的人，其实要担最大的责任，选别人少走的路的人，要背负最沉重的枷锁，从来就没有不需要抵抗重力的飞翔。“ ——马薇薇</p>
-</li>
-<li>
-<p>”你是那颗星星，我是你旁边的这颗星，我的整个轨迹是被你影响。即使有一天这颗星星熄灭了，它变成暗物质，它变成了看不见的东西，它依然在影响着我的轨迹。<br>
-你的出现永远改变着我的星轨，无论你在哪里。“ ——高晓松</p>
-</li>
-<li>
-<p>”我们最后选择的是跟自己的悲伤和解，而不是忘却。因为那曾经使我悲伤过的一切，也是我最热爱的一切。“ ——詹青云</p>
-</li>
-<li>
-<p>”要一个黄昏,满是风,和正在落下的夕阳。如果麦子刚好熟了,炊烟恰恰升起。那只白鸽贴着水面飞过，栖身于一棵芦苇。而芦苇正好准备了一首曲子。如此，足够我爱这破碎泥泞的人间。“——余秀华 《人间》</p>
-</li>
-<li>
-<p>“一切都会变好的，如果不会，那就由我来变好一切。”——德卡先生的信箱</p>
-</li>
-<li>
-<p>”有些鸟儿是注定不会被关在牢笼里的，它们的每一片羽毛都闪耀着自由的光辉。“——《肖申克的救赎》</p>
-</li>
-<li>
-<p>“你得丢开以往的事，才能不断得以前行。”——《阿甘正传》</p>
-</li>
-<li>
-<p>”连绵不绝的城市，什么都有，除了尽头，没有尽头。“——《海上钢琴师》</p>
-</li>
-<li>
-<p>”不管前方的路有多苦，只要走的方向正确，不管多么崎岖不平，都比站在原地更接近幸福。“——《千与千寻》</p>
-</li>
-<li>
-<p>”生活总会有不顺心的时候，我们都会犯错。天性如何并不重要，重要的是你开始改变。“——《疯狂动物城》</p>
-</li>
-<li>
-<p>”恐惧让你沦为囚犯，希望让你重获自由。“——《肖申克的救赎》</p>
-</li>
-<li>
-<p>”这份名单…就是生命。“——《辛德勒的名单》</p>
-</li>
-<li>
-<p>“死并非生的对立面，而是作为生的一部分永存。”——《挪威的森林》</p>
-</li>
-<li>
-<p>“没有一颗心，会因为追求梦想而受伤，当你真心渴望某样东西时，整个宇宙都会来帮忙。“—— 《牧羊少年奇幻之旅》</p>
-</li>
-</ol>
 ]]></content>
     </entry>
 </feed>
