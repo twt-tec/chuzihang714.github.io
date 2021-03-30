@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://chuzihang714.github.io</id>
     <title>chuzihang714&apos;s blog</title>
-    <updated>2021-03-26T10:41:18.957Z</updated>
+    <updated>2021-03-30T10:24:47.312Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://chuzihang714.github.io"/>
     <link rel="self" href="https://chuzihang714.github.io/atom.xml"/>
@@ -10,6 +10,276 @@
     <logo>https://chuzihang714.github.io/images/avatar.png</logo>
     <icon>https://chuzihang714.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, chuzihang714&apos;s blog</rights>
+    <entry>
+        <title type="html"><![CDATA[树上问题笔记]]></title>
+        <id>https://chuzihang714.github.io/post/shu-shang-wen-ti-bi-ji/</id>
+        <link href="https://chuzihang714.github.io/post/shu-shang-wen-ti-bi-ji/">
+        </link>
+        <updated>2021-03-30T02:46:39.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="定义"><strong>定义：</strong></h2>
+<p>自行 <a href="http://oi-wiki.com/graph/tree-basic/"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>OI-Wiki</mtext></mrow><annotation encoding="application/x-tex">\text{OI-Wiki}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">OI-Wiki</span></span></span></span></span></a> 。</p>
+<h2 id="树的直径"><strong>树的直径</strong></h2>
+<p>有两种解法。</p>
+<h3 id="sol1"><strong>sol1</strong></h3>
+<p>跑两遍大法师，第一遍找最远的结点，这个结点就是直径的一端，第二遍找以 <code>第一遍找出的点</code> 为根节点的最远的节点，这个点就是直径的第二端。</p>
+<h4 id="证明"><strong>证明：</strong></h4>
+<p>再次自行 <strong>OI-Wiki</strong></p>
+<h4 id="code"><strong>Code</strong></h4>
+<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long ll;
+
+const int N = 1e7 + 7;
+int id, maxn, n, deep[N];
+struct edge 
+{
+        int to, next;
+} e[N];
+int cnt, he[N];
+
+void add(int u, int v) 
+{
+        e[++cnt].next = he[u];
+        e[cnt].to = v;
+        he[u] = cnt;
+}
+
+void dfs(int u, int fa) 
+{
+
+        if(deep[u] &gt; maxn)
+                id = u, maxn = deep[u];
+
+        for(int i = he[u]; i; i = e[i].next) 
+        {
+                int v = e[i].to;
+                if(v == fa)
+                        continue;
+                deep[v] = deep[u] + 1;
+                dfs(v, u);
+        } // 我要 ak ioi 的
+}
+
+int main()
+{
+        cin &gt;&gt; n;
+        for(int i = 1; i &lt;= n - 1; i++)
+        {
+                int u,v;
+                cin &gt;&gt; u &gt;&gt; v;
+                add(u, v), add(v, u);
+        }
+
+        dfs(1, 0);
+
+        memset(deep, 0, sizeof(deep));
+        maxn = 0;
+
+        dfs(id, 0);
+
+        printf(&quot;%d&quot;, maxn);
+        return 0;
+}
+
+</code></pre>
+<h3 id="sol2"><strong>sol2</strong></h3>
+<p>用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">dp</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span></span></span></span> 写，分别记录每个点向下所能延伸的最大值与次大值，直径就是两者的加和。</p>
+<h4 id="code-2"><strong>Code</strong></h4>
+<pre><code class="language-c++">#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+using namespace std;
+int x,y,n,i,ans,d1[100001],d2[100001],t;
+vector&lt;int&gt; E[100001];
+
+void dfs(int now, int fath)
+{
+        d1[now]=d2[now]=0;
+        for(int i = 0; i &lt; E[now].size(); ++i)
+        {
+                int v=E[now][i];
+                if (fath==v) continue;
+                dfs(v,now);
+                t=d1[v]+1;
+                if (t&gt;d1[now]) d2[now]=d1[now],d1[now]=t;
+                else if (t&gt;d2[now]) d2[now]=t;
+        }
+        ans=max(ans,d1[now]+d2[now]);
+}
+
+int main()
+{
+        cin &gt;&gt; n;
+        for (i=1; i&lt;n; i++)
+        {
+                int u,v;
+                cin &gt;&gt; u &gt;&gt; v;
+                E[u].push_back(v);
+                E[v].push_back(u);
+        }
+        dfs(1,0);
+        cout &lt;&lt; ans;
+        return 0;
+}
+</code></pre>
+<h2 id="lca最近公共祖先"><strong>LCA最近公共祖先</strong></h2>
+<p>可以用 <code>tarjan</code> 写（显然我只看了这一个...）<br>
+做法：用临接链表存下每条边和询问的信息，然后跑一遍 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>a</mi><mi>r</mi><mi>j</mi><mi>a</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">tarjan</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span></span></span></span> ，最后对于询问 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">i,j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span> 的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>c</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lca</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">c</span><span class="mord mathdefault">a</span></span></span></span> ，答案为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>d</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>+</mo><mi>d</mi><mi>d</mi><mo>[</mo><mi>j</mi><mo>]</mo><mo>−</mo><mn>2</mn><mo>∗</mo><mi>d</mi><mi>d</mi><mo>[</mo><mi>L</mi><mi>C</mi><mi>A</mi><mo>(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo>)</mo><mo>]</mo></mrow><annotation encoding="application/x-tex">dd[i]+dd[j]-2*dd[LCA(i,j)]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">d</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">d</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">d</span><span class="mopen">[</span><span class="mord mathdefault">L</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">A</span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mclose">]</span></span></span></span> ，这里 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>d</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">dd[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">d</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 点到根节点的距离。</p>
+<h3 id="code-3"><strong>Code</strong></h3>
+<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+const int N = 100010;
+int x,y,k,question[N],edge[N],tot,tot1,fa[N],dd[N],lca[N],que1[N],que2[N];//d[i]表示该节点到根节点的距离，fa是父亲节点
+bool ff[N];
+struct EDGE
+{
+        int to,v,next;
+};
+EDGE a[N];
+struct QUES
+{
+        int to,nu,next;
+};
+QUES b[N];
+
+void add_edge(int x,int y,int value)
+{
+        a[++tot].to=y;//这条边到哪个点
+        a[tot].v=value;//这条边的长度
+        a[tot].next=edge[x];//与这条边有相同初始点的上一条边编号 
+        edge[x]=tot;//更新
+}
+void add_question(int x,int y,int number)
+{
+        b[++tot1].to=y;//询问点编号
+        b[tot1].nu=number;
+        b[tot1].next=question[x];
+        question[x]=tot1;
+}
+
+int get (int x)
+{
+        if (fa[x]==x) return x;
+        return fa[x]=get(fa[x]);
+}//并查集
+
+void tarjan(int x)
+{
+        fa[x]=x;//将父节点指向自己
+        ff[x]=true;//标记该点已经走过
+        for(int i=question[x]; i; i=b[i].next)
+        {
+                int now=b[i].to;
+                if(ff[now])
+                        lca[b[i].nu]=get(now);//更新lca
+        }
+        for(int i=edge[x]; i; i=a[i].next)
+        {
+                int now=a[i].to;
+                if(!ff[now])
+                {
+                        dd[now]=dd[x]+a[i].v;//更新dd
+                        tarjan(now);
+                        fa[now]=x;//更新父节点
+                }
+        }
+}
+int main()
+{
+        int tt;
+        cin &gt;&gt; tt;
+        while (tt--)
+        {
+                int n,m;
+                cin &gt;&gt; n &gt;&gt; m;
+                memset(ff,false,sizeof(ff));
+                memset(edge,0,sizeof(edge));
+                memset(question,0,sizeof(question));
+                memset(a,0,sizeof(a));
+                memset(b,0,sizeof(b));
+                memset(dd,0,sizeof(dd));
+                memset(fa,0,sizeof(fa));
+                for (int i=1; i&lt;=n; i++) fa[i]=i;
+                tot=0; tot1=0;//预处理
+                for(int i=1; i&lt;=n-1; i++)
+                {
+                        int aa,bb,cc;
+                        scanf(&quot;%d%d%d&quot;,&amp;aa,&amp;bb,&amp;cc);
+                        add_edge(aa,bb,cc);
+                        add_edge(bb,aa,cc);
+                }//建树
+                for(int i=1; i&lt;=m; i++)
+                {
+                        int aa,bb;
+                        scanf(&quot;%d%d&quot;,&amp;aa,&amp;bb);
+                        add_question(aa,bb,i);
+                        add_question(bb,aa,i);//安全一点存两次
+                        que1[i]=aa,que2[i]=bb;
+                }
+                tarjan(1);
+                for (int i=1; i&lt;=m; i++)
+                        printf(&quot;%d\n&quot;,dd[que1[i]]+dd[que2[i]]-2*dd[lca[i]]);
+        }
+}
+</code></pre>
+<h2 id="树的重心"><strong>树的重心</strong></h2>
+<h3 id="定义-2"><strong>定义：</strong></h3>
+<p>对于一棵树n个节点的无根树，找到一个点，将无根树变为以该点为根的有根树时，最大子树的结点数最小。换句话说，删除这个 1 点后最大连通块（一定是树）的结点数最小。</p>
+<h3 id="sol"><strong>Sol</strong></h3>
+<p>用大法师计算每个子树大小，利用<code>总点数 - 当前子树</code>的大小得到“向上”的子树的大小，然后就可以依据定义找到重心了。</p>
+<h3 id="code-4"><strong>Code</strong></h3>
+<pre><code class="language-c++">#include &lt;algorithm&gt;
+#include &lt;iostream&gt;
+#include &lt;cstdlib&gt;
+#include &lt;cstring&gt;
+#include &lt;cstdio&gt;
+#include &lt;cmath&gt;
+#define LL long long
+#define inf 2147483640
+#define Pi acos(-1.0)
+#define free(a) freopen(a &quot;.in&quot;,&quot;r&quot;,stdin),freopen(a &quot;.out&quot;,&quot;w&quot;,stdout);
+using namespace std;
+
+const int maxn=20010;
+struct edge {int to,next;} e[maxn&lt;&lt;2];
+
+int head[maxn],vis[maxn],son[maxn],cnt,size,ans,n;
+
+void insert(int u,int v) {
+        e[++cnt].to=v; e[cnt].next=head[u]; head[u]=cnt;
+        e[++cnt].to=u; e[cnt].next=head[v]; head[v]=cnt;
+}
+void dfs(int x) {
+        vis[x]=1,son[x]=0;
+        int tmp=0;
+        for (int i=head[x]; i; i=e[i].next) if (!vis[e[i].to]) {
+                        dfs(e[i].to);
+                        son[x]+=son[e[i].to]+1;
+                        tmp=max(tmp,son[e[i].to]+1);
+                }
+        tmp=max(tmp,n-son[x]-1);
+        if (tmp&lt;size || (tmp==size &amp;&amp; x&lt;ans)) size=tmp,ans=x;
+}
+int main() {
+        int T; scanf(&quot;%d&quot;,&amp;T);
+        while (T--) {
+                scanf(&quot;%d&quot;,&amp;n);
+                memset(vis,0,sizeof(vis)); memset(head,0,sizeof(head));
+                cnt=ans=0; size=inf;
+                for (int i=1; i&lt;n; i++) {
+                        int u,v;
+                        scanf(&quot;%d%d&quot;,&amp;u,&amp;v);
+                        insert(u,v);
+                }
+                dfs(1);
+                printf(&quot;%d %d\n&quot;,ans,size);
+        }
+        return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[【OI】膜你赛3.26小结]]></title>
         <id>https://chuzihang714.github.io/post/oi/</id>
@@ -434,15 +704,6 @@ signed main()
 <!-- more -->
 <p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mi>a</mi><mi>n</mi><mi>k</mi><mi mathvariant="normal">：</mi><mn>7</mn></mrow><annotation encoding="application/x-tex">rank：7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord cjk_fallback">：</span><span class="mord">7</span></span></span></span></p>
 <p>完结撒花💐💐💐💐💐</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【杂】一些好图]]></title>
-        <id>https://chuzihang714.github.io/post/yi-xie-hao-tu/</id>
-        <link href="https://chuzihang714.github.io/post/yi-xie-hao-tu/">
-        </link>
-        <updated>2021-03-19T10:43:35.000Z</updated>
-        <content type="html"><![CDATA[<p>一些好的场景图，其实就是封面...需要的自取。👽</p>
 ]]></content>
     </entry>
 </feed>

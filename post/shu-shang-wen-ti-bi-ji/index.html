@@ -2,16 +2,13 @@
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
-    <meta name="description" content="用法
-是什么，干什么用的就不写了，每篇都有...都看烦了...
-
-过程
-主要过程就是 建树 -&gt; 更新 -&gt; 查询输出
-
-板子code
-#include &lt;cstdio&gt;
-#include &lt;iostream&..." />
-    <meta name="keywords" content="笔记,luogu" />
+    <meta name="description" content="定义：
+自行 OI-Wiki\text{OI-Wiki}OI-Wiki 。
+树的直径
+有两种解法。
+sol1
+跑两遍大法师，第一遍找最远的结点，这个结点就是直径的一端，第二遍找以 第一遍找出的点 为根节点的最远的节点，这个点就是直径的第二端..." />
+    <meta name="keywords" content="笔记,题解" />
     <link rel="stylesheet" href="https://chuzihang714.github.io/media/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://chuzihang714.github.io/styles/main.css">
     
@@ -1078,19 +1075,19 @@
         <div class="postshow postpadding" style="padding-bottom: 0;">
             
             <div class="postdetailimg">
-                <img src="https://img.imgdb.cn/item/6057d4ac8322e6675c3d4079.jpg" class="postimage" style="cursor:auto">
+                <img src="https://img.imgdb.cn/item/6062fc518322e6675c3174d2.jpg" class="postimage" style="cursor:auto">
             </div>
             <div class="postinfo-detail">
-                <div class="postdate"><i class="fa fa-calendar"></i>2021-03-23</div>
-                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 3 min read</div>
+                <div class="postdate"><i class="fa fa-calendar"></i>2021-03-30</div>
+                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 8 min read</div>
                 <div class="posttag">
                     
                     <a data-pjax href="https://chuzihang714.github.io/tag/gdmiEn7kC/" class="postlink">
                         <i class="fa fa-tag"></i> 笔记
                     </a>
                     
-                    <a data-pjax href="https://chuzihang714.github.io/tag/P7qZKKyVW/" class="postlink">
-                        <i class="fa fa-tag"></i> luogu
+                    <a data-pjax href="https://chuzihang714.github.io/tag/bKIck_4Ix/" class="postlink">
+                        <i class="fa fa-tag"></i> 题解
                     </a>
                     
                 </div>
@@ -1098,9 +1095,9 @@
             
         <div id="articlecontent">
             <div id="texttitle" style="text-align: center">
-                <h2 id="ptitle">【OI】线段树笔记</h2>
+                <h2 id="ptitle">树上问题笔记</h2>
                 <!-- id 将作为查询条件 -->
-                <div id="pl" style="display:none">https://chuzihang714.github.io/post/oi-xian-duan-shu-bi-ji/</div>
+                <div id="pl" style="display:none">https://chuzihang714.github.io/post/shu-shang-wen-ti-bi-ji/</div>
                 <div id="rootaddr" style="display:none">https://chuzihang714.github.io</div>
                 <span id="hotnum">
                     <h4><i class="fa fa-eye" aria-hidden="true" style="color: #FF8C00;"></i>&nbsp;&nbsp;热度</i>: <i
@@ -1108,99 +1105,268 @@
                 </span>
             </div>
             <div class="text ">
-                <h2 id="用法">用法</h2>
-<p>是什么，干什么用的就不写了，每篇都有...都看烦了...</p>
-<!-- more -->
-<h2 id="过程">过程</h2>
-<p>主要过程就是 <strong>建树 -&gt; 更新 -&gt; 查询输出</strong></p>
-<!-- more -->
-<h2 id="板子code">板子code</h2>
-<pre><code class="language-c++">#include &lt;cstdio&gt;
-#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-#define int long long
+                <h2 id="定义"><strong>定义：</strong></h2>
+<p>自行 <a href="http://oi-wiki.com/graph/tree-basic/"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>OI-Wiki</mtext></mrow><annotation encoding="application/x-tex">\text{OI-Wiki}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">OI-Wiki</span></span></span></span></span></a> 。</p>
+<h2 id="树的直径"><strong>树的直径</strong></h2>
+<p>有两种解法。</p>
+<h3 id="sol1"><strong>sol1</strong></h3>
+<p>跑两遍大法师，第一遍找最远的结点，这个结点就是直径的一端，第二遍找以 <code>第一遍找出的点</code> 为根节点的最远的节点，这个点就是直径的第二端。</p>
+<h4 id="证明"><strong>证明：</strong></h4>
+<p>再次自行 <strong>OI-Wiki</strong></p>
+<h4 id="code"><strong>Code</strong></h4>
+<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int n,m,a[100001],tree[1000001],lazy[1000001],mid,b,c,d,e,f,a1,i;
+typedef long long ll;
 
-void push_up(int p)
+const int N = 1e7 + 7;
+int id, maxn, n, deep[N];
+struct edge 
 {
-        tree[p]=tree[p*2]+tree[p*2+1];
+        int to, next;
+} e[N];
+int cnt, he[N];
+
+void add(int u, int v) 
+{
+        e[++cnt].next = he[u];
+        e[cnt].to = v;
+        he[u] = cnt;
 }
 
-void swa(int p, int l,int r, int k)
+void dfs(int u, int fa) 
 {
-        lazy[p]+=k;
-        tree[p]=tree[p]+k*(r-l+1);
-}
 
-void push_down(int p, int l, int r)
-{
-        mid=(l+r) / 2;
-        swa(p*2,l,mid,lazy[p]);
-        swa(p*2+1,mid+1,r,lazy[p]);
-        lazy[p]=0;
-}
+        if(deep[u] &gt; maxn)
+                id = u, maxn = deep[u];
 
-void build(int p, int l, int r)
-{
-        lazy[p]=0;
-        if (l==r) {tree[p]=a[l]; return;}
-        int mid=(l+r)/2;
-        build(p*2,l,mid);
-        build(p*2+1,mid+1,r);
-        tree[p]=tree[p*2+1]+tree[p*2];
-}
-
-void update(int ll,int rr,int l,int r,int p,int k)
-{
-        if(ll&lt;=l&amp;&amp;r&lt;=rr)
+        for(int i = he[u]; i; i = e[i].next) 
         {
-                tree[p]+=k*(r-l+1);
-                lazy[p]+=k;
-                return;
+                int v = e[i].to;
+                if(v == fa)
+                        continue;
+                deep[v] = deep[u] + 1;
+                dfs(v, u);
+        } // 我要 ak ioi 的
+}
+
+int main()
+{
+        cin &gt;&gt; n;
+        for(int i = 1; i &lt;= n - 1; i++)
+        {
+                int u,v;
+                cin &gt;&gt; u &gt;&gt; v;
+                add(u, v), add(v, u);
         }
 
-        push_down(p,l,r);
-        int mid=(l+r) / 2;
-        if(ll&lt;=mid) update(ll,rr,l,mid,p*2,k);
-        if(rr&gt;mid) update(ll,rr,mid+1,r,p*2+1,k);
-        push_up(p);
-}
+        dfs(1, 0);
 
-int query(int xx,int yy,int l,int r,int p)
-{
-        int sum=0;
-        if(xx&lt;=l&amp;&amp;r&lt;=yy) return tree[p];
-        int mid=(l+r)&gt;&gt;1;
-        push_down(p,l,r);
-        if(xx&lt;=mid) sum+=query(xx,yy,l,mid,p*2);
-        if(yy&gt;mid) sum+=query(xx,yy,mid+1,r,p*2+1);
-        return sum;
-}
-signed main()
-{
-        cin &gt;&gt; n &gt;&gt; m;
-        for (i=1; i&lt;=n; i++) cin &gt;&gt; a[i];
-        build(1,1,n);
-        while (m--)
-        {
-                cin &gt;&gt; a1;
-                if (a1==1)
-                {
-                        cin &gt;&gt; b &gt;&gt; c &gt;&gt; d;
-                        update(b,c,1,n,1,d);
-                }
-                else
-                {
-                        cin &gt;&gt; e &gt;&gt; f;
-                        cout &lt;&lt; query(e,f,1,n,1) &lt;&lt; endl;
-                }
-        }
+        memset(deep, 0, sizeof(deep));
+        maxn = 0;
+
+        dfs(id, 0);
+
+        printf(&quot;%d&quot;, maxn);
+        return 0;
 }
 
 </code></pre>
-<!-- more -->
-<p>有点难懂的是懒标记，多看一会儿能理解。</p>
+<h3 id="sol2"><strong>sol2</strong></h3>
+<p>用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">dp</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span></span></span></span> 写，分别记录每个点向下所能延伸的最大值与次大值，直径就是两者的加和。</p>
+<h4 id="code-2"><strong>Code</strong></h4>
+<pre><code class="language-c++">#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+using namespace std;
+int x,y,n,i,ans,d1[100001],d2[100001],t;
+vector&lt;int&gt; E[100001];
+
+void dfs(int now, int fath)
+{
+        d1[now]=d2[now]=0;
+        for(int i = 0; i &lt; E[now].size(); ++i)
+        {
+                int v=E[now][i];
+                if (fath==v) continue;
+                dfs(v,now);
+                t=d1[v]+1;
+                if (t&gt;d1[now]) d2[now]=d1[now],d1[now]=t;
+                else if (t&gt;d2[now]) d2[now]=t;
+        }
+        ans=max(ans,d1[now]+d2[now]);
+}
+
+int main()
+{
+        cin &gt;&gt; n;
+        for (i=1; i&lt;n; i++)
+        {
+                int u,v;
+                cin &gt;&gt; u &gt;&gt; v;
+                E[u].push_back(v);
+                E[v].push_back(u);
+        }
+        dfs(1,0);
+        cout &lt;&lt; ans;
+        return 0;
+}
+</code></pre>
+<h2 id="lca最近公共祖先"><strong>LCA最近公共祖先</strong></h2>
+<p>可以用 <code>tarjan</code> 写（显然我只看了这一个...）<br>
+做法：用临接链表存下每条边和询问的信息，然后跑一遍 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>a</mi><mi>r</mi><mi>j</mi><mi>a</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">tarjan</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span></span></span></span> ，最后对于询问 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">i,j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span> 的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>c</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lca</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">c</span><span class="mord mathdefault">a</span></span></span></span> ，答案为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>d</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>+</mo><mi>d</mi><mi>d</mi><mo>[</mo><mi>j</mi><mo>]</mo><mo>−</mo><mn>2</mn><mo>∗</mo><mi>d</mi><mi>d</mi><mo>[</mo><mi>L</mi><mi>C</mi><mi>A</mi><mo>(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo>)</mo><mo>]</mo></mrow><annotation encoding="application/x-tex">dd[i]+dd[j]-2*dd[LCA(i,j)]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">d</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">d</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">d</span><span class="mopen">[</span><span class="mord mathdefault">L</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">A</span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mclose">]</span></span></span></span> ，这里 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>d</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">dd[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">d</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 点到根节点的距离。</p>
+<h3 id="code-3"><strong>Code</strong></h3>
+<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+const int N = 100010;
+int x,y,k,question[N],edge[N],tot,tot1,fa[N],dd[N],lca[N],que1[N],que2[N];//d[i]表示该节点到根节点的距离，fa是父亲节点
+bool ff[N];
+struct EDGE
+{
+        int to,v,next;
+};
+EDGE a[N];
+struct QUES
+{
+        int to,nu,next;
+};
+QUES b[N];
+
+void add_edge(int x,int y,int value)
+{
+        a[++tot].to=y;//这条边到哪个点
+        a[tot].v=value;//这条边的长度
+        a[tot].next=edge[x];//与这条边有相同初始点的上一条边编号 
+        edge[x]=tot;//更新
+}
+void add_question(int x,int y,int number)
+{
+        b[++tot1].to=y;//询问点编号
+        b[tot1].nu=number;
+        b[tot1].next=question[x];
+        question[x]=tot1;
+}
+
+int get (int x)
+{
+        if (fa[x]==x) return x;
+        return fa[x]=get(fa[x]);
+}//并查集
+
+void tarjan(int x)
+{
+        fa[x]=x;//将父节点指向自己
+        ff[x]=true;//标记该点已经走过
+        for(int i=question[x]; i; i=b[i].next)
+        {
+                int now=b[i].to;
+                if(ff[now])
+                        lca[b[i].nu]=get(now);//更新lca
+        }
+        for(int i=edge[x]; i; i=a[i].next)
+        {
+                int now=a[i].to;
+                if(!ff[now])
+                {
+                        dd[now]=dd[x]+a[i].v;//更新dd
+                        tarjan(now);
+                        fa[now]=x;//更新父节点
+                }
+        }
+}
+int main()
+{
+        int tt;
+        cin &gt;&gt; tt;
+        while (tt--)
+        {
+                int n,m;
+                cin &gt;&gt; n &gt;&gt; m;
+                memset(ff,false,sizeof(ff));
+                memset(edge,0,sizeof(edge));
+                memset(question,0,sizeof(question));
+                memset(a,0,sizeof(a));
+                memset(b,0,sizeof(b));
+                memset(dd,0,sizeof(dd));
+                memset(fa,0,sizeof(fa));
+                for (int i=1; i&lt;=n; i++) fa[i]=i;
+                tot=0; tot1=0;//预处理
+                for(int i=1; i&lt;=n-1; i++)
+                {
+                        int aa,bb,cc;
+                        scanf(&quot;%d%d%d&quot;,&amp;aa,&amp;bb,&amp;cc);
+                        add_edge(aa,bb,cc);
+                        add_edge(bb,aa,cc);
+                }//建树
+                for(int i=1; i&lt;=m; i++)
+                {
+                        int aa,bb;
+                        scanf(&quot;%d%d&quot;,&amp;aa,&amp;bb);
+                        add_question(aa,bb,i);
+                        add_question(bb,aa,i);//安全一点存两次
+                        que1[i]=aa,que2[i]=bb;
+                }
+                tarjan(1);
+                for (int i=1; i&lt;=m; i++)
+                        printf(&quot;%d\n&quot;,dd[que1[i]]+dd[que2[i]]-2*dd[lca[i]]);
+        }
+}
+</code></pre>
+<h2 id="树的重心"><strong>树的重心</strong></h2>
+<h3 id="定义-2"><strong>定义：</strong></h3>
+<p>对于一棵树n个节点的无根树，找到一个点，将无根树变为以该点为根的有根树时，最大子树的结点数最小。换句话说，删除这个 1 点后最大连通块（一定是树）的结点数最小。</p>
+<h3 id="sol"><strong>Sol</strong></h3>
+<p>用大法师计算每个子树大小，利用<code>总点数 - 当前子树</code>的大小得到“向上”的子树的大小，然后就可以依据定义找到重心了。</p>
+<h3 id="code-4"><strong>Code</strong></h3>
+<pre><code class="language-c++">#include &lt;algorithm&gt;
+#include &lt;iostream&gt;
+#include &lt;cstdlib&gt;
+#include &lt;cstring&gt;
+#include &lt;cstdio&gt;
+#include &lt;cmath&gt;
+#define LL long long
+#define inf 2147483640
+#define Pi acos(-1.0)
+#define free(a) freopen(a &quot;.in&quot;,&quot;r&quot;,stdin),freopen(a &quot;.out&quot;,&quot;w&quot;,stdout);
+using namespace std;
+
+const int maxn=20010;
+struct edge {int to,next;} e[maxn&lt;&lt;2];
+
+int head[maxn],vis[maxn],son[maxn],cnt,size,ans,n;
+
+void insert(int u,int v) {
+        e[++cnt].to=v; e[cnt].next=head[u]; head[u]=cnt;
+        e[++cnt].to=u; e[cnt].next=head[v]; head[v]=cnt;
+}
+void dfs(int x) {
+        vis[x]=1,son[x]=0;
+        int tmp=0;
+        for (int i=head[x]; i; i=e[i].next) if (!vis[e[i].to]) {
+                        dfs(e[i].to);
+                        son[x]+=son[e[i].to]+1;
+                        tmp=max(tmp,son[e[i].to]+1);
+                }
+        tmp=max(tmp,n-son[x]-1);
+        if (tmp&lt;size || (tmp==size &amp;&amp; x&lt;ans)) size=tmp,ans=x;
+}
+int main() {
+        int T; scanf(&quot;%d&quot;,&amp;T);
+        while (T--) {
+                scanf(&quot;%d&quot;,&amp;n);
+                memset(vis,0,sizeof(vis)); memset(head,0,sizeof(head));
+                cnt=ans=0; size=inf;
+                for (int i=1; i&lt;n; i++) {
+                        int u,v;
+                        scanf(&quot;%d%d&quot;,&amp;u,&amp;v);
+                        insert(u,v);
+                }
+                dfs(1);
+                printf(&quot;%d %d\n&quot;,ans,size);
+        }
+        return 0;
+}
+</code></pre>
 
             </div>
             <hr style="width: 80%;">
@@ -1238,36 +1404,24 @@ signed main()
             <div class="postfooter">
                 <ul class="post-copyright">
                     <li><strong>文章作者：</strong>chuzihang714</li>
-            <li><strong>原文链接：</strong>https://chuzihang714.github.io/post/oi-xian-duan-shu-bi-ji/</li>
+            <li><strong>原文链接：</strong>https://chuzihang714.github.io/post/shu-shang-wen-ti-bi-ji/</li>
             <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用<i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA
                 许可协议。转载请注明出处！</li>
             </ul>
         </div>
         <div id="otherpost">
             
-            <a  data-pjax class="prev-post-pc" href="https://chuzihang714.github.io/post/zheng-huo-chuzihang714-yu-nottttttthy-de-du-fa/"  style="color: black;">
-                <div id="ppcontainer">
-                    
-                    <img src="https://img.imgdb.cn/item/60573d558322e6675cf7a1d6.jpg" style="width: 100%;" class="opimg">
-                    
-                    <h4 class="optitle">【整活】“chuzihang714” 与 “nottttttthy的读法”</h4>
-                </div>
-            </a>
-            <div class="prev-post">
-                上一篇 <a  data-pjax href="https://chuzihang714.github.io/post/zheng-huo-chuzihang714-yu-nottttttthy-de-du-fa/">【整活】“chuzihang714” 与 “nottttttthy的读法”</a>
-            </div>
             
-            
-            <a data-pjax class="next-post-pc" href="https://chuzihang714.github.io/post/ying-pian-xin-de-le-de-ming-dan/"  style="color: black;">
+            <a data-pjax class="next-post-pc" href="https://chuzihang714.github.io/post/oi/"  style="color: black;">
                 <div id="npcontainer">
                     
-                    <img src="https://img.imgdb.cn/item/60543369524f85ce29fc7701.jpg" style="width: 100%;" class="opimg">
+                    <img src="https://img.imgdb.cn/item/605db71c8322e6675c7aa0b4.jpg" style="width: 100%;" class="opimg">
                     
-                    <h4 class="optitle">【影片】辛德勒的名单</h4>
+                    <h4 class="optitle">【OI】膜你赛3.26小结</h4>
                 </div>
             </a>
             <div class="next-post">
-                下一篇 <a  data-pjax href="https://chuzihang714.github.io/post/ying-pian-xin-de-le-de-ming-dan/">【影片】辛德勒的名单</a>
+                下一篇 <a  data-pjax href="https://chuzihang714.github.io/post/oi/">【OI】膜你赛3.26小结</a>
             </div>
             
         </div>
@@ -1290,9 +1444,34 @@ signed main()
                         <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E7%94%A8%E6%B3%95">用法</a></li>
-<li><a href="#%E8%BF%87%E7%A8%8B">过程</a></li>
-<li><a href="#%E6%9D%BF%E5%AD%90code">板子code</a></li>
+<li><a href="#%E5%AE%9A%E4%B9%89"><strong>定义：</strong></a></li>
+<li><a href="#%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84"><strong>树的直径</strong></a>
+<ul>
+<li><a href="#sol1"><strong>sol1</strong></a>
+<ul>
+<li><a href="#%E8%AF%81%E6%98%8E"><strong>证明：</strong></a></li>
+<li><a href="#code"><strong>Code</strong></a></li>
+</ul>
+</li>
+<li><a href="#sol2"><strong>sol2</strong></a>
+<ul>
+<li><a href="#code-2"><strong>Code</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#lca%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88"><strong>LCA最近公共祖先</strong></a>
+<ul>
+<li><a href="#code-3"><strong>Code</strong></a></li>
+</ul>
+</li>
+<li><a href="#%E6%A0%91%E7%9A%84%E9%87%8D%E5%BF%83"><strong>树的重心</strong></a>
+<ul>
+<li><a href="#%E5%AE%9A%E4%B9%89-2"><strong>定义：</strong></a></li>
+<li><a href="#sol"><strong>Sol</strong></a></li>
+<li><a href="#code-4"><strong>Code</strong></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
