@@ -2,10 +2,15 @@
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
-    <meta name="description" content="4.2
-T4
-Idea
-不难看出，这是一道 dpdpdp 题，但是发现求没被激活的集合数有点难？怎么办？我们可以求出被激活的集合数（因为其是一一对应的）。又因为每个机器人被激活后会激活后面的一系列机器人，那么我们就只需要将这个机器人和它所能..." />
+    <meta name="description" content="3.31
+T1
+导弹拦截魔改...简单的 dpdpdp 可我竟然调了1hour...
+Code
+简单题不放了
+T2
+每次找中间的 l 然后往两边搜，若不能匹配再减一下就好...
+Code
+#include&lt;bits/stdc++.h&..." />
     <meta name="keywords" content="模拟赛,题解" />
     <link rel="stylesheet" href="https://chuzihang714.github.io/media/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://chuzihang714.github.io/styles/main.css">
@@ -256,6 +261,11 @@ Idea
     <div id="side-posttitle" style="display: none;">
         
     
+    【杂】
+    <script>postsnum += 1</script>
+    
+    
+    
     【OI】3.31/4.2膜你赛总结
     <script>postsnum += 1</script>
     
@@ -311,7 +321,7 @@ Idea
     
     
     
-    【杂】一些好图
+    【杂】一首很真实的曲子
     <script>postsnum += 1</script>
     
     
@@ -343,7 +353,7 @@ Idea
         <a onclick="showAaplayer()"><i style="font-size: 20px;"><img
                     src='https://chuzihang714.github.io/media/images/music.png' alt="音乐播放器" class="musicbtn"></i></a>
         <div class="avatar-border">
-            <img src="https://chuzihang714.github.io/images/avatar.png?v=1617335514325" class="avatar">
+            <img src="https://chuzihang714.github.io/images/avatar.png?v=1617706218874" class="avatar">
         </div>
         <div class="sitename">chuzihang714&#39;s blog</div>
         <span class="describtion" data-text='["At its summit goodbye."]'>&nbsp;</span>
@@ -692,7 +702,7 @@ Idea
                 <img src="' + talks[i].img + '" class="talkimg"> \
                 <div class="ainfo">\
                     <div class="ainfo-intro">\
-                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1617335514325">\
+                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1617706218874">\
                         <div class="author">' + talks[i].author + '</div>·\
                         <div class="time">' + talks[i].time + '</div>\
                     </div>\
@@ -705,7 +715,7 @@ Idea
             <div class="talk" v-for="t in talks"> \
                 <div class="ainfo">\
                     <div class="ainfo-intro">\
-                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1617335514325">\
+                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1617706218874">\
                         <div class="author">' + talks[i].author + '</div>·\
                         <div class="time">' + talks[i].time + '</div>\
                     </div>\
@@ -1082,7 +1092,7 @@ Idea
             </div>
             <div class="postinfo-detail">
                 <div class="postdate"><i class="fa fa-calendar"></i>2021-04-02</div>
-                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 4 min read</div>
+                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 7 min read</div>
                 <div class="posttag">
                     
                     <a data-pjax href="https://chuzihang714.github.io/tag/YVbwvfuYL/" class="postlink">
@@ -1108,20 +1118,134 @@ Idea
                 </span>
             </div>
             <div class="text ">
-                <h2 id="42"><strong>4.2</strong></h2>
-<h3 id="t4"><strong>T4</strong></h3>
-<h4 id="idea"><strong>Idea</strong></h4>
-<p>不难看出，这是一道 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">dp</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span></span></span></span> 题，但是发现求没被激活的集合数有点难？怎么办？我们可以求出被激活的集合数（因为其是一一对应的）。又因为每个机器人被激活后会激活后面的一系列机器人，那么我们就只需要将这个机器人和它所能激活的一系列机器人缩到一起就可以了。<br>
-我们先定义 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>o</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">to[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 为激活第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 个机器人后至 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>o</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">to[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 个都会被激活。</p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">dp</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span></span></span></span>方程也很好推：<br>
-<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>i</mi><mo separator="true">,</mo><mn>0</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">f[i,0]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mclose">]</span></span></span></span> 表示<strong>不激活</strong>机器人 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 时 机器人 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 后的集合数。<br>
-<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>i</mi><mo separator="true">,</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">f[i,1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span> 表示<strong>激活</strong>机器人 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 是 机器人 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 后的集合数。<br>
-那么<br>
-<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>i</mi><mo separator="true">,</mo><mn>0</mn><mo>]</mo><mo>=</mo><mi>f</mi><mo>[</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo separator="true">,</mo><mn>0</mn><mo>]</mo><mo>+</mo><mi>f</mi><mo>[</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">f[i,0]=f[i+1,0]+f[i+1,1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span><br>
-<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>i</mi><mo separator="true">,</mo><mn>1</mn><mo>]</mo><mo>=</mo><mi>f</mi><mo>[</mo><mi>t</mi><mi>o</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo separator="true">,</mo><mn>0</mn><mo>]</mo><mo>+</mo><mi>f</mi><mo>[</mo><mi>t</mi><mi>o</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo separator="true">,</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">f[i,1]=f[to[i],0]+f[to[i],1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span></p>
-<p>那么接下来的问题就是如何求 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>o</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">to[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 了，这也很好办，二分一下然后用线段树查找一下最值即可。（别问为什么用线段树，问就是这几星期学图论锻炼一下线段树能力）</p>
-<p>最后答案就是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mn>1</mn><mo separator="true">,</mo><mn>0</mn><mo>]</mo><mo>+</mo><mi>f</mi><mo>[</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">f[1,0]+f[1,1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span></p>
+                <h2 id="331"><strong>3.31</strong></h2>
+<h3 id="t1"><strong>T1</strong></h3>
+<p>导弹拦截魔改...简单的 <big><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">dp</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span></span></span></span></big> 可我竟然调了1hour...</p>
 <h4 id="code"><strong>Code</strong></h4>
+<p>简单题不放了</p>
+<h3 id="t2"><strong>T2</strong></h3>
+<p>每次找中间的 <big><code>l</code></big> 然后往两边搜，若不能匹配再减一下就好...</p>
+<h4 id="code-2"><strong>Code</strong></h4>
+<pre><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long ll;
+
+inline ll read()
+{
+								ll a=0,f=1;
+								char ch=getchar();
+								for(; !isdigit(ch); ch=getchar())
+																if(ch=='-') f=-1;
+								for(; isdigit(ch); ch=getchar())
+																a=(a&lt;&lt;3)+(a&lt;&lt;1)+ch-'0';
+								return a*f;
+}
+
+const ll mod=1e9+7;
+const int N=1e6+5;
+long long num1,num2,n,num,ans;
+
+inline ll qpow(ll a,ll n)
+{
+								ll ans=1;
+								for(; n; n&gt;&gt;=1)
+								{
+																if(n&amp;1) ans=(ans*a)%mod;
+																a=(a*a)%mod;
+								}
+								return ans;
+}
+
+signed main()
+{
+								freopen(&quot;jiangge.in&quot;,&quot;r&quot;,stdin);
+								freopen(&quot;jiangge.out&quot;,&quot;w&quot;,stdout);
+								n=read();
+								for(int i=1; i&lt;=n; i++)
+								{
+																char ch=getchar();
+																if(ch=='b') ans =( ans+num2)%mod;
+																else if(ch=='l') num2=(num2+num1)%mod;
+																else if(ch=='a') num1=(num1+qpow(3,num))%mod;
+																else if(ch=='?')
+																{
+																								ans =(ans*3%mod+num2)%mod;
+																								num2=(num2*3%mod+num1)%mod;
+																								num1=(num1*3%mod+qpow(3,num))%mod;
+																								num++; num%=mod;
+																}
+//		printf(&quot;%lld---&gt;%lld---&gt;%lld\n&quot;,num1,num2,ans);
+//		if(num1&lt;0)break;
+								}
+								printf(&quot;%lld\n&quot;,(ans+mod)%mod);
+								return 0;
+}
+/*
+   600849148
+ */
+</code></pre>
+<h3 id="t4"><strong>T4</strong></h3>
+<p>原本以为这题很难...实则有一种很水的解法可以卡过去（原题可过，比赛题时间复杂度是wa的）<br>
+就是先将序列变成差值序列，然后找一个序列，枚举左端点，取一个匹配到的最短的序列再和答案取个max即可。</p>
+<h4 id="code-3"><strong>Code</strong></h4>
+<pre><code class="language-c++">#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#define int long long
+using namespace std;
+const int N=1e3+10;
+int n,m[N],a[N][N],ans,i,j,l,r,maxx,p,rr;
+signed main()
+{
+        cin &gt;&gt; n;
+        for(i=1; i&lt;=n; i++)
+        {
+                cin &gt;&gt; m[i];
+                for(j=1; j&lt;=m[i]; j++)
+                        scanf(&quot;%lld&quot;,&amp;a[i][j]);
+                m[i]--;
+                if(m[i]==0) {puts(&quot;1&quot;); return 0;}
+                for(j=1; j&lt;=m[i]; j++)
+                        a[i][j]=a[i][j+1]-a[i][j];
+        }
+        for(l=1; l&lt;=m[1]; l++)
+        {
+                r=m[1];
+                for(i=2; i&lt;=n; i++)
+                {
+                        maxx=0;
+                        for(j=1; j&lt;=m[i]; j++)
+                        {
+                                if(a[i][j]==a[1][l])
+                                {
+                                        p=j,rr=l;
+                                        while(a[i][p]==a[1][rr] &amp;&amp; p&lt;=m[i] &amp;&amp; rr&lt;=r)
+                                                rr++,p++;
+                                        maxx=max(maxx,rr-1);
+                                }
+                        }
+                        r=min(r,maxx);
+                }
+                ans=max(ans,r-l+1);
+        }
+        cout&lt;&lt;ans+1;
+}
+
+</code></pre>
+<h2 id="42"><strong>4.2</strong></h2>
+<h3 id="t4-2"><strong>T4</strong></h3>
+<h4 id="idea"><strong>Idea</strong></h4>
+<p>不难看出，这是一道 <big><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">dp</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span></span></span></span> </big>题，但是发现求没被激活的集合数有点难？怎么办？我们可以求出被激活的集合数（因为其是一一对应的）。又因为每个机器人被激活后会激活后面的一系列机器人，那么我们就只需要将这个机器人和它所能激活的一系列机器人缩到一起就可以了。<br>
+我们先定义  <big> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>o</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">to[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> </big>为激活第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 个机器人后至 <big><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>o</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">to[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span></big> 个都会被激活。</p>
+<p><big><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">dp</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span></span></span></span></big>方程也很好推：<br>
+<big><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>i</mi><mo separator="true">,</mo><mn>0</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">f[i,0]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mclose">]</span></span></span></span></big> 表示<strong>不激活</strong>机器人 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 时 机器人 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 后的集合数。<br>
+<big><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>i</mi><mo separator="true">,</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">f[i,1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span></big> 表示<strong>激活</strong>机器人 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 是 机器人 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 后的集合数。<br>
+那么<br>
+<big><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>i</mi><mo separator="true">,</mo><mn>0</mn><mo>]</mo><mo>=</mo><mi>f</mi><mo>[</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo separator="true">,</mo><mn>0</mn><mo>]</mo><mo>+</mo><mi>f</mi><mo>[</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">f[i,0]=f[i+1,0]+f[i+1,1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span></big><br>
+<big><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mi>i</mi><mo separator="true">,</mo><mn>1</mn><mo>]</mo><mo>=</mo><mi>f</mi><mo>[</mo><mi>t</mi><mi>o</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo separator="true">,</mo><mn>0</mn><mo>]</mo><mo>+</mo><mi>f</mi><mo>[</mo><mi>t</mi><mi>o</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo separator="true">,</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">f[i,1]=f[to[i],0]+f[to[i],1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span></big></p>
+<p>那么接下来的问题就是如何求 <big><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>o</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">to[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span></big> 了，这也很好办，二分一下然后用线段树查找一下最值即可。（别问为什么用线段树，问就是这几星期学图论锻炼一下线段树能力）</p>
+<p>最后答案就是 <big><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>[</mo><mn>1</mn><mo separator="true">,</mo><mn>0</mn><mo>]</mo><mo>+</mo><mi>f</mi><mo>[</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">f[1,0]+f[1,1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span></big></p>
+<h4 id="code-4"><strong>Code</strong></h4>
 <pre><code class="language-c++">#include &lt;cstdio&gt;
 #include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -1244,6 +1368,20 @@ signed main()
         </div>
         <div id="otherpost">
             
+            <a  data-pjax class="prev-post-pc" href="https://chuzihang714.github.io/post/za/"  style="color: black;">
+                <div id="ppcontainer">
+                    
+                    
+                    <img src="https://img.imgdb.cn/item/60543369524f85ce29fc7701.jpg" style="width: 100%;" class="opimg">
+                    
+                    
+                    <h4 class="optitle">【杂】</h4>
+                </div>
+            </a>
+            <div class="prev-post">
+                上一篇 <a  data-pjax href="https://chuzihang714.github.io/post/za/">【杂】</a>
+            </div>
+            
             
             <a data-pjax class="next-post-pc" href="https://chuzihang714.github.io/post/shu-shang-wen-ti-bi-ji/"  style="color: black;">
                 <div id="npcontainer">
@@ -1277,12 +1415,31 @@ signed main()
                         <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#42"><strong>4.2</strong></a>
+<li><a href="#331"><strong>3.31</strong></a>
 <ul>
+<li><a href="#t1"><strong>T1</strong></a>
+<ul>
+<li><a href="#code"><strong>Code</strong></a></li>
+</ul>
+</li>
+<li><a href="#t2"><strong>T2</strong></a>
+<ul>
+<li><a href="#code-2"><strong>Code</strong></a></li>
+</ul>
+</li>
 <li><a href="#t4"><strong>T4</strong></a>
 <ul>
+<li><a href="#code-3"><strong>Code</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#42"><strong>4.2</strong></a>
+<ul>
+<li><a href="#t4-2"><strong>T4</strong></a>
+<ul>
 <li><a href="#idea"><strong>Idea</strong></a></li>
-<li><a href="#code"><strong>Code</strong></a></li>
+<li><a href="#code-4"><strong>Code</strong></a></li>
 </ul>
 </li>
 </ul>
