@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://chuzihang714.github.io</id>
     <title>chuzihang714&apos;s blog</title>
-    <updated>2021-04-13T02:48:15.773Z</updated>
+    <updated>2021-04-13T10:33:51.960Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://chuzihang714.github.io"/>
     <link rel="self" href="https://chuzihang714.github.io/atom.xml"/>
@@ -10,6 +10,63 @@
     <logo>https://chuzihang714.github.io/images/avatar.png</logo>
     <icon>https://chuzihang714.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, chuzihang714&apos;s blog</rights>
+    <entry>
+        <title type="html"><![CDATA[【OI】题解P7371 [COCI2018-2019#4] Kisik]]></title>
+        <id>https://chuzihang714.github.io/post/oi-ti-jie/</id>
+        <link href="https://chuzihang714.github.io/post/oi-ti-jie/">
+        </link>
+        <updated>2021-04-13T10:30:11.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="sol">Sol</h2>
+<p>简化一下题目：给你 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 个楼房每个楼房有个宽度和一个高度，要你在这 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 栋楼中选 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span> 个然后用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 个空气将其填充为一个矩形，要求最小的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>。</p>
+<p>我们简单一想，欸，贪心嘛。</p>
+<p>怎么贪？选 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span> 个的话宽度就是这 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span> 个宽度的和，而高度就是这 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span> 个中高度最大的值。那我们就只要先按这些楼房的高度排序，然后求出每个高度下最小的宽度，将两者的乘积与答案取 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">min</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span></span></span></span> 就可以了。</p>
+<p>如何维护最小值？用优先队列就可以了。</p>
+<h3 id="tips">Tips</h3>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mi>n</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">ans</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span></span></span></span> 开大点，否则会哇。</p>
+<h2 id="code">Code</h2>
+<pre><code class="language-c++">#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;queue&gt;
+#define int long long
+using namespace std;
+const int N = 1000001;
+priority_queue&lt;long long&gt; q;//双端队列
+int n,k,i,j,ans,s;
+struct stu
+{
+        int x,y;
+};
+stu a[N];
+bool cmp(stu x1, stu y1)
+{
+        return x1.y&lt;y1.y;
+}
+signed main()
+{
+        cin &gt;&gt; n &gt;&gt; k;
+        for (i=1; i&lt;=n; i++) cin &gt;&gt; a[i].x &gt;&gt; a[i].y;
+        sort(a+1,a+n+1,cmp);
+        for (i=1; i&lt;=k; i++)
+        {
+                s+=a[i].x;
+                q.push(a[i].x);
+        }
+        ans=1000000000000000000;
+        for (i=k; i&lt;=n; i++)
+        {
+                ans=min(ans,s*a[i].y);//与答案取min
+                s+=a[i+1].x;//s是宽度
+                q.push(a[i+1].x);
+                s-=q.top();//更新宽度
+                q.pop();
+        }
+        cout &lt;&lt; ans;
+}
+
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[【OI】关于求 n 阶行列式]]></title>
         <id>https://chuzihang714.github.io/post/za/</id>
@@ -851,65 +908,6 @@ signed main()
         end; 
 </code></pre>
 <p>八格缩进有点难看请见谅。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【OI】题解 P6495 [COCI2016-2017#2] Tavan]]></title>
-        <id>https://chuzihang714.github.io/post/oi-ti-jie-p6495-coci2016-20172-tavan/</id>
-        <link href="https://chuzihang714.github.io/post/oi-ti-jie-p6495-coci2016-20172-tavan/">
-        </link>
-        <updated>2021-03-19T12:53:35.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="sol">Sol:</h2>
-<p>是一道简单的<strong>字符串</strong>题。</p>
-<p>题目大意：给你一个由 <code>#</code> 与小写字母组成的字符串，每个 <code>#</code> 有 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span> 种字母可填，试求所有方案字典序排列后的第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 种方案。</p>
-<p>因为是按字典序排列，所以我们可以将 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span></span></span></span> 个长度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span> 的字符串<strong>一一排序</strong>。然后找每个待更新的 <code>#</code> 要更新的字符的位置，最后更新字符串即可。</p>
-<p>建议黄。</p>
-<h2 id="code">Code:</h2>
-<pre><code class="language-cpp">#include &lt;cmath&gt;
-#include &lt;queue&gt;
-#include &lt;cstdio&gt;
-#include &lt;algorithm&gt;
-#include &lt;iostream&gt;
-#define int long long
-using namespace std;
-int x,m,k,n,kk,kkk;
-int a[501],d[501];
-char s[501],ss[501][501];
-
-signed main()
-{
-        cin &gt;&gt; n &gt;&gt; m &gt;&gt; k &gt;&gt; x;
-        x--;
-        kk=0;
-        scanf(&quot;%s&quot;,s+1);
-        for(int i=1; i&lt;=n; i++)
-                if(s[i]=='#')
-                        d[kk++]=i;//d数组表示#的位置。
-
-        for(int i=0; i&lt;m; i++)
-        {
-                scanf(&quot;%s&quot;,ss[i]);
-                sort(ss[i],ss[i]+k);
-        }//因为按字典序，所以要排序。
-
-        kk=0; kkk=1;//kkk就是位值。
-        while(kkk*k&lt;=x)
-                kkk=k*kkk,kk++;
-
-        while(x &amp;&amp; kk&gt;=0)
-        {
-                a[kk]=x/kkk;//a数组表示在ss[i]中取第几位字符。
-                x-=a[kk--]*kkk;
-                kkk/=k;
-        }
-
-        for(int i=0; i&lt;m; i++)
-                s[d[i]]=ss[i][a[m-i-1]];//更新字符串。
-                
-        puts(s+1);
-}
-
-</code></pre>
 ]]></content>
     </entry>
 </feed>
