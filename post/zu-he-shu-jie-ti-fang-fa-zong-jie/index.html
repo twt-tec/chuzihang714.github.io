@@ -363,7 +363,7 @@
         <a onclick="showAaplayer()"><i style="font-size: 20px;"><img
                     src='https://chuzihang714.github.io/media/images/music.png' alt="音乐播放器" class="musicbtn"></i></a>
         <div class="avatar-border">
-            <img src="https://chuzihang714.github.io/images/avatar.png?v=1619761237481" class="avatar">
+            <img src="https://chuzihang714.github.io/images/avatar.png?v=1620036869296" class="avatar">
         </div>
         <div class="sitename">chuzihang714&#39;s blog</div>
         <span class="describtion" data-text='["At its summit goodbye."]'>&nbsp;</span>
@@ -712,7 +712,7 @@
                 <img src="' + talks[i].img + '" class="talkimg"> \
                 <div class="ainfo">\
                     <div class="ainfo-intro">\
-                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1619761237481">\
+                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1620036869296">\
                         <div class="author">' + talks[i].author + '</div>·\
                         <div class="time">' + talks[i].time + '</div>\
                     </div>\
@@ -725,7 +725,7 @@
             <div class="talk" v-for="t in talks"> \
                 <div class="ainfo">\
                     <div class="ainfo-intro">\
-                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1619761237481">\
+                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1620036869296">\
                         <div class="author">' + talks[i].author + '</div>·\
                         <div class="time">' + talks[i].time + '</div>\
                     </div>\
@@ -1244,7 +1244,7 @@ signed main()
                 if (y&amp;1) res=(res*x)%mod;
         }
         return res;
-}
+}//快速幂
 
 void init()
 {
@@ -1253,14 +1253,14 @@ void init()
 
         inv[n]=quick_power(jc[n],mod-2);
         for (int i=n-1; i&gt;=0; i--) inv[i]=(inv[i+1]*(i+1))%mod;
-}
+}//初始化
 
 int C(int x,int y)
 {
         if (y==0) return 1;
         if (x&lt;y) return 0;
         return ((jc[x]*inv[y])%mod*inv[x-y])%mod;
-}
+}//求C
 </code></pre>
 <p><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathsize="1.2em"><mrow><mi>T</mi><mi>h</mi><mi>e</mi><mtext> </mtext><mi>e</mi><mi>n</mi><mi>d</mi><mi mathvariant="normal">.</mi></mrow></mstyle></mrow><annotation encoding="application/x-tex">\large{The \ end.}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.833328em;vertical-align:0em;"></span><span class="mord sizing reset-size6 size7"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">h</span><span class="mord mathdefault">e</span><span class="mspace"> </span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mord">.</span></span></span></span></span></strong></p>
 
