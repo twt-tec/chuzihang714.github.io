@@ -2,25 +2,12 @@
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
-    <meta name="description" content="
-
-本博客包含题解，总结，和一些奇奇怪怪的东西（如：一些好图，好句等，也可点右下角实时聊天）。
-
-想要快速精确查找请搜索
-
-题解......
-好句......
-好图......
-好诗......
-等等
-
-
-也可按文章种类筛选：
-
-OI
-杂
-..." />
-    <meta name="keywords" content="定更,Gridea" />
+    <meta name="description" content="我们可以用 tarjantarjantarjan 来求。
+具体见代码，主要怕以后忘了对塔尖的深度的理解才写这篇blog。
+例题：P2341 [USACO03FALL][HAOI2006]受欢迎的牛 G
+/*
+1.dfn，表示这个点在dfs时..." />
+    <meta name="keywords" content="笔记,luogu" />
     <link rel="stylesheet" href="https://chuzihang714.github.io/media/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://chuzihang714.github.io/styles/main.css">
     
@@ -1117,19 +1104,19 @@ OI
         <div class="postshow postpadding" style="padding-bottom: 0;">
             
             <div class="postdetailimg">
-                <img src="https://img.imgdb.cn/item/6057d5698322e6675c3d7b83.jpg" class="postimage" style="cursor:auto">
+                <img src="https://pic.imgdb.cn/item/609a7d7ad1a9ae528ff5fe38.jpg" class="postimage" style="cursor:auto">
             </div>
             <div class="postinfo-detail">
-                <div class="postdate"><i class="fa fa-calendar"></i>2018-12-12</div>
-                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 1 min read</div>
+                <div class="postdate"><i class="fa fa-calendar"></i>2021-05-11</div>
+                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 3 min read</div>
                 <div class="posttag">
                     
-                    <a data-pjax href="https://chuzihang714.github.io/tag/ZFCuHfpre/" class="postlink">
-                        <i class="fa fa-tag"></i> 定更
+                    <a data-pjax href="https://chuzihang714.github.io/tag/gdmiEn7kC/" class="postlink">
+                        <i class="fa fa-tag"></i> 笔记
                     </a>
                     
-                    <a data-pjax href="https://chuzihang714.github.io/tag/CuMwABn7E/" class="postlink">
-                        <i class="fa fa-tag"></i> Gridea
+                    <a data-pjax href="https://chuzihang714.github.io/tag/P7qZKKyVW/" class="postlink">
+                        <i class="fa fa-tag"></i> luogu
                     </a>
                     
                 </div>
@@ -1137,9 +1124,9 @@ OI
             
         <div id="articlecontent">
             <div id="texttitle" style="text-align: center">
-                <h2 id="ptitle">Hello Gridea导航页</h2>
+                <h2 id="ptitle">【OI】关于强连通分量</h2>
                 <!-- id 将作为查询条件 -->
-                <div id="pl" style="display:none">https://chuzihang714.github.io/post/hello-gridea/</div>
+                <div id="pl" style="display:none">https://chuzihang714.github.io/post/oi-guan-yu-qiang-lian-tong-fen-liang/</div>
                 <div id="rootaddr" style="display:none">https://chuzihang714.github.io</div>
                 <span id="hotnum">
                     <h4><i class="fa fa-eye" aria-hidden="true" style="color: #FF8C00;"></i>&nbsp;&nbsp;热度</i>: <i
@@ -1147,35 +1134,83 @@ OI
                 </span>
             </div>
             <div class="text ">
-                <!-- more -->
-<!-- more -->
-<p>本博客包含题解，总结，和一些奇奇怪怪的东西（如：一些好图，好句等，也可点右下角实时聊天）。</p>
-<!-- more -->
-<h3 id="想要快速精确查找请搜索">想要快速精确查找请搜索</h3>
-<ol>
-<li>题解......</li>
-<li>好句......</li>
-<li>好图......</li>
-<li>好诗......</li>
-<li>等等</li>
-</ol>
-<!-- more -->
-<h3 id="也可按文章种类筛选">也可按文章种类筛选：</h3>
-<ol>
-<li>OI</li>
-<li>杂</li>
-<li>影片</li>
-</ol>
-<!-- more -->
-<h3 id="在这里推广一下本公司">在这里推广一下本公司：</h3>
-<p><a href="https://twt-tec.github.io/"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathcolor="red"><mtext>twt-tec</mtext></mstyle></mrow><annotation encoding="application/x-tex">\text{\color{red}twt-tec}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord text"><span class="mord" style="color:red;">twt-tec</span></span></span></span></span></a></p>
-<h3 id="补充">补充：</h3>
-<ol>
-<li>使用即时聊天功能时请先备注你是谁。</li>
-<li>不知道为什么换页的东西崩了，不可以点 <strong>1，2</strong> 切换，只能点 <strong>上一页，下一页</strong> ...</li>
-</ol>
-<!-- more -->
-<p>😘 Enjoy~</p>
+                <p>我们可以用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>a</mi><mi>r</mi><mi>j</mi><mi>a</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">tarjan</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span></span></span></span> 来求。<br>
+具体见代码，主要怕以后忘了对塔尖的深度的理解才写这篇blog。<br>
+例题：P2341 [USACO03FALL][HAOI2006]受欢迎的牛 G</p>
+<pre><code class="language-c++">/*
+1.dfn，表示这个点在dfs时是第几个被搜到的。
+
+2.low, 表示这个点以及其子孙节点连的所有点中dfn最小的值
+
+3.stack, 表示当前所有可能能构成是强连通分量的点。
+
+4.vis, 表示一个点是否在stack数组中。
+*/
+#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+using namespace std;
+const int N = 50001;
+int n,m,dfn[N],low[N],vis[N],color[N], c[N], head[N],n_m[N],top,num,sum,tot,stack[N];
+struct Edge
+{
+        int to,next;
+};
+Edge e[N];
+void add(int a, int b)
+{
+        e[++tot].to=b;
+        e[tot].next=head[a];
+        head[a]=tot;
+}
+void tarjan(int u)
+{
+        low[u]=dfn[u]=++sum;//初始化，在开始时先使low[i]=dfn[i]
+        stack[++top]=u; vis[u] = 1;//初始化
+        for (int i=head[u]; i; i=e[i].next)
+        {
+                int v=e[i].to;
+                if (dfn[v]) {if (vis[v]) low[u]=min(low[v],low[u]); }
+                else tarjan(v),low[u]=min(low[v],low[u]);
+        }//遍历每个点，如果已经被搜到过了，就看它是否在stack中，如若是，则取min；没被搜到过就搜这个点，再取min
+
+        if (low[u]==dfn[u])//如果找到一个强连通分量
+        {
+                color[u]=++num; vis[u] = 0; c[num]= 1;//color将该强连通分量中所有点染成同色，c[i]表示这个强连通分量中有几个数
+                while (stack[top]!=u)
+                {
+                        c[num]++;
+                        vis[stack[top]] = 0;
+                        color[stack[top]]=num;
+                        --top;
+                }//将该强连通分量找完为止
+                --top;
+        }
+}
+int main()
+{
+        cin &gt;&gt; n &gt;&gt; m;
+        int a,b;
+        for (int i=1; i&lt;=m; i++) cin &gt;&gt; a &gt;&gt; b,add(a,b);//建边
+
+        for (int i=1; i&lt;=n; i++)
+                if (!dfn[i]) tarjan(i);//如果这个点还没有被搜到，那就对该点进行操作
+        for (int i=1; i&lt;=n; i++)
+                for (int j=head[i]; j; j=e[j].next)
+                {
+                        if (color[i]!=color[e[j].to]) n_m[color[i]]++;
+                }//遍历每个点，并统计出度
+        int ans=0,u=0;
+
+        for (int i=1; i&lt;=num; i++) if (!n_m[i]) ans=c[i],u++;
+        // cout &lt;&lt; u &lt;&lt; endl;
+        if (u==1) cout &lt;&lt; ans;
+        else cout &lt;&lt; 0;
+        return 0;
+}
+
+</code></pre>
 
             </div>
             <hr style="width: 80%;">
@@ -1213,25 +1248,25 @@ OI
             <div class="postfooter">
                 <ul class="post-copyright">
                     <li><strong>文章作者：</strong>chuzihang714</li>
-            <li><strong>原文链接：</strong>https://chuzihang714.github.io/post/hello-gridea/</li>
+            <li><strong>原文链接：</strong>https://chuzihang714.github.io/post/oi-guan-yu-qiang-lian-tong-fen-liang/</li>
             <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用<i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA
                 许可协议。转载请注明出处！</li>
             </ul>
         </div>
         <div id="otherpost">
             
-            <a  data-pjax class="prev-post-pc" href="https://chuzihang714.github.io/post/luo-gu-ti-jie-p6418-coci2014-20151-zabava/"  style="color: black;">
-                <div id="ppcontainer">
+            
+            <a data-pjax class="next-post-pc" href="https://chuzihang714.github.io/post/zu-he-shu-jie-ti-fang-fa-zong-jie/"  style="color: black;">
+                <div id="npcontainer">
                     
-                    <img src="https://img.imgdb.cn/item/60549ff6524f85ce293eb1cf.jpg" style="width: 100%;" class="opimg">
+                    <img src="https://img.imgdb.cn/item/6081632d563420b64799989e.jpg" style="width: 100%;" class="opimg">
                     
-                    <h4 class="optitle">【OI】洛谷题解P6418 [COCI2014-2015#1] ZABAVA</h4>
+                    <h4 class="optitle">【OI】组合数解题方法总结</h4>
                 </div>
             </a>
-            <div class="prev-post">
-                上一篇 <a  data-pjax href="https://chuzihang714.github.io/post/luo-gu-ti-jie-p6418-coci2014-20151-zabava/">【OI】洛谷题解P6418 [COCI2014-2015#1] ZABAVA</a>
+            <div class="next-post">
+                下一篇 <a  data-pjax href="https://chuzihang714.github.io/post/zu-he-shu-jie-ti-fang-fa-zong-jie/">【OI】组合数解题方法总结</a>
             </div>
-            
             
         </div>
     </div>
@@ -1250,21 +1285,7 @@ OI
     $("#hotnum").attr('id', pl);
 </script>
                     <div class="toc-container">
-                        <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#%E6%83%B3%E8%A6%81%E5%BF%AB%E9%80%9F%E7%B2%BE%E7%A1%AE%E6%9F%A5%E6%89%BE%E8%AF%B7%E6%90%9C%E7%B4%A2">想要快速精确查找请搜索</a></li>
-<li><a href="#%E4%B9%9F%E5%8F%AF%E6%8C%89%E6%96%87%E7%AB%A0%E7%A7%8D%E7%B1%BB%E7%AD%9B%E9%80%89">也可按文章种类筛选：</a></li>
-<li><a href="#%E5%9C%A8%E8%BF%99%E9%87%8C%E6%8E%A8%E5%B9%BF%E4%B8%80%E4%B8%8B%E6%9C%AC%E5%85%AC%E5%8F%B8">在这里推广一下本公司：</a></li>
-<li><a href="#%E8%A1%A5%E5%85%85">补充：</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
+                        
                     </div>
                     <div class="tog">
                         <div class="toggleContainer">
