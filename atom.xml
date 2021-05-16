@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://chuzihang714.github.io</id>
     <title>chuzihang714&apos;s blog</title>
-    <updated>2021-05-11T12:50:42.571Z</updated>
+    <updated>2021-05-16T13:21:49.226Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://chuzihang714.github.io"/>
     <link rel="self" href="https://chuzihang714.github.io/atom.xml"/>
@@ -11,13 +11,73 @@
     <icon>https://chuzihang714.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, chuzihang714&apos;s blog</rights>
     <entry>
-        <title type="html"><![CDATA[【OI】关于强连通分量]]></title>
+        <title type="html"><![CDATA[【OI】关于st表]]></title>
+        <id>https://chuzihang714.github.io/post/oi-guan-yu-st-biao/</id>
+        <link href="https://chuzihang714.github.io/post/oi-guan-yu-st-biao/">
+        </link>
+        <updated>2021-05-16T13:13:36.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>是一个基础的数据结构。</strong><br>
+首先这种数据结构用到了倍增的思想，能够在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>N</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>N</mi><mo>+</mo><mi>M</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(N log N + M)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mclose">)</span></span></span></span> 的时间复杂度下求出最值。具体见代码注释：</p>
+<pre><code class="language-c++">/*
+lg:即log代表指数。
+f[i][j]:区间i~j中的最值（本体中为最大值）
+*/
+#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+using namespace std;
+const int N =1e5+1;
+int n,m,a[N],lg[N],f[N][51],l,r,len,sum;
+
+inline int read()
+{
+        int x=0,f=1; char ch=getchar();
+        while (!isdigit(ch)) {if (ch=='-') f=-1; ch=getchar();}
+        while (isdigit(ch)) {x=x*10+ch-48; ch=getchar();}
+        return x*f;
+}
+
+void init()
+{
+        for (int i=1; i&lt;=n; i++) lg[i]=lg[i/2]+1;//初始化指数
+        for (int i=1; i&lt;=n; i++) f[i][0]=a[i];//显然得出
+        for (int j=1; j&lt;=lg[n]; j++)
+                for (int i=1; i+(1&lt;&lt;j)-1&lt;=n; i++)
+                {
+                        f[i][j]=max(f[i][j-1],f[i+(1&lt;&lt;j-1)][j-1]);//公式
+                }
+}
+int main()
+{
+        n=read();
+        m=read();
+        for (int i=1; i&lt;=n; i++) a[i]=read();
+        memset(lg,-1,sizeof(lg));//指数要先设置为-1，在一些题目中要设为-inf
+        init();//初始化
+        while (m--)
+        {
+                l=read();
+                r=read();
+                len=lg[r-l+1];
+                sum=max(f[l][len],f[r-(1&lt;&lt;len)+1][len]);//查询
+                printf(&quot;%d\n&quot;,sum);
+        }
+}
+
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[【OI】关于一些图论]]></title>
         <id>https://chuzihang714.github.io/post/oi-guan-yu-qiang-lian-tong-fen-liang/</id>
         <link href="https://chuzihang714.github.io/post/oi-guan-yu-qiang-lian-tong-fen-liang/">
         </link>
         <updated>2021-05-11T12:34:50.000Z</updated>
-        <content type="html"><![CDATA[<p>我们可以用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>a</mi><mi>r</mi><mi>j</mi><mi>a</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">tarjan</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span></span></span></span> 来求。<br>
+        <content type="html"><![CDATA[<h2 id="强连通分量"><strong>强连通分量</strong></h2>
+<p>我们可以用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>a</mi><mi>r</mi><mi>j</mi><mi>a</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">tarjan</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span></span></span></span> 来求。<br>
 具体见代码，主要怕以后忘了对塔尖的深度的理解才写这篇blog。<br>
+具体细节见注释。<br>
 例题：P2341 [USACO03FALL][HAOI2006]受欢迎的牛 G</p>
 <pre><code class="language-c++">/*
 1.dfn，表示这个点在dfs时是第几个被搜到的。
@@ -89,6 +149,112 @@ int main()
         // cout &lt;&lt; u &lt;&lt; endl;
         if (u==1) cout &lt;&lt; ans;
         else cout &lt;&lt; 0;
+        return 0;
+}
+</code></pre>
+<hr>
+<h2 id="关于欧拉图"><strong>关于欧拉图</strong></h2>
+<p>通过图（无向图或有向图）中所有边且每边仅通过一次通路，这条路径称为欧拉路径，而相应的回路称为欧拉回路，具有欧拉回路的图称为欧拉图，具有欧拉通路而无欧拉回路的图称为半欧拉图。</p>
+<h3 id="某些定理"><strong>某些定理</strong></h3>
+<ol>
+<li>无向连通图 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">G</span></span></span></span> 是欧拉图，当且仅当 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">G</span></span></span></span> 不含奇数度结点( <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">G</span></span></span></span> 的所有结点度数为偶数)；</li>
+<li>无向连通图 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">G</span></span></span></span> 含有欧拉通路，当且仅当 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">G</span></span></span></span> 有零个或两个奇数度的结点；</li>
+<li>有向连通图 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi></mrow><annotation encoding="application/x-tex">D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span></span></span></span> 是欧拉图，当且仅当该图为连通图且 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi></mrow><annotation encoding="application/x-tex">D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span></span></span></span> 中每个结点的入度=出度；</li>
+<li>有向连通图 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi></mrow><annotation encoding="application/x-tex">D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span></span></span></span> 含有欧拉通路，当且仅当该图为连通图且 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi></mrow><annotation encoding="application/x-tex">D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span></span></span></span> 中除两个结点外，其余每个结点的入度=出度，起始点 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span></span></span></span> 的入度=出度-1，结束点 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span> 的出度=入度-1 或两个点的入度=出度；</li>
+<li>一个非平凡连通图是欧拉图当且仅当它的每条边属于奇数个环；</li>
+<li>如果图 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>G</mi></mrow><annotation encoding="application/x-tex">G</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">G</span></span></span></span> 是欧拉图且 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>H</mi><mo>=</mo><mi>G</mi><mo>−</mo><mi>u</mi><mi>v</mi></mrow><annotation encoding="application/x-tex">H = G-uv</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.08125em;">H</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">G</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span> ，则 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>H</mi></mrow><annotation encoding="application/x-tex">H</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.08125em;">H</span></span></span></span> 有奇数个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span> ,<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span> 迹仅在最后访问 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span> ；同时，在这一序列的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span> ,<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>-迹中，不是路径的迹的条数是偶数。   ---摘自百度百科</li>
+</ol>
+<h3 id="整理得某些判定方法"><strong>整理得某些判定方法</strong></h3>
+<p>（以下图均视为连通图）</p>
+<ol>
+<li>若一个图存在<strong>欧拉路径</strong>，当且仅当
+<ol>
+<li><strong>无向图</strong>：
+<ol>
+<li>有且只有两个点度数为<strong>奇数</strong>；</li>
+<li>其余所有点度数为*偶数**。</li>
+</ol>
+</li>
+<li><strong>有向图</strong>
+<ol>
+<li>有一个点入度比出度<strong>大 1</strong> ，一个点出度比入度<strong>大 1</strong>；</li>
+<li>其余所有点的入度<strong>等于</strong>出度。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>若一个图存在<strong>欧拉回路</strong>，当且仅当
+<ol>
+<li><strong>无向图</strong>的所有顶点的度数都是<strong>偶数</strong>；</li>
+<li><strong>有向图</strong>的所有顶点的入度与出度都<strong>相等</strong>。</li>
+</ol>
+</li>
+</ol>
+<h3 id="具体做法"><strong>具体做法</strong></h3>
+<p>在此介绍 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>H</mi><mi>i</mi><mi>e</mi><mi>r</mi><mi>h</mi><mi>o</mi><mi>l</mi><mi>z</mi><mi>e</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">Hierholzer</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.08125em;">H</span><span class="mord mathdefault">i</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">h</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span> 算法<br>
+该算法的思路是，先找一个顶点然后一直搜与它相连的点，直到搜不到为止（即出现<strong>环</strong>），然后再从从没搜过的点开始搜，直到所有的边都被访问过。<br>
+例题：[USACO3.3]骑马修栅栏 Riding the Fences</p>
+<pre><code class="language-c++">#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;vector&gt;
+#include &lt;stack&gt;
+using namespace std;
+const int N =501;
+const int M = 1111;
+int n,m,du[M],vis[N][N],op;
+vector &lt;int &gt; e[M];
+stack &lt;int&gt; s;//栈，记录经过的节点。
+
+void dfs(int u)
+{
+        for (int i=0; i&lt;e[u].size(); i++)
+        {
+                int v=e[u][i];
+                if (vis[u][v])
+                {
+                        vis[u][v]--;
+                        vis[v][u]--;
+                        dfs(v);
+                }
+        }
+        s.push(u);
+}
+
+int main()
+{
+        cin &gt;&gt; m;
+        int maxx=0,minn=1e9;
+        for (int i=1; i&lt;=m; i++)
+        {
+                int u,v;
+                cin &gt;&gt; u &gt;&gt; v;
+                du[u]++;
+                du[v]++;
+                vis[u][v]++;
+                vis[v][u]++;
+                e[u].push_back(v);
+                e[v].push_back(u);
+                // maxx=max(u,max(v,maxx));
+                minn=min(minn,min(u,v));
+        }
+        op=minn;
+        for (int i=minn; i&lt;=m; i++)
+                sort(e[i].begin(),e[i].end());//vector内排序
+        for (int i=minn; i&lt;=m; i++)
+                if (du[i]%2)//奇度节点
+                {
+                        op=i;//顶点
+                        break;
+                }
+        // cout &lt;&lt;  op &lt;&lt; endl;
+        dfs(op);
+        while(!s.empty())
+        {
+                printf(&quot;%d\n&quot;,s.top());
+                s.pop();
+        }
         return 0;
 }
 
@@ -979,110 +1145,6 @@ int main() {
 <ol start="5">
 <li><a href="https://www.luogu.com.cn/blog/CatHome/ninelifecat-di-du-fa"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathcolor="#ddccbb"><mtext>Ninelife_Cat</mtext></mstyle></mrow><annotation encoding="application/x-tex">\text{\color{#ddccbb}Ninelife\_Cat}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.00444em;vertical-align:-0.31em;"></span><span class="mord text"><span class="mord" style="color:#ddccbb;">Ninelife_Cat</span></span></span></span></span></a></li>
 </ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【OI】线段树笔记]]></title>
-        <id>https://chuzihang714.github.io/post/oi-xian-duan-shu-bi-ji/</id>
-        <link href="https://chuzihang714.github.io/post/oi-xian-duan-shu-bi-ji/">
-        </link>
-        <updated>2021-03-23T12:27:39.000Z</updated>
-        <summary type="html"><![CDATA[<h2 id="用法">用法</h2>
-<p>是什么，干什么用的就不写了，每篇都有...都看烦了...</p>
-]]></summary>
-        <content type="html"><![CDATA[<h2 id="用法">用法</h2>
-<p>是什么，干什么用的就不写了，每篇都有...都看烦了...</p>
-<!-- more -->
-<h2 id="过程">过程</h2>
-<p>主要过程就是 <strong>建树 -&gt; 更新 -&gt; 查询输出</strong></p>
-<!-- more -->
-<h2 id="板子code">板子code</h2>
-<pre><code class="language-c++">#include &lt;cstdio&gt;
-#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-#define int long long
-using namespace std;
-int n,m,a[100001],tree[1000001],lazy[1000001],mid,b,c,d,e,f,a1,i;
-
-void push_up(int p)
-{
-        tree[p]=tree[p*2]+tree[p*2+1];
-}
-
-void swa(int p, int l,int r, int k)
-{
-        lazy[p]+=k;
-        tree[p]=tree[p]+k*(r-l+1);
-}
-
-void push_down(int p, int l, int r)
-{
-        mid=(l+r) / 2;
-        swa(p*2,l,mid,lazy[p]);
-        swa(p*2+1,mid+1,r,lazy[p]);
-        lazy[p]=0;
-}
-
-void build(int p, int l, int r)
-{
-        lazy[p]=0;
-        if (l==r) {tree[p]=a[l]; return;}
-        int mid=(l+r)/2;
-        build(p*2,l,mid);
-        build(p*2+1,mid+1,r);
-        tree[p]=tree[p*2+1]+tree[p*2];
-}
-
-void update(int ll,int rr,int l,int r,int p,int k)
-{
-        if(ll&lt;=l&amp;&amp;r&lt;=rr)
-        {
-                tree[p]+=k*(r-l+1);
-                lazy[p]+=k;
-                return;
-        }
-
-        push_down(p,l,r);
-        int mid=(l+r) / 2;
-        if(ll&lt;=mid) update(ll,rr,l,mid,p*2,k);
-        if(rr&gt;mid) update(ll,rr,mid+1,r,p*2+1,k);
-        push_up(p);
-}
-
-int query(int xx,int yy,int l,int r,int p)
-{
-        int sum=0;
-        if(xx&lt;=l&amp;&amp;r&lt;=yy) return tree[p];
-        int mid=(l+r)&gt;&gt;1;
-        push_down(p,l,r);
-        if(xx&lt;=mid) sum+=query(xx,yy,l,mid,p*2);
-        if(yy&gt;mid) sum+=query(xx,yy,mid+1,r,p*2+1);
-        return sum;
-}
-signed main()
-{
-        cin &gt;&gt; n &gt;&gt; m;
-        for (i=1; i&lt;=n; i++) cin &gt;&gt; a[i];
-        build(1,1,n);
-        while (m--)
-        {
-                cin &gt;&gt; a1;
-                if (a1==1)
-                {
-                        cin &gt;&gt; b &gt;&gt; c &gt;&gt; d;
-                        update(b,c,1,n,1,d);
-                }
-                else
-                {
-                        cin &gt;&gt; e &gt;&gt; f;
-                        cout &lt;&lt; query(e,f,1,n,1) &lt;&lt; endl;
-                }
-        }
-}
-
-</code></pre>
-<!-- more -->
-<p>有点难懂的是懒标记，多看一会儿能理解。</p>
 ]]></content>
     </entry>
 </feed>

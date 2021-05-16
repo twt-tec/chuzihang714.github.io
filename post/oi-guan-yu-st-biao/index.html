@@ -2,15 +2,11 @@
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
-    <meta name="description" content="用法
-是什么，干什么用的就不写了，每篇都有...都看烦了...
-
-过程
-主要过程就是 建树 -&gt; 更新 -&gt; 查询输出
-
-板子code
-#include &lt;cstdio&gt;
-#include &lt;iostream&..." />
+    <meta name="description" content="是一个基础的数据结构。
+首先这种数据结构用到了倍增的思想，能够在 O(NlogN+M)O(N log N + M)O(NlogN+M) 的时间复杂度下求出最值。具体见代码注释：
+/*
+lg:即log代表指数。
+f[i][j]:区间i~j中的..." />
     <meta name="keywords" content="笔记,luogu" />
     <link rel="stylesheet" href="https://chuzihang714.github.io/media/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://chuzihang714.github.io/styles/main.css">
@@ -1113,11 +1109,11 @@
         <div class="postshow postpadding" style="padding-bottom: 0;">
             
             <div class="postdetailimg">
-                <img src="https://img.imgdb.cn/item/6057d4ac8322e6675c3d4079.jpg" class="postimage" style="cursor:auto">
+                <img src="https://pic.imgdb.cn/item/60a11c316ae4f77d35bac618.jpg" class="postimage" style="cursor:auto">
             </div>
             <div class="postinfo-detail">
-                <div class="postdate"><i class="fa fa-calendar"></i>2021-03-23</div>
-                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 3 min read</div>
+                <div class="postdate"><i class="fa fa-calendar"></i>2021-05-16</div>
+                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 2 min read</div>
                 <div class="posttag">
                     
                     <a data-pjax href="https://chuzihang714.github.io/tag/gdmiEn7kC/" class="postlink">
@@ -1133,9 +1129,9 @@
             
         <div id="articlecontent">
             <div id="texttitle" style="text-align: center">
-                <h2 id="ptitle">【OI】线段树笔记</h2>
+                <h2 id="ptitle">【OI】关于st表</h2>
                 <!-- id 将作为查询条件 -->
-                <div id="pl" style="display:none">https://chuzihang714.github.io/post/oi-xian-duan-shu-bi-ji/</div>
+                <div id="pl" style="display:none">https://chuzihang714.github.io/post/oi-guan-yu-st-biao/</div>
                 <div id="rootaddr" style="display:none">https://chuzihang714.github.io</div>
                 <span id="hotnum">
                     <h4><i class="fa fa-eye" aria-hidden="true" style="color: #FF8C00;"></i>&nbsp;&nbsp;热度</i>: <i
@@ -1143,99 +1139,56 @@
                 </span>
             </div>
             <div class="text ">
-                <h2 id="用法">用法</h2>
-<p>是什么，干什么用的就不写了，每篇都有...都看烦了...</p>
-<!-- more -->
-<h2 id="过程">过程</h2>
-<p>主要过程就是 <strong>建树 -&gt; 更新 -&gt; 查询输出</strong></p>
-<!-- more -->
-<h2 id="板子code">板子code</h2>
-<pre><code class="language-c++">#include &lt;cstdio&gt;
+                <p><strong>是一个基础的数据结构。</strong><br>
+首先这种数据结构用到了倍增的思想，能够在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>N</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>N</mi><mo>+</mo><mi>M</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(N log N + M)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mclose">)</span></span></span></span> 的时间复杂度下求出最值。具体见代码注释：</p>
+<pre><code class="language-c++">/*
+lg:即log代表指数。
+f[i][j]:区间i~j中的最值（本体中为最大值）
+*/
+#include &lt;cstdio&gt;
 #include &lt;iostream&gt;
 #include &lt;algorithm&gt;
-#define int long long
+#include &lt;cstring&gt;
 using namespace std;
-int n,m,a[100001],tree[1000001],lazy[1000001],mid,b,c,d,e,f,a1,i;
+const int N =1e5+1;
+int n,m,a[N],lg[N],f[N][51],l,r,len,sum;
 
-void push_up(int p)
+inline int read()
 {
-        tree[p]=tree[p*2]+tree[p*2+1];
+        int x=0,f=1; char ch=getchar();
+        while (!isdigit(ch)) {if (ch=='-') f=-1; ch=getchar();}
+        while (isdigit(ch)) {x=x*10+ch-48; ch=getchar();}
+        return x*f;
 }
 
-void swa(int p, int l,int r, int k)
+void init()
 {
-        lazy[p]+=k;
-        tree[p]=tree[p]+k*(r-l+1);
+        for (int i=1; i&lt;=n; i++) lg[i]=lg[i/2]+1;//初始化指数
+        for (int i=1; i&lt;=n; i++) f[i][0]=a[i];//显然得出
+        for (int j=1; j&lt;=lg[n]; j++)
+                for (int i=1; i+(1&lt;&lt;j)-1&lt;=n; i++)
+                {
+                        f[i][j]=max(f[i][j-1],f[i+(1&lt;&lt;j-1)][j-1]);//公式
+                }
 }
-
-void push_down(int p, int l, int r)
+int main()
 {
-        mid=(l+r) / 2;
-        swa(p*2,l,mid,lazy[p]);
-        swa(p*2+1,mid+1,r,lazy[p]);
-        lazy[p]=0;
-}
-
-void build(int p, int l, int r)
-{
-        lazy[p]=0;
-        if (l==r) {tree[p]=a[l]; return;}
-        int mid=(l+r)/2;
-        build(p*2,l,mid);
-        build(p*2+1,mid+1,r);
-        tree[p]=tree[p*2+1]+tree[p*2];
-}
-
-void update(int ll,int rr,int l,int r,int p,int k)
-{
-        if(ll&lt;=l&amp;&amp;r&lt;=rr)
-        {
-                tree[p]+=k*(r-l+1);
-                lazy[p]+=k;
-                return;
-        }
-
-        push_down(p,l,r);
-        int mid=(l+r) / 2;
-        if(ll&lt;=mid) update(ll,rr,l,mid,p*2,k);
-        if(rr&gt;mid) update(ll,rr,mid+1,r,p*2+1,k);
-        push_up(p);
-}
-
-int query(int xx,int yy,int l,int r,int p)
-{
-        int sum=0;
-        if(xx&lt;=l&amp;&amp;r&lt;=yy) return tree[p];
-        int mid=(l+r)&gt;&gt;1;
-        push_down(p,l,r);
-        if(xx&lt;=mid) sum+=query(xx,yy,l,mid,p*2);
-        if(yy&gt;mid) sum+=query(xx,yy,mid+1,r,p*2+1);
-        return sum;
-}
-signed main()
-{
-        cin &gt;&gt; n &gt;&gt; m;
-        for (i=1; i&lt;=n; i++) cin &gt;&gt; a[i];
-        build(1,1,n);
+        n=read();
+        m=read();
+        for (int i=1; i&lt;=n; i++) a[i]=read();
+        memset(lg,-1,sizeof(lg));//指数要先设置为-1，在一些题目中要设为-inf
+        init();//初始化
         while (m--)
         {
-                cin &gt;&gt; a1;
-                if (a1==1)
-                {
-                        cin &gt;&gt; b &gt;&gt; c &gt;&gt; d;
-                        update(b,c,1,n,1,d);
-                }
-                else
-                {
-                        cin &gt;&gt; e &gt;&gt; f;
-                        cout &lt;&lt; query(e,f,1,n,1) &lt;&lt; endl;
-                }
+                l=read();
+                r=read();
+                len=lg[r-l+1];
+                sum=max(f[l][len],f[r-(1&lt;&lt;len)+1][len]);//查询
+                printf(&quot;%d\n&quot;,sum);
         }
 }
 
 </code></pre>
-<!-- more -->
-<p>有点难懂的是懒标记，多看一会儿能理解。</p>
 
             </div>
             <hr style="width: 80%;">
@@ -1273,36 +1226,24 @@ signed main()
             <div class="postfooter">
                 <ul class="post-copyright">
                     <li><strong>文章作者：</strong>chuzihang714</li>
-            <li><strong>原文链接：</strong>https://chuzihang714.github.io/post/oi-xian-duan-shu-bi-ji/</li>
+            <li><strong>原文链接：</strong>https://chuzihang714.github.io/post/oi-guan-yu-st-biao/</li>
             <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用<i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA
                 许可协议。转载请注明出处！</li>
             </ul>
         </div>
         <div id="otherpost">
             
-            <a  data-pjax class="prev-post-pc" href="https://chuzihang714.github.io/post/zheng-huo-chuzihang714-yu-nottttttthy-de-du-fa/"  style="color: black;">
-                <div id="ppcontainer">
-                    
-                    <img src="https://img.imgdb.cn/item/60573d558322e6675cf7a1d6.jpg" style="width: 100%;" class="opimg">
-                    
-                    <h4 class="optitle">【整活】“chuzihang714” 与 “nottttttthy的读法”</h4>
-                </div>
-            </a>
-            <div class="prev-post">
-                上一篇 <a  data-pjax href="https://chuzihang714.github.io/post/zheng-huo-chuzihang714-yu-nottttttthy-de-du-fa/">【整活】“chuzihang714” 与 “nottttttthy的读法”</a>
-            </div>
             
-            
-            <a data-pjax class="next-post-pc" href="https://chuzihang714.github.io/post/ying-pian-xin-de-le-de-ming-dan/"  style="color: black;">
+            <a data-pjax class="next-post-pc" href="https://chuzihang714.github.io/post/oi-guan-yu-qiang-lian-tong-fen-liang/"  style="color: black;">
                 <div id="npcontainer">
                     
-                    <img src="https://img.imgdb.cn/item/60543369524f85ce29fc7701.jpg" style="width: 100%;" class="opimg">
+                    <img src="https://pic.imgdb.cn/item/609a7d7ad1a9ae528ff5fe38.jpg" style="width: 100%;" class="opimg">
                     
-                    <h4 class="optitle">【影片】辛德勒的名单</h4>
+                    <h4 class="optitle">【OI】关于一些图论</h4>
                 </div>
             </a>
             <div class="next-post">
-                下一篇 <a  data-pjax href="https://chuzihang714.github.io/post/ying-pian-xin-de-le-de-ming-dan/">【影片】辛德勒的名单</a>
+                下一篇 <a  data-pjax href="https://chuzihang714.github.io/post/oi-guan-yu-qiang-lian-tong-fen-liang/">【OI】关于一些图论</a>
             </div>
             
         </div>
@@ -1322,16 +1263,7 @@ signed main()
     $("#hotnum").attr('id', pl);
 </script>
                     <div class="toc-container">
-                        <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E7%94%A8%E6%B3%95">用法</a></li>
-<li><a href="#%E8%BF%87%E7%A8%8B">过程</a></li>
-<li><a href="#%E6%9D%BF%E5%AD%90code">板子code</a></li>
-</ul>
-</li>
-</ul>
-
+                        
                     </div>
                     <div class="tog">
                         <div class="toggleContainer">
