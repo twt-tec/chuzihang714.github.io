@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://chuzihang714.github.io</id>
     <title>chuzihang714&apos;s blog</title>
-    <updated>2021-05-17T13:13:17.655Z</updated>
+    <updated>2021-06-02T23:51:07.329Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://chuzihang714.github.io"/>
     <link rel="self" href="https://chuzihang714.github.io/atom.xml"/>
@@ -10,6 +10,325 @@
     <logo>https://chuzihang714.github.io/images/avatar.png</logo>
     <icon>https://chuzihang714.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, chuzihang714&apos;s blog</rights>
+    <entry>
+        <title type="html"><![CDATA[【OI】字符串相关]]></title>
+        <id>https://chuzihang714.github.io/post/oi-zi-fu-chuan-xiang-guan/</id>
+        <link href="https://chuzihang714.github.io/post/oi-zi-fu-chuan-xiang-guan/">
+        </link>
+        <updated>2021-05-31T12:34:05.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="kmp-算法">KMP 算法</h2>
+<p>多用于查找一个字符串在另一字符串的哪个位置出现了的问题。详细操作见代码。</p>
+<h3 id="code">Code</h3>
+<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+const int N = 1e6+1;
+int next[N],n1,n2;
+//next[i]=j: 下标为i 的字符前的字符串最长相等前后缀的长度为j
+//且表示该处字符不匹配时应该回溯到的字符的下标
+char s1[N],s2[N];
+void init()
+{
+        for (int i=2,j=0; i&lt;=n2; i++)
+        {
+                while (j&amp;&amp;s2[i]!=s2[j+1]) j=next[j];
+                if (s2[i]==s2[j+1]) j++; next[i]=j;
+        }
+}
+void KMP()
+{
+        int j=0;
+        for (int i=1; i&lt;=n1; i++)
+        {
+                while(j&gt;0&amp;&amp;s2[j+1]!=s1[i])
+                        j=next[j];//往回跳，回溯
+                if (s2[j+1]==s1[i])
+                        j++;//匹配成功
+                if (j==n2)
+                {
+                        cout &lt;&lt; i-n2+1 &lt;&lt; endl;
+                        j=next[j];//继续匹配
+                }
+        }
+}
+int main()
+{
+        cin &gt;&gt; s1+1 &gt;&gt; s2+1;
+        n1 = strlen(s1+1);
+        n2 = strlen(s2+1);
+        init();
+        KMP();
+        for (int i=1; i&lt;=n2; i++)
+                cout &lt;&lt; next[i] &lt;&lt; &quot; &quot;;
+        return 0;
+}
+</code></pre>
+<h2 id="字符串哈希">字符串哈希</h2>
+<p>用于处理有多少个字符串相同的问题。</p>
+<h3 id="code-2">Code</h3>
+<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+#define int long long
+const int mod = 2005091020050911;
+const int J = 51971;
+const int N = 3e3+10;
+int n,now,p,t[N*N],num;
+char s1[N],s2[N];
+signed main()
+{
+        cin &gt;&gt; n &gt;&gt; s1+1 &gt;&gt; s2+1;
+        for (int i=1; i&lt;=n; i++)
+        {
+                now=0,p=1;
+                for (int j=i; j&lt;=n; j++)
+                {
+                        while(p &lt;= n &amp;&amp; s1[p] != s2[j]) p++;
+                        if(p&gt;n) break;
+                        p++; now = (now*J+s2[j]-'a'+1) % mod;
+                        t[++num] = now;
+                }
+        }
+        sort(t+1,t+num+1);
+        cout &lt;&lt; unique(t+1,t+num+1)-t-1;
+        return 0;
+}
+</code></pre>
+<h2 id="ac自动机">AC自动机</h2>
+<p>用于在一个大字符串中查找一系列小字符串的个数的算法，前置知识是 KMP 和 trie 树。</p>
+<h3 id="code-3">Code</h3>
+<pre><code class="language-c++">//AC自动机
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+const int N = 2e6+10;
+int trie[N][30],fail[N],cntw[N],cnt,n;
+//trie是字典树
+//fail是当前点匹配失败时退回点的编号
+//cntw记录的是有多少个单词在这个点结束
+void insert(string s)
+{
+        int now=0;
+        for (int i=0; i&lt;s.size(); i++)
+        {
+                int to=s[i]-'a';
+                if (!trie[now][to]) trie[now][to]=++cnt; //如果没这条边
+                now=trie[now][to];//更新现在的位置
+        }
+        cntw[now]++;//因为到当前节点一个单词就结束了，那就更新单词数
+}
+void getfail()
+{
+        queue&lt;int&gt; q;
+        for (int i=0; i&lt;26; i++)
+                if (trie[0][i])
+                        fail[trie[0][i]]=0,q.push(trie[0][i]); //把与根节点相连的字母处理好,并放入队列
+
+        while (q.size())
+        {
+                int now=q.front();
+                q.pop();
+                for (int i=0; i&lt;26; i++)
+//如果有子节点让这个节点的失败指针指向
+//(((他父亲节点)的失败指针所指向的那个节点)的下一个节点)
+                        if (trie[now][i])
+                        {
+                                fail[trie[now][i]]=trie[fail[now]][i];
+                                q.push(trie[now][i]);
+                        }
+                        //否则就让当前节点的这个子节点
+                        //指向当前节点fail指针的这个子节点
+                        else trie[now][i]=trie[fail[now]][i];
+        }
+}
+int query(string s)
+{
+        int now=0,ans=0;
+        for (int i=0; i&lt;s.size(); i++)//遍历
+        {
+                now=trie[now][s[i]-'a'];
+                for (int j=now; j&amp;&amp;cntw[j]!=-1; j=fail[j])
+                {
+                        ans+=cntw[j];
+                        cntw[j]=-1;
+                }
+        }
+        return ans;
+}
+int main()
+{
+        cin &gt;&gt; n;
+        for (int i=1; i&lt;=n; i++)
+        {
+                string s;
+                cin &gt;&gt; s;
+                insert(s);
+        }
+        fail[0]=0;
+        getfail();
+        // for (int i=0; i&lt;=n; i++) cout &lt;&lt; fail[i] &lt;&lt; endl;
+        string s;
+        cin &gt;&gt; s;
+        cout &lt;&lt; query(s) &lt;&lt; endl;
+        return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[【OI】题解P1382 楼房]]></title>
+        <id>https://chuzihang714.github.io/post/oi-ti-jie-p1382-lou-fang/</id>
+        <link href="https://chuzihang714.github.io/post/oi-ti-jie-p1382-lou-fang/">
+        </link>
+        <updated>2021-05-27T11:41:53.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="写在前面">写在前面</h2>
+<p>接触到了一个新的算法：扫描线，所以写下这篇blog记录一下。</p>
+<h2 id="sol">sol</h2>
+<p>看到样例之后直呼：这题好水啊，可正要操刀才发现，暴力肯定过不去，于是乎就轮到我们的扫描线登场了。<br>
+扫描线正如它的字面意思，将一个多边形全部扫一遍，然后按自己的需要处理这个多边形。<br>
+在这题中我们需要记录在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 个矩形中出现的端点个数，那么我们只需要用扫出这些端点即可。<br>
+具体做法：<br>
+首先定义一个结构体 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>m</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">sm[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">m</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>m</mi><mo>[</mo><mi>i</mi><mo>]</mo><mi mathvariant="normal">.</mi><mi>h</mi></mrow><annotation encoding="application/x-tex">sm[i].h</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">m</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mord">.</span><span class="mord mathdefault">h</span></span></span></span> 表示高度，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>m</mi><mo>[</mo><mi>i</mi><mo>]</mo><mi mathvariant="normal">.</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">sm[i].x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">m</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mord">.</span><span class="mord mathdefault">x</span></span></span></span> 表示横坐标， <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>m</mi><mo>[</mo><mi>i</mi><mo>]</mo><mi mathvariant="normal">.</mi><mi>y</mi></mrow><annotation encoding="application/x-tex">sm[i].y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">m</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mord">.</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 代表纵坐标，id是编号，fla是这个点是否是这个矩形的终点。<br>
+为之后处理方便，将 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 个矩形按横坐标排序，而之后我们可以用一个堆维护<strong>扫过的、还没过去的楼中的最大高度</strong>，因为充当轮廓都是当前最大楼高。（也可以用线段树）<br>
+之后每次记录下答案就行了。<br>
+ps：还是有很多细节的...见代码</p>
+<h2 id="code">Code</h2>
+<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+#define int long long
+#define re register
+const int N = 1e6+10;
+int n,tot,tail,pre,num,vis[N],ans[N][2],last;
+struct xian
+{
+        int id,x,y,fla;
+};
+xian sm[N];
+struct Dui
+{
+        int x,y,id;
+};
+inline bool cmp(xian xx, xian yy)
+{
+        return xx.x&lt;yy.x;
+}
+inline bool cmp1(Dui xx, Dui yy)
+{
+        return xx.y&lt;yy.y;
+}
+Dui dui[N];
+signed main()
+{
+        cin &gt;&gt; n;
+        for (re int i=1; i&lt;=n; i++)
+        {
+                int h,l,r;
+                cin &gt;&gt; h &gt;&gt; l &gt;&gt; r;
+                sm[++tot].id=i;
+                sm[tot].x=l;
+                sm[tot].y=h;
+                sm[++tot].x=r;
+                sm[tot].y=h;
+                sm[tot].id=i;
+                sm[tot].fla=1;
+        }//处理矩形
+
+        sort(sm+1,sm+tot+1,cmp);//按x排序
+
+        for (re int i=1; i&lt;=tot; i++)
+        {
+                int now=sm[i].x;
+                while (sm[i].x==now)
+                {
+                        if (sm[i].fla)//是这个矩形的终点
+                        {
+                                vis[sm[i].id]=1;//记录
+                                while (vis[dui[0].id])
+                                {
+                                        pop_heap(dui,dui+tail+1,cmp1);//维护最值
+                                        tail--;
+                                }
+                        }
+                        else
+                        {
+                                dui[++tail].y=sm[i].y;
+                                dui[tail].id=sm[i].id;
+                                push_heap(dui,dui+tail+1,cmp1);//放入堆
+                        }
+                        i++;
+                }
+                i--;
+                if (dui[0].y&gt;pre||(vis[last]&amp;&amp;dui[0].y!=pre))
+                {// [0][1]分别是横坐标与纵坐标
+                        ans[++num][0]=sm[i].x;
+                        ans[num][1]=pre;
+                        ans[++num][0]=sm[i].x;
+                        ans[num][1]=dui[0].y;
+                        pre=dui[0].y;
+                        last=dui[0].id;
+                }
+        }
+        cout &lt;&lt; num &lt;&lt; endl;
+        for (re int i=1; i&lt;=num; i++)
+                cout &lt;&lt; ans[i][0] &lt;&lt; &quot; &quot; &lt;&lt; ans[i][1] &lt;&lt; endl;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[【OI】关于一些DP]]></title>
+        <id>https://chuzihang714.github.io/post/oi-guan-yu-yi-xie-dp/</id>
+        <link href="https://chuzihang714.github.io/post/oi-guan-yu-yi-xie-dp/">
+        </link>
+        <updated>2021-05-21T13:08:32.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="数位dp">数位dp</h2>
+<p>这种 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">dp</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span></span></span></span> 通常用于解决一段区间内一个数出现了几次的问题。解题思路一般为：将要找的数的各个位数上的数分离出来并进行记忆化搜索，具体见实例代码。</p>
+<h3 id="code">Code</h3>
+<p>例题： 不要62</p>
+<pre><code class="language-c++">#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+using namespace std;
+const int N = 21;
+int l,r,dp[N][N],a[N];
+//pos是第几位，pre是上一位是什么，sta是状态，limit判断枚举的范围
+int dfs(int pos, int pre, int sta, bool limit)
+{
+        if (pos==-1) return 1; //枚举完了
+        if (!limit&amp;&amp;dp[pos][sta]!=-1) return dp[pos][sta]; //记忆化，剪枝.
+        int up=limit?a[pos]:9;//根据limit判断上界
+        int tmp=0;//start
+        for (int i=0; i&lt;=up; i++)//0~9，，up上界
+        {
+                if (pre==6&amp;&amp;i==2) continue;
+                if (i==4) continue; //按照题目来进行操作,很灵活
+                tmp+=dfs(pos-1,i,i==6,limit&amp;&amp;i==a[pos]);
+        }
+        if (!limit) dp[pos][sta]=tmp; //这里对应上面的记忆化，在一定条件下时记录
+        return tmp;
+}
+int sol(int x)
+{
+        int pos=0;
+        while (x)
+        {
+                a[pos++]=x%10;
+                x/=10;
+        }//把每一位都分解出来
+        return dfs(pos-1,-1,0,true);
+}
+int main()
+{
+        while (cin &gt;&gt; l &gt;&gt; r)
+        {
+                if (l==0&amp;&amp;r==0) return 0;
+                memset(dp,-1,sizeof(dp));
+                cout &lt;&lt; sol(r)-sol(l-1) &lt;&lt; endl;
+        }
+}
+
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[【OI】关于st表]]></title>
         <id>https://chuzihang714.github.io/post/oi-guan-yu-st-biao/</id>
@@ -256,6 +575,103 @@ int main()
                 s.pop();
         }
         return 0;
+}
+
+</code></pre>
+<h2 id="关于拓扑排序">关于拓扑排序</h2>
+<ol>
+<li>这么写容易理解但效率低</li>
+</ol>
+<pre><code class="language-c++">//b[]为每个点的入度
+for(i=1;i&lt;=n;i++){
+  for(j=1;j&lt;=n;j++){
+     if(b[j]==0){   //找到一个入度为0的点
+       ans=j;
+       vis[cnt++]=j;
+       b[j]--;
+       break;
+      }
+   }
+   for(j=1;j&lt;=n;j++)
+       if(a[ans][j]) b[j]--; //与入度为0的点相连的点的入度减一
+}
+   printf(&quot;%d&quot;,vis[0]);
+   for(i=1;i&lt;cnt;i++) printf(&quot; %d&quot;,vis[i]);
+
+</code></pre>
+<p>效率更高的方法：</p>
+<pre><code class="language-c++">void topo()
+{
+        for(int i=1; i&lt;=n; i++)
+                if(indeg[i]==0)
+                        q.push(i);
+
+        while(!q.empty())
+        {
+                const int u=q.front();
+                ans[++cnt]=u;
+                q.pop();
+                for(int i=1; i&lt;=n; i++)
+                        if(a[u][i])
+                        {
+                                indeg[i]--;
+                                if(indeg[i]==0)
+                                        q.push(i);
+                        }
+        }
+}
+//很好理解...
+</code></pre>
+<p>例题：P4017 最大食物链计数</p>
+<pre><code class="language-c++">#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;queue&gt;
+using namespace std;
+const int N = 5001;
+const int mod = 80112002;
+int n,m,a[N][N],ru[N],ans,cnt,chu[N],f[N];
+queue&lt;int &gt; q;
+void topo()
+{
+        for(int i=1; i&lt;=n; i++)
+                if(ru[i]==0)
+                        q.push(i),f[i]=1;
+
+        while(!q.empty())
+        {
+                int u=q.front();
+                // ans[++cnt]=u;
+                q.pop();
+                for(int i=1; i&lt;=n; i++)
+                        if(a[u][i])
+                        {
+                                f[i]=(f[i]+f[u])%mod;
+                                ru[i]--;
+                                if(ru[i]==0&amp;&amp;chu[i]==0)
+                                {
+                                        ans=(ans+f[i])%mod;
+                                        continue;
+                                }
+                                if(ru[i]==0)
+                                        q.push(i);
+                        }
+        }
+}
+int main()
+{
+        cin &gt;&gt; n &gt;&gt; m;
+        for (int i=1; i&lt;=m; i++)
+        {
+                int u,v;
+                cin &gt;&gt; u &gt;&gt; v;
+                a[u][v]++;
+                ru[v]++;
+                chu[u]++;
+        }
+        topo();
+        cout &lt;&lt; ans;
 }
 
 </code></pre>
@@ -804,347 +1220,6 @@ signed main()
 }
 
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【OI】树上问题笔记]]></title>
-        <id>https://chuzihang714.github.io/post/shu-shang-wen-ti-bi-ji/</id>
-        <link href="https://chuzihang714.github.io/post/shu-shang-wen-ti-bi-ji/">
-        </link>
-        <updated>2021-03-30T02:46:39.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="定义"><strong>定义：</strong></h2>
-<p>自行 <a href="http://oi-wiki.com/graph/tree-basic/"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>OI-Wiki</mtext></mrow><annotation encoding="application/x-tex">\text{OI-Wiki}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">OI-Wiki</span></span></span></span></span></a> 。</p>
-<h2 id="树的直径"><strong>树的直径</strong></h2>
-<p>有两种解法。</p>
-<h3 id="sol1"><strong>sol1</strong></h3>
-<p>跑两遍大法师，第一遍找最远的结点，这个结点就是直径的一端，第二遍找以 <code>第一遍找出的点</code> 为根节点的最远的节点，这个点就是直径的第二端。<br>
-<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow><annotation encoding="application/x-tex">\frac{1}{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.190108em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></p>
-<h4 id="证明"><strong>证明：</strong></h4>
-<p>再次自行 <strong>OI-Wiki</strong></p>
-<h4 id="code"><strong>Code</strong></h4>
-<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
-using namespace std;
-typedef long long ll;
-
-const int N = 1e7 + 7;
-int id, maxn, n, deep[N];
-struct edge 
-{
-        int to, next;
-} e[N];
-int cnt, he[N];
-
-void add(int u, int v) 
-{
-        e[++cnt].next = he[u];
-        e[cnt].to = v;
-        he[u] = cnt;
-}
-
-void dfs(int u, int fa) 
-{
-
-        if(deep[u] &gt; maxn)
-                id = u, maxn = deep[u];
-
-        for(int i = he[u]; i; i = e[i].next) 
-        {
-                int v = e[i].to;
-                if(v == fa)
-                        continue;
-                deep[v] = deep[u] + 1;
-                dfs(v, u);
-        } // 我要 ak ioi 的
-}
-
-int main()
-{
-        cin &gt;&gt; n;
-        for(int i = 1; i &lt;= n - 1; i++)
-        {
-                int u,v;
-                cin &gt;&gt; u &gt;&gt; v;
-                add(u, v), add(v, u);
-        }
-
-        dfs(1, 0);
-
-        memset(deep, 0, sizeof(deep));
-        maxn = 0;
-
-        dfs(id, 0);
-
-        printf(&quot;%d&quot;, maxn);
-        return 0;
-}
-
-</code></pre>
-<h3 id="sol2"><strong>sol2</strong></h3>
-<p>用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">dp</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span></span></span></span> 写，分别记录每个点向下所能延伸的最大值与次大值，直径就是两者的加和。</p>
-<h4 id="code-2"><strong>Code</strong></h4>
-<pre><code class="language-c++">#include &lt;cstdio&gt;
-#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-#include &lt;vector&gt;
-using namespace std;
-int x,y,n,i,ans,d1[100001],d2[100001],t;
-vector&lt;int&gt; E[100001];
-
-void dfs(int now, int fath)
-{
-        d1[now]=d2[now]=0;
-        for(int i = 0; i &lt; E[now].size(); ++i)
-        {
-                int v=E[now][i];
-                if (fath==v) continue;
-                dfs(v,now);
-                t=d1[v]+1;
-                if (t&gt;d1[now]) d2[now]=d1[now],d1[now]=t;
-                else if (t&gt;d2[now]) d2[now]=t;
-        }
-        ans=max(ans,d1[now]+d2[now]);
-}
-
-int main()
-{
-        cin &gt;&gt; n;
-        for (i=1; i&lt;n; i++)
-        {
-                int u,v;
-                cin &gt;&gt; u &gt;&gt; v;
-                E[u].push_back(v);
-                E[v].push_back(u);
-        }
-        dfs(1,0);
-        cout &lt;&lt; ans;
-        return 0;
-}
-</code></pre>
-<h2 id="lca最近公共祖先"><strong>LCA最近公共祖先</strong></h2>
-<p>可以用 <code>tarjan</code> 写（显然我只看了这一个...）<br>
-做法：用临接链表存下每条边和询问的信息，然后跑一遍 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>a</mi><mi>r</mi><mi>j</mi><mi>a</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">tarjan</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span></span></span></span> ，最后对于询问 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">i,j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span> 的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>c</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lca</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">c</span><span class="mord mathdefault">a</span></span></span></span> ，答案为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>d</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>+</mo><mi>d</mi><mi>d</mi><mo>[</mo><mi>j</mi><mo>]</mo><mo>−</mo><mn>2</mn><mo>∗</mo><mi>d</mi><mi>d</mi><mo>[</mo><mi>L</mi><mi>C</mi><mi>A</mi><mo>(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo>)</mo><mo>]</mo></mrow><annotation encoding="application/x-tex">dd[i]+dd[j]-2*dd[LCA(i,j)]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">d</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">d</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">d</span><span class="mopen">[</span><span class="mord mathdefault">L</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">A</span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mclose">]</span></span></span></span> ，这里 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>d</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">dd[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">d</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 点到根节点的距离。</p>
-<h3 id="code-3"><strong>Code</strong></h3>
-<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
-using namespace std;
-const int N = 100010;
-int x,y,k,question[N],edge[N],tot,tot1,fa[N],dd[N],lca[N],que1[N],que2[N];//d[i]表示该节点到根节点的距离，fa是父亲节点
-bool ff[N];
-struct EDGE
-{
-        int to,v,next;
-};
-EDGE a[N];
-struct QUES
-{
-        int to,nu,next;
-};
-QUES b[N];
-
-void add_edge(int x,int y,int value)
-{
-        a[++tot].to=y;//这条边到哪个点
-        a[tot].v=value;//这条边的长度
-        a[tot].next=edge[x];//与这条边有相同初始点的上一条边编号 
-        edge[x]=tot;//更新
-}
-void add_question(int x,int y,int number)
-{
-        b[++tot1].to=y;//询问点编号
-        b[tot1].nu=number;
-        b[tot1].next=question[x];
-        question[x]=tot1;
-}
-
-int get (int x)
-{
-        if (fa[x]==x) return x;
-        return fa[x]=get(fa[x]);
-}//并查集
-
-void tarjan(int x)
-{
-        fa[x]=x;//将父节点指向自己
-        ff[x]=true;//标记该点已经走过
-        for(int i=question[x]; i; i=b[i].next)
-        {
-                int now=b[i].to;
-                if(ff[now])
-                        lca[b[i].nu]=get(now);//更新lca
-        }
-        for(int i=edge[x]; i; i=a[i].next)
-        {
-                int now=a[i].to;
-                if(!ff[now])
-                {
-                        dd[now]=dd[x]+a[i].v;//更新dd
-                        tarjan(now);
-                        fa[now]=x;//更新父节点
-                }
-        }
-}
-int main()
-{
-        int tt;
-        cin &gt;&gt; tt;
-        while (tt--)
-        {
-                int n,m;
-                cin &gt;&gt; n &gt;&gt; m;
-                memset(ff,false,sizeof(ff));
-                memset(edge,0,sizeof(edge));
-                memset(question,0,sizeof(question));
-                memset(a,0,sizeof(a));
-                memset(b,0,sizeof(b));
-                memset(dd,0,sizeof(dd));
-                memset(fa,0,sizeof(fa));
-                for (int i=1; i&lt;=n; i++) fa[i]=i;
-                tot=0; tot1=0;//预处理
-                for(int i=1; i&lt;=n-1; i++)
-                {
-                        int aa,bb,cc;
-                        scanf(&quot;%d%d%d&quot;,&amp;aa,&amp;bb,&amp;cc);
-                        add_edge(aa,bb,cc);
-                        add_edge(bb,aa,cc);
-                }//建树
-                for(int i=1; i&lt;=m; i++)
-                {
-                        int aa,bb;
-                        scanf(&quot;%d%d&quot;,&amp;aa,&amp;bb);
-                        add_question(aa,bb,i);
-                        add_question(bb,aa,i);//安全一点存两次
-                        que1[i]=aa,que2[i]=bb;
-                }
-                tarjan(1);
-                for (int i=1; i&lt;=m; i++)
-                        printf(&quot;%d\n&quot;,dd[que1[i]]+dd[que2[i]]-2*dd[lca[i]]);
-        }
-}
-</code></pre>
-<h2 id="树的重心"><strong>树的重心</strong></h2>
-<h3 id="定义-2"><strong>定义：</strong></h3>
-<p>对于一棵树n个节点的无根树，找到一个点，将无根树变为以该点为根的有根树时，最大子树的结点数最小。换句话说，删除这个 1 点后最大连通块（一定是树）的结点数最小。</p>
-<h3 id="sol"><strong>Sol</strong></h3>
-<p>用大法师计算每个子树大小，利用<code>总点数 - 当前子树</code>的大小得到“向上”的子树的大小，然后就可以依据定义找到重心了。</p>
-<h3 id="code-4"><strong>Code</strong></h3>
-<pre><code class="language-c++">#include &lt;algorithm&gt;
-#include &lt;iostream&gt;
-#include &lt;cstdlib&gt;
-#include &lt;cstring&gt;
-#include &lt;cstdio&gt;
-#include &lt;cmath&gt;
-#define LL long long
-#define inf 2147483640
-#define Pi acos(-1.0)
-#define free(a) freopen(a &quot;.in&quot;,&quot;r&quot;,stdin),freopen(a &quot;.out&quot;,&quot;w&quot;,stdout);
-using namespace std;
-
-const int maxn=20010;
-struct edge {int to,next;} e[maxn&lt;&lt;2];
-
-int head[maxn],vis[maxn],son[maxn],cnt,size,ans,n;
-
-void insert(int u,int v) {
-        e[++cnt].to=v; e[cnt].next=head[u]; head[u]=cnt;
-        e[++cnt].to=u; e[cnt].next=head[v]; head[v]=cnt;
-}
-void dfs(int x) {
-        vis[x]=1,son[x]=0;
-        int tmp=0;
-        for (int i=head[x]; i; i=e[i].next) if (!vis[e[i].to]) {
-                        dfs(e[i].to);
-                        son[x]+=son[e[i].to]+1;
-                        tmp=max(tmp,son[e[i].to]+1);
-                }
-        tmp=max(tmp,n-son[x]-1);
-        if (tmp&lt;size || (tmp==size &amp;&amp; x&lt;ans)) size=tmp,ans=x;
-}
-int main() {
-        int T; scanf(&quot;%d&quot;,&amp;T);
-        while (T--) {
-                scanf(&quot;%d&quot;,&amp;n);
-                memset(vis,0,sizeof(vis)); memset(head,0,sizeof(head));
-                cnt=ans=0; size=inf;
-                for (int i=1; i&lt;n; i++) {
-                        int u,v;
-                        scanf(&quot;%d%d&quot;,&amp;u,&amp;v);
-                        insert(u,v);
-                }
-                dfs(1);
-                printf(&quot;%d %d\n&quot;,ans,size);
-        }
-        return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【OI】膜你赛3.26小结]]></title>
-        <id>https://chuzihang714.github.io/post/oi/</id>
-        <link href="https://chuzihang714.github.io/post/oi/">
-        </link>
-        <updated>2021-03-26T10:06:59.000Z</updated>
-        <summary type="html"><![CDATA[<h3 id="野花终于良心地出了套模拟赛了啊普及"><strong>野花终于良心地出了套模拟赛了啊...(普及)</strong></h3>
-<h3 id="结果这个文件提交我真的赣了啊"><strong>结果这个文件提交我真的赣了啊...</strong></h3>
-<h3 id="t1t2"><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mn>1</mn><mi mathvariant="normal">/</mi><mi>T</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">T1/T2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">1</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">2</span></span></span></span></strong></h3>
-<p>这两题都很简单，找出其中的规律就行。<br>
-要注意的是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">T2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">2</span></span></span></span> 在没有一张卡牌是 奇/偶 的情况下是无解的，特判一下，比赛数据太水竟然给过了，但CF上过不了。</p>
-<h3 id="t3"><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mn>3</mn></mrow><annotation encoding="application/x-tex">T3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">3</span></span></span></span></strong></h3>
-<p>暴力就能过，如何判断形状相同这点有点难想，其实可以把形状转化成数字来做。（定一点 其他各点到这个点的距离和就可视为这个图案）</p>
-<h3 id="t4"><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mn>4</mn></mrow><annotation encoding="application/x-tex">T4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">4</span></span></span></span></strong></h3>
-<p>也是很水的一题，考场上以为是正解，结果只考虑了最后一个女生第一步需等待的情况... 再开一个数组记录每个连通块中最后的一个女生需等待多久并每次更新一下即可...</p>
-]]></summary>
-        <content type="html"><![CDATA[<h3 id="野花终于良心地出了套模拟赛了啊普及"><strong>野花终于良心地出了套模拟赛了啊...(普及)</strong></h3>
-<h3 id="结果这个文件提交我真的赣了啊"><strong>结果这个文件提交我真的赣了啊...</strong></h3>
-<h3 id="t1t2"><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mn>1</mn><mi mathvariant="normal">/</mi><mi>T</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">T1/T2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">1</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">2</span></span></span></span></strong></h3>
-<p>这两题都很简单，找出其中的规律就行。<br>
-要注意的是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">T2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">2</span></span></span></span> 在没有一张卡牌是 奇/偶 的情况下是无解的，特判一下，比赛数据太水竟然给过了，但CF上过不了。</p>
-<h3 id="t3"><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mn>3</mn></mrow><annotation encoding="application/x-tex">T3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">3</span></span></span></span></strong></h3>
-<p>暴力就能过，如何判断形状相同这点有点难想，其实可以把形状转化成数字来做。（定一点 其他各点到这个点的距离和就可视为这个图案）</p>
-<h3 id="t4"><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mn>4</mn></mrow><annotation encoding="application/x-tex">T4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord">4</span></span></span></span></strong></h3>
-<p>也是很水的一题，考场上以为是正解，结果只考虑了最后一个女生第一步需等待的情况... 再开一个数组记录每个连通块中最后的一个女生需等待多久并每次更新一下即可...</p>
-<!-- more -->
-<p>sxyz2021求真班成员提醒您：<br>
-<strong>题目千万道，文件要交好；</strong><br>
-<strong>不检查文件，爆零两行泪。</strong></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【整活】“chuzihang714” 与 “nottttttthy的读法”]]></title>
-        <id>https://chuzihang714.github.io/post/zheng-huo-chuzihang714-yu-nottttttthy-de-du-fa/</id>
-        <link href="https://chuzihang714.github.io/post/zheng-huo-chuzihang714-yu-nottttttthy-de-du-fa/">
-        </link>
-        <updated>2021-03-24T12:06:50.000Z</updated>
-        <content type="html"><![CDATA[<p><code>chuzihang</code> 中文是楚子航，是小说龙族中我喜欢的一个角色。<br>
-而<code>714</code> 是一个有特殊意义的数字.</p>
-<p><code>nottttttthy</code> 的正确发音应该是 <code>[ˈnɒθiː]</code>   没有别的特殊含义...只是因为原本名字是nothing2333 ...</p>
-<p>其他整活：</p>
-<ol>
-<li><a href="https://caixy06.blog.luogu.org/caixy06-di-du-fa"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathcolor="#ffE1F2"><mtext>鱼的</mtext></mstyle></mrow><annotation encoding="application/x-tex">\text{\color{#ffE1F2}鱼的}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord cjk_fallback" style="color:#ffE1F2;">鱼的</span></span></span></span></span></a></li>
-</ol>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext> </mtext><mspace linebreak="newline"></mspace><mtext> </mtext><mspace linebreak="newline"></mspace></mrow><annotation encoding="application/x-tex">~\\
-~\\
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mspace nobreak"> </span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mspace nobreak"> </span></span><span class="mspace newline"></span></span></span></span></p>
-<ol start="2">
-<li><a href="https://www.luogu.com.cn/blog/Acfboy/acfboy-di-du-fa"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathcolor="#5ac5ac"><mtext>Acfboy</mtext></mstyle></mrow><annotation encoding="application/x-tex">\text{\color{#5ac5ac}Acfboy}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord" style="color:#5ac5ac;">Acfboy</span></span></span></span></span></a></li>
-</ol>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext> </mtext><mspace linebreak="newline"></mspace><mtext> </mtext><mspace linebreak="newline"></mspace></mrow><annotation encoding="application/x-tex">~\\
-~\\
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mspace nobreak"> </span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mspace nobreak"> </span></span><span class="mspace newline"></span></span></span></span></p>
-<ol start="3">
-<li><a href="https://www.luogu.com.cn/blog/ZLY/life-di-du-fa-tai-wu-post"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathcolor="#1111cc"><mtext>_Life_</mtext></mstyle></mrow><annotation encoding="application/x-tex">\text{\color{#1111cc}\_Life\_}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.00444em;vertical-align:-0.31em;"></span><span class="mord text"><span class="mord" style="color:#1111cc;">_Life_</span></span></span></span></span></a></li>
-</ol>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext> </mtext><mspace linebreak="newline"></mspace><mtext> </mtext><mspace linebreak="newline"></mspace></mrow><annotation encoding="application/x-tex">~\\
-~\\
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mspace nobreak"> </span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mspace nobreak"> </span></span><span class="mspace newline"></span></span></span></span></p>
-<ol start="4">
-<li><a href="https://yifanlg.blog.luogu.org/post-long-qian-yue-shi-wu-di-du-fa"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathcolor="#dd11cc"><mtext>龙虾十三香</mtext></mstyle></mrow><annotation encoding="application/x-tex">\text{\color{#dd11cc}龙虾十三香}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord cjk_fallback" style="color:#dd11cc;">龙虾十三香</span></span></span></span></span></a></li>
-</ol>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext> </mtext><mspace linebreak="newline"></mspace><mtext> </mtext><mspace linebreak="newline"></mspace></mrow><annotation encoding="application/x-tex">~\\
-~\\
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mspace nobreak"> </span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mspace nobreak"> </span></span><span class="mspace newline"></span></span></span></span></p>
-<ol start="5">
-<li><a href="https://www.luogu.com.cn/blog/CatHome/ninelifecat-di-du-fa"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathcolor="#ddccbb"><mtext>Ninelife_Cat</mtext></mstyle></mrow><annotation encoding="application/x-tex">\text{\color{#ddccbb}Ninelife\_Cat}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.00444em;vertical-align:-0.31em;"></span><span class="mord text"><span class="mord" style="color:#ddccbb;">Ninelife_Cat</span></span></span></span></span></a></li>
-</ol>
 ]]></content>
     </entry>
 </feed>

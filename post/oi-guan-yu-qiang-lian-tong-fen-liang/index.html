@@ -259,6 +259,21 @@
     <div id="side-posttitle" style="display: none;">
         
     
+    【OI】字符串相关
+    <script>postsnum += 1</script>
+    
+    
+    
+    【OI】题解P1382 楼房
+    <script>postsnum += 1</script>
+    
+    
+    
+    【OI】关于一些DP
+    <script>postsnum += 1</script>
+    
+    
+    
     【OI】关于st表
     <script>postsnum += 1</script>
     
@@ -309,7 +324,7 @@
     
     
     
-    【OI】线段树笔记
+    【OI】数据结构笔记
     <script>postsnum += 1</script>
     
     
@@ -376,7 +391,7 @@
         <a onclick="showAaplayer()"><i style="font-size: 20px;"><img
                     src='https://chuzihang714.github.io/media/images/music.png' alt="音乐播放器" class="musicbtn"></i></a>
         <div class="avatar-border">
-            <img src="https://chuzihang714.github.io/images/avatar.png?v=1621210149901" class="avatar">
+            <img src="https://chuzihang714.github.io/images/avatar.png?v=1622677723177" class="avatar">
         </div>
         <div class="sitename">chuzihang714&#39;s blog</div>
         <span class="describtion" data-text='["At its summit goodbye."]'>&nbsp;</span>
@@ -725,7 +740,7 @@
                 <img src="' + talks[i].img + '" class="talkimg"> \
                 <div class="ainfo">\
                     <div class="ainfo-intro">\
-                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1621210149901">\
+                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1622677723177">\
                         <div class="author">' + talks[i].author + '</div>·\
                         <div class="time">' + talks[i].time + '</div>\
                     </div>\
@@ -738,7 +753,7 @@
             <div class="talk" v-for="t in talks"> \
                 <div class="ainfo">\
                     <div class="ainfo-intro">\
-                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1621210149901">\
+                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1622677723177">\
                         <div class="author">' + talks[i].author + '</div>·\
                         <div class="time">' + talks[i].time + '</div>\
                     </div>\
@@ -1115,7 +1130,7 @@
             </div>
             <div class="postinfo-detail">
                 <div class="postdate"><i class="fa fa-calendar"></i>2021-05-11</div>
-                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 6 min read</div>
+                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 8 min read</div>
                 <div class="posttag">
                     
                     <a data-pjax href="https://chuzihang714.github.io/tag/gdmiEn7kC/" class="postlink">
@@ -1326,6 +1341,103 @@ int main()
 }
 
 </code></pre>
+<h2 id="关于拓扑排序">关于拓扑排序</h2>
+<ol>
+<li>这么写容易理解但效率低</li>
+</ol>
+<pre><code class="language-c++">//b[]为每个点的入度
+for(i=1;i&lt;=n;i++){
+  for(j=1;j&lt;=n;j++){
+     if(b[j]==0){   //找到一个入度为0的点
+       ans=j;
+       vis[cnt++]=j;
+       b[j]--;
+       break;
+      }
+   }
+   for(j=1;j&lt;=n;j++)
+       if(a[ans][j]) b[j]--; //与入度为0的点相连的点的入度减一
+}
+   printf(&quot;%d&quot;,vis[0]);
+   for(i=1;i&lt;cnt;i++) printf(&quot; %d&quot;,vis[i]);
+
+</code></pre>
+<p>效率更高的方法：</p>
+<pre><code class="language-c++">void topo()
+{
+        for(int i=1; i&lt;=n; i++)
+                if(indeg[i]==0)
+                        q.push(i);
+
+        while(!q.empty())
+        {
+                const int u=q.front();
+                ans[++cnt]=u;
+                q.pop();
+                for(int i=1; i&lt;=n; i++)
+                        if(a[u][i])
+                        {
+                                indeg[i]--;
+                                if(indeg[i]==0)
+                                        q.push(i);
+                        }
+        }
+}
+//很好理解...
+</code></pre>
+<p>例题：P4017 最大食物链计数</p>
+<pre><code class="language-c++">#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;queue&gt;
+using namespace std;
+const int N = 5001;
+const int mod = 80112002;
+int n,m,a[N][N],ru[N],ans,cnt,chu[N],f[N];
+queue&lt;int &gt; q;
+void topo()
+{
+        for(int i=1; i&lt;=n; i++)
+                if(ru[i]==0)
+                        q.push(i),f[i]=1;
+
+        while(!q.empty())
+        {
+                int u=q.front();
+                // ans[++cnt]=u;
+                q.pop();
+                for(int i=1; i&lt;=n; i++)
+                        if(a[u][i])
+                        {
+                                f[i]=(f[i]+f[u])%mod;
+                                ru[i]--;
+                                if(ru[i]==0&amp;&amp;chu[i]==0)
+                                {
+                                        ans=(ans+f[i])%mod;
+                                        continue;
+                                }
+                                if(ru[i]==0)
+                                        q.push(i);
+                        }
+        }
+}
+int main()
+{
+        cin &gt;&gt; n &gt;&gt; m;
+        for (int i=1; i&lt;=m; i++)
+        {
+                int u,v;
+                cin &gt;&gt; u &gt;&gt; v;
+                a[u][v]++;
+                ru[v]++;
+                chu[u]++;
+        }
+        topo();
+        cout &lt;&lt; ans;
+}
+
+</code></pre>
 
             </div>
             <hr style="width: 80%;">
@@ -1423,6 +1535,7 @@ int main()
 <li><a href="#%E5%85%B7%E4%BD%93%E5%81%9A%E6%B3%95"><strong>具体做法</strong></a></li>
 </ul>
 </li>
+<li><a href="#%E5%85%B3%E4%BA%8E%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F">关于拓扑排序</a></li>
 </ul>
 </li>
 </ul>

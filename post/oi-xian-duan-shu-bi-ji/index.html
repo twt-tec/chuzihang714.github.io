@@ -2,7 +2,8 @@
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
-    <meta name="description" content="用法
+    <meta name="description" content="线段树
+用法
 是什么，干什么用的就不写了，每篇都有...都看烦了...
 
 过程
@@ -10,7 +11,7 @@
 
 板子code
 #include &lt;cstdio&gt;
-#include &lt;iostream&..." />
+#include &lt;iostr..." />
     <meta name="keywords" content="笔记,luogu" />
     <link rel="stylesheet" href="https://chuzihang714.github.io/media/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://chuzihang714.github.io/styles/main.css">
@@ -261,6 +262,21 @@
     <div id="side-posttitle" style="display: none;">
         
     
+    【OI】字符串相关
+    <script>postsnum += 1</script>
+    
+    
+    
+    【OI】题解P1382 楼房
+    <script>postsnum += 1</script>
+    
+    
+    
+    【OI】关于一些DP
+    <script>postsnum += 1</script>
+    
+    
+    
     【OI】关于st表
     <script>postsnum += 1</script>
     
@@ -311,7 +327,7 @@
     
     
     
-    【OI】线段树笔记
+    【OI】数据结构笔记
     <script>postsnum += 1</script>
     
     
@@ -378,7 +394,7 @@
         <a onclick="showAaplayer()"><i style="font-size: 20px;"><img
                     src='https://chuzihang714.github.io/media/images/music.png' alt="音乐播放器" class="musicbtn"></i></a>
         <div class="avatar-border">
-            <img src="https://chuzihang714.github.io/images/avatar.png?v=1621210149901" class="avatar">
+            <img src="https://chuzihang714.github.io/images/avatar.png?v=1622677723177" class="avatar">
         </div>
         <div class="sitename">chuzihang714&#39;s blog</div>
         <span class="describtion" data-text='["At its summit goodbye."]'>&nbsp;</span>
@@ -727,7 +743,7 @@
                 <img src="' + talks[i].img + '" class="talkimg"> \
                 <div class="ainfo">\
                     <div class="ainfo-intro">\
-                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1621210149901">\
+                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1622677723177">\
                         <div class="author">' + talks[i].author + '</div>·\
                         <div class="time">' + talks[i].time + '</div>\
                     </div>\
@@ -740,7 +756,7 @@
             <div class="talk" v-for="t in talks"> \
                 <div class="ainfo">\
                     <div class="ainfo-intro">\
-                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1621210149901">\
+                        <img class="intro1" src="https://chuzihang714.github.io/images/avatar.png?v=1622677723177">\
                         <div class="author">' + talks[i].author + '</div>·\
                         <div class="time">' + talks[i].time + '</div>\
                     </div>\
@@ -1117,7 +1133,7 @@
             </div>
             <div class="postinfo-detail">
                 <div class="postdate"><i class="fa fa-calendar"></i>2021-03-23</div>
-                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 3 min read</div>
+                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 6 min read</div>
                 <div class="posttag">
                     
                     <a data-pjax href="https://chuzihang714.github.io/tag/gdmiEn7kC/" class="postlink">
@@ -1133,7 +1149,7 @@
             
         <div id="articlecontent">
             <div id="texttitle" style="text-align: center">
-                <h2 id="ptitle">【OI】线段树笔记</h2>
+                <h2 id="ptitle">【OI】数据结构笔记</h2>
                 <!-- id 将作为查询条件 -->
                 <div id="pl" style="display:none">https://chuzihang714.github.io/post/oi-xian-duan-shu-bi-ji/</div>
                 <div id="rootaddr" style="display:none">https://chuzihang714.github.io</div>
@@ -1143,7 +1159,8 @@
                 </span>
             </div>
             <div class="text ">
-                <h2 id="用法">用法</h2>
+                <h1 id="线段树">线段树</h1>
+<h2 id="用法">用法</h2>
 <p>是什么，干什么用的就不写了，每篇都有...都看烦了...</p>
 <!-- more -->
 <h2 id="过程">过程</h2>
@@ -1154,8 +1171,9 @@
 #include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #define int long long
+#define ll long long
 using namespace std;
-int n,m,a[100001],tree[1000001],lazy[1000001],mid,b,c,d,e,f,a1,i;
+int n,m,a[100001],tree[400001],lazy[400001],mid,b,c,d,e,f,a1,i;
 
 void push_up(int p)
 {
@@ -1178,39 +1196,43 @@ void push_down(int p, int l, int r)
 
 void build(int p, int l, int r)
 {
-        lazy[p]=0;
-        if (l==r) {tree[p]=a[l]; return;}
+        lazy[p]=0;//不加应该也行
+        if (l==r) {tree[p]=a[l]; return;}//找到叶子节点
         int mid=(l+r)/2;
         build(p*2,l,mid);
-        build(p*2+1,mid+1,r);
-        tree[p]=tree[p*2+1]+tree[p*2];
+        build(p*2+1,mid+1,r);//两个儿子
+        push_up(p);//更新，可写为 push_up;
 }
 
-void update(int ll,int rr,int l,int r,int p,int k)
+void update(int nl,int nr,int l,int r,int p,int k)
 {
-        if(ll&lt;=l&amp;&amp;r&lt;=rr)
+//nl,nr为要修改的区间
+//l,r,p为当前节点所存储的区间以及节点的编号 
+        if(nl&lt;=l&amp;&amp;r&lt;=nr)
         {
                 tree[p]+=k*(r-l+1);
                 lazy[p]+=k;
                 return;
-        }
+        }//包含的话
 
         push_down(p,l,r);
-        int mid=(l+r) / 2;
-        if(ll&lt;=mid) update(ll,rr,l,mid,p*2,k);
-        if(rr&gt;mid) update(ll,rr,mid+1,r,p*2+1,k);
+        ll mid=(l+r) / 2;
+        //回溯之前（也可以说是下一次递归之前，因为没有递归就没有回溯） 
+//由于是在回溯之前不断向下传递，所以自然每个节点都可以更新到 
+        if(nl&lt;=mid) update(nl,nr,l,mid,p*2,k);//不包含搜左右儿子。
+        if(nr&gt;mid) update(nl,nr,mid+1,r,p*2+1,k);
         push_up(p);
 }
 
-int query(int xx,int yy,int l,int r,int p)
+int query(int q_x,int q_y,int l,int r,int p)
 {
-        int sum=0;
-        if(xx&lt;=l&amp;&amp;r&lt;=yy) return tree[p];
-        int mid=(l+r)&gt;&gt;1;
+        ll res=0;
+        if(q_x&lt;=l&amp;&amp;r&lt;=q_y) return tree[p];
+        ll mid=(l+r)&gt;&gt;1;
         push_down(p,l,r);
-        if(xx&lt;=mid) sum+=query(xx,yy,l,mid,p*2);
-        if(yy&gt;mid) sum+=query(xx,yy,mid+1,r,p*2+1);
-        return sum;
+        if(q_x&lt;=mid) res+=query(q_x,q_y,l,mid,p*2);
+        if(q_y&gt;mid) res+=query(q_x,q_y,mid+1,r,p*2+1);//同理updata
+        return res;
 }
 signed main()
 {
@@ -1233,9 +1255,82 @@ signed main()
         }
 }
 
+
 </code></pre>
 <!-- more -->
 <p>有点难懂的是懒标记，多看一会儿能理解。</p>
+<h2 id="主席树">主席树</h2>
+<p>用于需要记录多个版本的题，可持久数据结构主要指的是我们可以查询历史版本的情况并支持插入，利用使用之前历史版本的数据结构来减少对空间的消耗</p>
+<p>例题：P3834 【模板】可持久化线段树 2（主席树）</p>
+<pre><code class="language-c++">#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+using namespace std;
+const int N=200001;
+int n,q,m,cnt=0,x,y,z;
+int a[N],b[N],num[N];
+int sum[N&lt;&lt;5],le[N&lt;&lt;5],ri[N&lt;&lt;5];
+//num存编号，sum是元素个数
+int build(int l,int r)
+{
+        int mid=(l+r)/2;
+        int rt=++cnt;
+        sum[rt]=0;
+        if(l&lt;r)
+        {
+                le[rt]=build(l,mid);
+                ri[rt]=build(mid+1,r);
+        }
+        return rt;
+}
+int update(int pre,int l,int r,int x)
+{
+  //新建一棵树
+        int mid=(l+r)/2;
+        int rt=++cnt;
+        le[rt]=le[pre]; ri[rt]=ri[pre]; sum[rt]=sum[pre]+1;
+        if(l&lt;r)
+        {
+                if(x&lt;=mid) le[rt]=update(le[pre],l,mid,x);
+                else ri[rt]=update(ri[pre],mid+1,r,x);
+        }
+        return rt;
+}
+int query(int u,int v,int l,int r,int k)
+{
+        int mid=(l+r)/2;
+        if(l&gt;=r) return l;
+        int x=sum[le[v]]-sum[le[u]];//二分查询 k 小值
+        if(x&gt;=k) return query(le[u],le[v],l,mid,k);
+        else return query(ri[u],ri[v],mid+1,r,k-x);
+}
+int main()
+{
+        cin &gt;&gt; n &gt;&gt; q;
+        for(int i=1; i&lt;=n; i++) cin &gt;&gt; a[i],b[i]=a[i];
+        sort(b+1,b+1+n);
+        m=unique(b+1,b+n+1)-b-1;
+        num[0]=build(1,m);//建树
+        for(int i=1; i&lt;=n; i++)
+        {
+                int t=lower_bound(b+1,b+1+m,a[i])-b;//离散化
+                num[i]=update(num[i-1],1,m,t);
+        }
+        while(q--)
+        {
+                cin &gt;&gt; x &gt;&gt; y &gt;&gt; z;
+                int t=query(num[x-1],num[y],1,m,z);
+                cout &lt;&lt; b[t] &lt;&lt; endl;
+        }
+}
+</code></pre>
+<h1 id="莫队">莫队</h1>
+<h2 id="普通莫队sol">普通莫队sol</h2>
+<p>离线后排序，顺序处理每个询问，暴力从上一个区间的答案转移到下一个区间答案（一步一步移动即可）。</p>
+<h2 id="板子code-2">板子Code</h2>
 
             </div>
             <hr style="width: 80%;">
@@ -1323,11 +1418,18 @@ signed main()
 </script>
                     <div class="toc-container">
                         <ul class="markdownIt-TOC">
-<li>
+<li><a href="#%E7%BA%BF%E6%AE%B5%E6%A0%91">线段树</a>
 <ul>
 <li><a href="#%E7%94%A8%E6%B3%95">用法</a></li>
 <li><a href="#%E8%BF%87%E7%A8%8B">过程</a></li>
 <li><a href="#%E6%9D%BF%E5%AD%90code">板子code</a></li>
+<li><a href="#%E4%B8%BB%E5%B8%AD%E6%A0%91">主席树</a></li>
+</ul>
+</li>
+<li><a href="#%E8%8E%AB%E9%98%9F">莫队</a>
+<ul>
+<li><a href="#%E6%99%AE%E9%80%9A%E8%8E%AB%E9%98%9Fsol">普通莫队sol</a></li>
+<li><a href="#%E6%9D%BF%E5%AD%90code-2">板子Code</a></li>
 </ul>
 </li>
 </ul>

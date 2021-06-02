@@ -1,28 +1,204 @@
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta name="description" content="写在前面
+接触到了一个新的算法：扫描线，所以写下这篇blog记录一下。
+sol
+看到样例之后直呼：这题好水啊，可正要操刀才发现，暴力肯定过不去，于是乎就轮到我们的扫描线登场了。
+扫描线正如它的字面意思，将一个多边形全部扫一遍，然后按自己的需..." />
+    <meta name="keywords" content="笔记,题解" />
+    <link rel="stylesheet" href="https://chuzihang714.github.io/media/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://chuzihang714.github.io/styles/main.css">
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/default.min.css">
+    
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/js/clipboard.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/css/live2d.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="https://chuzihang714.github.io/media/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/css/live2d.css">
-    <link rel="stylesheet" href="https://chuzihang714.github.io/styles/main.css">
-
-    <!-- pjax 加载valine文件 -->
-    <script src="https://chuzihang714.github.io/media/js/valine.min.js"></script>
-    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
-    <meta name="description" content="At its summit goodbye." />
-    <meta http-equiv="x-pjax-version" content="v123">
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.1/css/all.min.css" rel="stylesheet">
+    <!-- 数学公式 -->
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css"
+        integrity="sha384-9tPv11A+glH/on/wEu99NVwDPwkMQESOocs/ZGXPoIiLE8MU/qkqUcZ3zzL+6DuH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.js"
+        integrity="sha384-U8Vrjwb8fuHMt6ewaCy8uqeUXv4oitYACKdB0VziCerzt011iQ/0TqlSlv8MReCm" crossorigin="anonymous">
+        </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/contrib/auto-render.min.js"
+        integrity="sha384-aGfk5kvhIq5x1x5YdvCp4upKZYnA8ckafviDpmWEKp4afOZEqOli7gqSnh8I6enH" crossorigin="anonymous">
+        </script>
+    <script>
+        renderMathInElement(document.body, {
+            delimiters: [{
+                left: "$$",
+                right: "$$",
+                display: true
+            },
+            {
+                left: "$",
+                right: "$",
+                display: false
+            }
+            ]
+        });
+    </script>
+    
     <title>chuzihang714's blog</title>
+    
+    <style>
+        .markdownIt-TOC {
+            margin-left: 28%;
+            padding-left: 2px;
+            width: 80%;
+        }
+
+        .markdownIt-TOC li {
+            padding-left: 8%;
+        }
+    </style>
+    
 </head>
 
-
 <body>
+    <div id="landlord">
+        <div class="message" style="opacity:0"></div>
+        <canvas id="live2d" width="240" height="250" class="live2d"></canvas>
+    </div>
+    <div id="domainname" style="display:none">https://chuzihang714.github.io</div>
     <!-- 响应式布局，针对PC端内容显示 -->
     <div id="content">
-        <div class="nav-large">
+        <div>
+            <div id="bar">
+                <head>
+  <!-- 引入Bootstrap核心样式文件 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/css/bootstrap.min.css">
+</head>
+<style>
+  .navmobile {
+    z-index: 15;
+    max-height: 40vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+  @media screen and (max-width: 1200px) {
+    .navbar {
+      max-width: 100vw;
+    }
+  }
+
+  @media screen and (max-width:1200px) and (min-width: 768px) {
+    @media (min-width: 768px) {
+      .navbar-nav {
+        float: right;
+        margin: 0;
+      }
+    }
+  }
+
+  @media screen and (max-width:768px) {
+    .mbapspan {
+      padding: 0;
+    }
+  }
+</style>
+<div class="pjaxloading"  onclick="pjaxloadingClose()">
+  <div class="loadingbackground"></div>
+  <div id="loading">
+    <div class="loading">
+    </div>
+  </div>
+</div>
+<nav class="navbar navbar-inverse navbar-fixed-top navmobile">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#barmenu"
+        aria-expanded="false" id="barbutton">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a data-pjax class="navbar-brand" href="https://chuzihang714.github.io">chuzihang714&#39;s blog&nbsp;&nbsp;|</a>
+      <span class="navbar-brand mbapspan"><i id="mbaplayer" class="fa fa-play-circle-o" aria-hidden="true"
+          style="font-size: 28px;top: 12px;position: absolute;" onclick="aplayerPlay();"></i></span>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="barmenu">
+      <ul class="nav navbar-nav">
+        
+        
+        <li>
+          <a data-pjax href="/">
+            首页
+          </a>
+        </li>
+        
+        
+        
+        <li>
+          <a data-pjax href="/archives">
+            归档
+          </a>
+        </li>
+        
+        
+        
+        <li>
+          <a data-pjax href="/tags">
+            标签
+          </a>
+        </li>
+        
+        
+        
+        <li><a data-pjax href="https://chuzihang714.github.io/talk">说说</a></li>
+        
+          
+        <li><a data-pjax href="https://chuzihang714.github.io/friends">友链</a></li>
+
+        
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+
+  <!-- 引入jQuery核心js文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+  <script>
+    let btstate = false;
+    var bt = $("#barbutton");
+    var bm = $("#barmenu");
+    bt.click(function () {
+      dropdown();
+    })
+    function dropdown() {
+      console.log(btstate);
+      //下拉
+      if (btstate == false) {
+        bt.removeClass("collapsed");
+        bt.attr("aria-expanded", "true");
+        bm.attr("aria-expanded", "true")
+        bm.fadeIn(700);
+        btstate = true;
+      }
+      else {
+        bt.addClass("collapsed");
+        bt.attr("aria-expanded", "false");
+        bm.removeClass("in");
+        bm.hide();
+        bm.attr("aria-expanded", "false");
+        btstate = false;
+      }
+    }
+  </script> 
+            </div>
             <div class="row">
-                
                 <div class="side"><head>
     <link rel="stylesheet" href="https://chuzihang714.github.io/media/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://chuzihang714.github.io/styles/main.css">
@@ -930,6 +1106,7 @@
         daovoice('update');
     </script>
     </div>
+                
                 <div id="tab1" class="tab">
                     <div class="bars">
                         <span></span>
@@ -939,214 +1116,244 @@
                     <div class="close"></div>
                 </div>
                 <div class="col-md-1 col-lg-3"></div>
-                <div class="mobilebar"><head>
-  <!-- 引入Bootstrap核心样式文件 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/css/bootstrap.min.css">
-</head>
-<style>
-  .navmobile {
-    z-index: 15;
-    max-height: 40vh;
-    overflow-y: scroll;
-    overflow-x: hidden;
-  }
+                <div id="main" class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
+                    <link rel="stylesheet" href="https://chuzihang714.github.io/media/css/font-awesome.css">
 
-  @media screen and (max-width: 1200px) {
-    .navbar {
-      max-width: 100vw;
-    }
-  }
-
-  @media screen and (max-width:1200px) and (min-width: 768px) {
-    @media (min-width: 768px) {
-      .navbar-nav {
-        float: right;
-        margin: 0;
-      }
-    }
-  }
-
-  @media screen and (max-width:768px) {
-    .mbapspan {
-      padding: 0;
-    }
-  }
-</style>
-<div class="pjaxloading"  onclick="pjaxloadingClose()">
-  <div class="loadingbackground"></div>
-  <div id="loading">
-    <div class="loading">
-    </div>
-  </div>
-</div>
-<nav class="navbar navbar-inverse navbar-fixed-top navmobile">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#barmenu"
-        aria-expanded="false" id="barbutton">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a data-pjax class="navbar-brand" href="https://chuzihang714.github.io">chuzihang714&#39;s blog&nbsp;&nbsp;|</a>
-      <span class="navbar-brand mbapspan"><i id="mbaplayer" class="fa fa-play-circle-o" aria-hidden="true"
-          style="font-size: 28px;top: 12px;position: absolute;" onclick="aplayerPlay();"></i></span>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="barmenu">
-      <ul class="nav navbar-nav">
-        
-        
-        <li>
-          <a data-pjax href="/">
-            首页
-          </a>
-        </li>
-        
-        
-        
-        <li>
-          <a data-pjax href="/archives">
-            归档
-          </a>
-        </li>
-        
-        
-        
-        <li>
-          <a data-pjax href="/tags">
-            标签
-          </a>
-        </li>
-        
-        
-        
-        <li><a data-pjax href="https://chuzihang714.github.io/talk">说说</a></li>
-        
-          
-        <li><a data-pjax href="https://chuzihang714.github.io/friends">友链</a></li>
-
-        
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
-
-
-  <!-- 引入jQuery核心js文件 -->
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-  <script>
-    let btstate = false;
-    var bt = $("#barbutton");
-    var bm = $("#barmenu");
-    bt.click(function () {
-      dropdown();
-    })
-    function dropdown() {
-      console.log(btstate);
-      //下拉
-      if (btstate == false) {
-        bt.removeClass("collapsed");
-        bt.attr("aria-expanded", "true");
-        bm.attr("aria-expanded", "true")
-        bm.fadeIn(700);
-        btstate = true;
-      }
-      else {
-        bt.addClass("collapsed");
-        bt.attr("aria-expanded", "false");
-        bm.removeClass("in");
-        bm.hide();
-        bm.attr("aria-expanded", "false");
-        btstate = false;
-      }
-    }
-  </script> 
+<body>
+    <div class="allcontent" id="postdetail">
+        <div class="postshow postpadding" style="padding-bottom: 0;">
+            
+            <div class="postdetailimg">
+                <img src="https://pic.imgdb.cn/item/60af898408f74bc159a8a0cb.png" class="postimage" style="cursor:auto">
+            </div>
+            <div class="postinfo-detail">
+                <div class="postdate"><i class="fa fa-calendar"></i>2021-05-27</div>
+                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 4 min read</div>
+                <div class="posttag">
+                    
+                    <a data-pjax href="https://chuzihang714.github.io/tag/gdmiEn7kC/" class="postlink">
+                        <i class="fa fa-tag"></i> 笔记
+                    </a>
+                    
+                    <a data-pjax href="https://chuzihang714.github.io/tag/bKIck_4Ix/" class="postlink">
+                        <i class="fa fa-tag"></i> 题解
+                    </a>
+                    
                 </div>
-                <div id="main" class="col-xs-12 col-sm-12 col-md-11 col-lg-7">
-                    <!-- 移动端 -->
-                    <div class="mobilebar">
-                        <!-- 移动端欢迎页 -->
-<div class="welcome">
-    <div class="avatar-border">
-        <img src="https://chuzihang714.github.io/images/avatar.png?v=1622677723177" class="avatar">
-    </div>
-    <span class="mobiledescribtion"></span>
-</div>
+            </div>
+            
+        <div id="articlecontent">
+            <div id="texttitle" style="text-align: center">
+                <h2 id="ptitle">【OI】题解P1382 楼房</h2>
+                <!-- id 将作为查询条件 -->
+                <div id="pl" style="display:none">https://chuzihang714.github.io/post/oi-ti-jie-p1382-lou-fang/</div>
+                <div id="rootaddr" style="display:none">https://chuzihang714.github.io</div>
+                <span id="hotnum">
+                    <h4><i class="fa fa-eye" aria-hidden="true" style="color: #FF8C00;"></i>&nbsp;&nbsp;热度</i>: <i
+                            class="hotnum">loading...</i></h4>
+                </span>
+            </div>
+            <div class="text ">
+                <h2 id="写在前面">写在前面</h2>
+<p>接触到了一个新的算法：扫描线，所以写下这篇blog记录一下。</p>
+<h2 id="sol">sol</h2>
+<p>看到样例之后直呼：这题好水啊，可正要操刀才发现，暴力肯定过不去，于是乎就轮到我们的扫描线登场了。<br>
+扫描线正如它的字面意思，将一个多边形全部扫一遍，然后按自己的需要处理这个多边形。<br>
+在这题中我们需要记录在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 个矩形中出现的端点个数，那么我们只需要用扫出这些端点即可。<br>
+具体做法：<br>
+首先定义一个结构体 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>m</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">sm[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">m</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>m</mi><mo>[</mo><mi>i</mi><mo>]</mo><mi mathvariant="normal">.</mi><mi>h</mi></mrow><annotation encoding="application/x-tex">sm[i].h</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">m</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mord">.</span><span class="mord mathdefault">h</span></span></span></span> 表示高度，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>m</mi><mo>[</mo><mi>i</mi><mo>]</mo><mi mathvariant="normal">.</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">sm[i].x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">m</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mord">.</span><span class="mord mathdefault">x</span></span></span></span> 表示横坐标， <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>m</mi><mo>[</mo><mi>i</mi><mo>]</mo><mi mathvariant="normal">.</mi><mi>y</mi></mrow><annotation encoding="application/x-tex">sm[i].y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">m</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mord">.</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 代表纵坐标，id是编号，fla是这个点是否是这个矩形的终点。<br>
+为之后处理方便，将 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 个矩形按横坐标排序，而之后我们可以用一个堆维护<strong>扫过的、还没过去的楼中的最大高度</strong>，因为充当轮廓都是当前最大楼高。（也可以用线段树）<br>
+之后每次记录下答案就行了。<br>
+ps：还是有很多细节的...见代码</p>
+<h2 id="code">Code</h2>
+<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+#define int long long
+#define re register
+const int N = 1e6+10;
+int n,tot,tail,pre,num,vis[N],ans[N][2],last;
+struct xian
+{
+        int id,x,y,fla;
+};
+xian sm[N];
+struct Dui
+{
+        int x,y,id;
+};
+inline bool cmp(xian xx, xian yy)
+{
+        return xx.x&lt;yy.x;
+}
+inline bool cmp1(Dui xx, Dui yy)
+{
+        return xx.y&lt;yy.y;
+}
+Dui dui[N];
+signed main()
+{
+        cin &gt;&gt; n;
+        for (re int i=1; i&lt;=n; i++)
+        {
+                int h,l,r;
+                cin &gt;&gt; h &gt;&gt; l &gt;&gt; r;
+                sm[++tot].id=i;
+                sm[tot].x=l;
+                sm[tot].y=h;
+                sm[++tot].x=r;
+                sm[tot].y=h;
+                sm[tot].id=i;
+                sm[tot].fla=1;
+        }//处理矩形
 
-    <div id="mobilebgurl" style="display:none">https://img.imgdb.cn/item/6057d5698322e6675c3d7b83.jpg</div>
+        sort(sm+1,sm+tot+1,cmp);//按x排序
 
-<script>
-    var welcome = $('.welcome');
-    var bgurl = document.getElementById("mobilebgurl").innerHTML;
-    for (var i = 0; i < 3; i++)
-        bgurl = bgurl.replace("\\", "/");
-    welcome.css("background", "url('" + bgurl + "')");
-    var mobiledes = document.querySelector(".mobiledescribtion");
-    var text = "At its summit goodbye.";
-    // 当前显示第几个字
-    var mobilecharIndex = 1;
-    // 每个字显示间隔默认是500毫秒
-    var mobiledelta = 500;
-
-    // 记录动画执行开始时间
-    var mobilestart = null;
-    // 是否为删除动画
-    var mobileisDeleting = false;
-
-    // 动画回调函数
-    function mobileLoadDes(time) {
-        window.requestAnimationFrame(mobileLoadDes);
-        // 初始化开始时间
-        if (!mobilestart) start = time;
-        // 获取时间间隔
-        var mobileprogress = time - mobilestart;
-        // 每隔一定的时间，打印出一个新的字符
-        if (mobileprogress > mobiledelta) {
-            // 如果是打字效果
-            if (!mobileisDeleting) {
-                // 给展示文字的span新增一个字符，使用innerHTML来替换，charIndex自增1，然后返回新的字符串子串
-                mobiledes.innerHTML = "&nbsp;" + text.slice(
-                    0,
-                    ++mobilecharIndex
-                );
-                mobiledelta = 500 - Math.random() * 400;
-            } else {
-                // 如果是删除效果，则把文字一个一个减掉
-                mobiledes.innerHTML = "&nbsp;" + text.slice(
-                    0,
-                    mobilecharIndex--
-                );
-            }
-            // 把star更新为当前时间，进行下一个周期
-            mobilestart = time;
-
-            // 如果文字已经全部打印完毕
-            if (mobilecharIndex === text.length) {
-                // 下次开始删除文字
-                mobileisDeleting = true;
-                // 删除文字的间隔为200毫秒
-                mobiledelta = 100;
-                // 额外等待1.2秒后再删除
-                mobilestart = time + 1000;
-            }
-
-            // 如果文字删除完毕
-            if (mobilecharIndex < 0) {
-                mobileisDeleting = false;
-                // 额外增加200毫秒延迟
-                mobilestart = time + 200;
-            }
+        for (re int i=1; i&lt;=tot; i++)
+        {
+                int now=sm[i].x;
+                while (sm[i].x==now)
+                {
+                        if (sm[i].fla)//是这个矩形的终点
+                        {
+                                vis[sm[i].id]=1;//记录
+                                while (vis[dui[0].id])
+                                {
+                                        pop_heap(dui,dui+tail+1,cmp1);//维护最值
+                                        tail--;
+                                }
+                        }
+                        else
+                        {
+                                dui[++tail].y=sm[i].y;
+                                dui[tail].id=sm[i].id;
+                                push_heap(dui,dui+tail+1,cmp1);//放入堆
+                        }
+                        i++;
+                }
+                i--;
+                if (dui[0].y&gt;pre||(vis[last]&amp;&amp;dui[0].y!=pre))
+                {// [0][1]分别是横坐标与纵坐标
+                        ans[++num][0]=sm[i].x;
+                        ans[num][1]=pre;
+                        ans[++num][0]=sm[i].x;
+                        ans[num][1]=dui[0].y;
+                        pre=dui[0].y;
+                        last=dui[0].id;
+                }
         }
-    }
+        cout &lt;&lt; num &lt;&lt; endl;
+        for (re int i=1; i&lt;=num; i++)
+                cout &lt;&lt; ans[i][0] &lt;&lt; &quot; &quot; &lt;&lt; ans[i][1] &lt;&lt; endl;
+}
+</code></pre>
 
-    window.requestAnimationFrame(mobileLoadDes);
+            </div>
+            <hr style="width: 80%;">
+            
+            <div class="sharebtnContainer">
+                <button type="button" class="sharebtn">转载分享</button>
+            </div>
+            <div class="shareContainer">
+                <div class="share" style="height:30px;background: white;">
+                    <a class="qq" href=""><i><img class="shareicon"
+                                src="https://chuzihang714.github.io/media/images/QQ.png" alt=""></i></a>
+                    <a class="wechat" href=""><i><img class="shareicon"
+                                src="https://chuzihang714.github.io/media/images/wechat.png" alt=""></i></a>
+                    <a class="weibo" href=""><i><img class="shareicon"
+                                src="https://chuzihang714.github.io/media/images/weibo.png" alt=""></i></a>
+                    <a class="qzone" href=""><i><img class="shareicon"
+                                src="https://chuzihang714.github.io/media/images/qzone.png" alt=""></i></a>
+                    <a class="douban" href=""><i><img class="shareicon"
+                                src="https://chuzihang714.github.io/media/images/douban.png" alt=""></i></a>
+                    <a class="facebook" href=""><i><img class="shareicon"
+                                src="https://chuzihang714.github.io/media/images/facebook.png" alt=""></i></a>
+                    <a class="twitter" href=""><i><img class="shareicon"
+                                src="https://chuzihang714.github.io/media/images/twitter.png" alt=""></i></a>
+                </div>
+            </div>
+            
+            
+            <div class="donateContainer">
+                <img src="https://chuzihang714.github.io/media/images/donate.png" alt="" class="donateImg">
+            </div>
+            <div class="donateContainer">
+                <img src="" alt="" class="donate">
+            </div>
+            
+            <div class="postfooter">
+                <ul class="post-copyright">
+                    <li><strong>文章作者：</strong>chuzihang714</li>
+            <li><strong>原文链接：</strong>https://chuzihang714.github.io/post/oi-ti-jie-p1382-lou-fang/</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用<i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA
+                许可协议。转载请注明出处！</li>
+            </ul>
+        </div>
+        <div id="otherpost">
+            
+            <a  data-pjax class="prev-post-pc" href="https://chuzihang714.github.io/post/oi-zi-fu-chuan-xiang-guan/"  style="color: black;">
+                <div id="ppcontainer">
+                    
+                    <img src="https://pic.imgdb.cn/item/603b023b5f4313ce257f8727.jpg" style="width: 100%;" class="opimg">
+                    
+                    <h4 class="optitle">【OI】字符串相关</h4>
+                </div>
+            </a>
+            <div class="prev-post">
+                上一篇 <a  data-pjax href="https://chuzihang714.github.io/post/oi-zi-fu-chuan-xiang-guan/">【OI】字符串相关</a>
+            </div>
+            
+            
+            <a data-pjax class="next-post-pc" href="https://chuzihang714.github.io/post/oi-guan-yu-yi-xie-dp/"  style="color: black;">
+                <div id="npcontainer">
+                    
+                    <img src="https://pic.imgdb.cn/item/60a7b1d86ae4f77d357755fa.jpg" style="width: 100%;" class="opimg">
+                    
+                    <h4 class="optitle">【OI】关于一些DP</h4>
+                </div>
+            </a>
+            <div class="next-post">
+                下一篇 <a  data-pjax href="https://chuzihang714.github.io/post/oi-guan-yu-yi-xie-dp/">【OI】关于一些DP</a>
+            </div>
+            
+        </div>
+    </div>
+    </div>
+    </div>
+    <!-- 弹窗 -->
+    <div id="myModal" class="modal">
+        <img class="modal-content" id="img01">
+    </div>
+</body>
+<script>
+    //文章阅读热度
+    var pl = $("#pl").html();
+    var rootaddr = $("#rootaddr").html();
+    pl = pl.replace(rootaddr, "");
+    $("#hotnum").attr('id', pl);
 </script>
+                    <div class="toc-container">
+                        <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2">写在前面</a></li>
+<li><a href="#sol">sol</a></li>
+<li><a href="#code">Code</a></li>
+</ul>
+</li>
+</ul>
+
                     </div>
-                    <div style="display:none"><style>
+                    <div class="tog">
+                        <div class="toggleContainer">
+                            <div class="toggle">
+                                <i class="fas fa-angle-double-up"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="comment" class="comment" style="background: white">
+                        <div class="commentcontainer">
+                            
+                            <style>
     @media screen and (min-width: 1300px) {
         .veditor::placeholder {
             color: #b3b3b3;
@@ -1191,209 +1398,19 @@
         });
     </script>
 
-</body></div>
-                    <link rel="stylesheet" href="https://chuzihang714.github.io/media/css/font-awesome.css">
-<div id="post-container">
-    
-    <div class="postshow postlist">
-        
-        <a data-pjax href="https://chuzihang714.github.io/post/mo-ni-sai-319-zong-jie/" class="apost">
-            <div id="post" style="width:100%">
-                <img src="https://img.imgdb.cn/item/6054a04e524f85ce293ef56b.jpg" class="postimage">
-                <div class="posttitlebox">
-                    <div class="posttitle">
-                        【OI】膜你赛3.19总结
-                    </div>
-                </div>
-            </div>
-        </a>
-        <div class="postinfo">
-            <div class="postdate"><i class="fa fa-calendar"></i>2021-03-19</div>
-            <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 1 min read</div>
-            <div class="posttag">
-                
-                <a data-pjax href="https://chuzihang714.github.io/tag/gdmiEn7kC/" class="postlink">
-                    <i class="fa fa-tag"></i> 笔记
-                </a>
-                
-                <a data-pjax href="https://chuzihang714.github.io/tag/YVbwvfuYL/" class="postlink">
-                    <i class="fa fa-tag"></i> 模拟赛
-                </a>
-                
-            </div>
-        </div>
-        
-</div>
-
-    <div class="postshow postlist">
-        
-        <a data-pjax href="https://chuzihang714.github.io/post/yi-xie-hao-tu/" class="apost">
-            <div id="post" style="width:100%">
-                <img src="https://img.imgdb.cn/item/6054a033524f85ce293ee23e.jpg" class="postimage">
-                <div class="posttitlebox">
-                    <div class="posttitle">
-                        【杂】一些曲子
-                    </div>
-                </div>
-            </div>
-        </a>
-        <div class="postinfo">
-            <div class="postdate"><i class="fa fa-calendar"></i>2021-03-19</div>
-            <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 11 min read</div>
-            <div class="posttag">
-                
-                <a data-pjax href="https://chuzihang714.github.io/tag/6kE3oW_Mk/" class="postlink">
-                    <i class="fa fa-tag"></i> 影音
-                </a>
-                
-                <a data-pjax href="https://chuzihang714.github.io/tag/ZFCuHfpre/" class="postlink">
-                    <i class="fa fa-tag"></i> 定更
-                </a>
-                
-                <a data-pjax href="https://chuzihang714.github.io/tag/XB3JfFJy3/" class="postlink">
-                    <i class="fa fa-tag"></i> 私
-                </a>
-                
-            </div>
-        </div>
-        
-</div>
-
-    <div class="postshow postlist">
-        
-        <a data-pjax href="https://chuzihang714.github.io/post/yi-xie-hao-ju/" class="apost">
-            <div id="post" style="width:100%">
-                <img src="https://img.imgdb.cn/item/6054a00e524f85ce293ec85c.jpg" class="postimage">
-                <div class="posttitlebox">
-                    <div class="posttitle">
-                        【杂】一些好句
-                    </div>
-                </div>
-            </div>
-        </a>
-        <div class="postinfo">
-            <div class="postdate"><i class="fa fa-calendar"></i>2021-03-19</div>
-            <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 3 min read</div>
-            <div class="posttag">
-                
-                <a data-pjax href="https://chuzihang714.github.io/tag/ZFCuHfpre/" class="postlink">
-                    <i class="fa fa-tag"></i> 定更
-                </a>
-                
-                <a data-pjax href="https://chuzihang714.github.io/tag/XB3JfFJy3/" class="postlink">
-                    <i class="fa fa-tag"></i> 私
-                </a>
-                
-            </div>
-        </div>
-        
-</div>
-
-    <div class="postshow postlist">
-        
-        <a data-pjax href="https://chuzihang714.github.io/post/luo-gu-ti-jie-p6418-coci2014-20151-zabava/" class="apost">
-            <div id="post" style="width:100%">
-                <img src="https://img.imgdb.cn/item/60549ff6524f85ce293eb1cf.jpg" class="postimage">
-                <div class="posttitlebox">
-                    <div class="posttitle">
-                        【OI】洛谷题解P6418 [COCI2014-2015#1] ZABAVA
-                    </div>
-                </div>
-            </div>
-        </a>
-        <div class="postinfo">
-            <div class="postdate"><i class="fa fa-calendar"></i>2021-03-19</div>
-            <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 3 min read</div>
-            <div class="posttag">
-                
-                <a data-pjax href="https://chuzihang714.github.io/tag/P7qZKKyVW/" class="postlink">
-                    <i class="fa fa-tag"></i> luogu
-                </a>
-                
-                <a data-pjax href="https://chuzihang714.github.io/tag/bKIck_4Ix/" class="postlink">
-                    <i class="fa fa-tag"></i> 题解
-                </a>
-                
-            </div>
-        </div>
-        
-</div>
-
-</div>
-                    <div>
-                        <div class="pcpagi">
-    <div class="pagi">
-        <ul>
-            
-            <li><a data-pjax href="https://chuzihang714.github.io/page/2/" style="width:100px" id="prev">上一页</a></li>
-            
-                    <li><a id="page1">1</a></li>
-                    <li><a id="page2" class="active">2</a></li>
-                    <li><a id="page3">3</a></li>
-                    
-            <li><a style="width:100px">&nbsp;</a></li>
-            
-                </ul>
-    </div>
-</div>
-
-<div id="pagination-prev" style="display:none"> https://chuzihang714.github.io/page/2/
-</div>
-<div id="pagination-next" style="display:none"> </div>
-
-<div class="pagination-container">
-    
-    <a data-pjax href="https://chuzihang714.github.io/page/2/" class="mobile-prevpage">上一页</a>
-      
-    
-</div>
-
-<script>
-    var prevstr = document.getElementById("pagination-prev").innerHTML;
-    var nextstr = document.getElementById("pagination-next").innerHTML;
-    var page1 = document.getElementById("page1");
-    var page2 = document.getElementById("page2");
-    var page3 = document.getElementById("page3");
-    page1.innerHTML = '-';
-    page2.innerHTML = '1';
-    page3.innerHTML = '-';
-    if (prevstr.length > 5) {
-        if (prevstr.indexOf("page/") != -1) {
-            var prevnum = parseInt(prevstr.split("page/")[1]);
-            page1.innerHTML = prevnum;
-            page2.innerHTML = prevnum + 1;
-        } else {
-            page1.innerHTML = 1;
-            page2.innerHTML = 2;
-        }
-    }
-    if (nextstr.indexOf("page/") != -1) {
-        var nextnum = parseInt(nextstr.split("page/")[1]);
-        page3.innerHTML = nextnum;
-        page2.innerHTML = nextnum - 1;
-    }
-</script>
+</body>
+                            <div class="clear"></div>
+                            
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-1 col-lg-2"></div>
-                
-                 
+                <div id="bg">
                 </div>
             </div>
-            <div id="bg">
-            </div>
-            <div id="bgchoice" style="display: none">link
-            </div>
             
-            <div id="bgurl" style="display:none">https://img.imgdb.cn/item/6054a033524f85ce293ee23e.jpg</div>
-             
-        <div id="landlord">
-            <div class="message" style="opacity:0"></div>
-            <canvas id="live2d" width="240" height="250" class="live2d"></canvas>
-        </div>
-    </div>
-    
-            <head>
+        
+        <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
 </head>
 
@@ -1455,20 +1472,120 @@
         }
     }
 </script>
-            
-    <div id="domainname" style="display:none">https://chuzihang714.github.io
-        </div>
         
-        <script type="text/javascript">
-            var message_Path = '/live2d/'
-            var home_Path = document.getElementById("domainname").innerHTML + "/"; //此处修改为你的域名，必须带斜杠
-        </script>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/live2d.js"></script>
-        <script type="text/javascript" src="https://chuzihang714.github.io/media/live2d/js/message.js"></script>
-        <script type="text/javascript">
-            loadlive2d("live2d", "https://chuzihang714.github.io/media/live2d/assets/tororo.model.json");
-        </script>
-        
+    </div>
+    
+    <div id="bgchoice" style="display: none">link
+    </div>
+    
+    <div id="bgurl" style="display:none">https://img.imgdb.cn/item/6054a033524f85ce293ee23e.jpg</div>
+    
+</body>
+<script>
+    var img = $("img");
+    for (var i = 0; i < img.length; i++) {
+        if (img.eq(i).attr("class") == undefined) {
+            img.eq(i).attr("class", "lazyload");
+            var imgsrc = img.eq(i).attr("src");
+            img.eq(i).attr("data-original", imgsrc);
+            img.eq(i).attr("src", "");
+            img.eq(i).hide();
+        }
+    }
+
+    function refreshImg(imgclass) {
+        // 获取弹窗
+        var modal = document.getElementById('myModal');
+
+        // 获取图片插入到弹窗 - 使用 "alt" 属性作为文本部分的内容
+        var img = document.getElementsByClassName(imgclass);
+        var modalImg = document.getElementById("img01");
+        var captionText = document.getElementById("caption");
+        for (var i in img) {
+            img[i].onclick = function () {
+                modal.style.display = "block";
+                modalImg.src = this.src;
+            }
+        }
+
+        // 图片关闭
+        var modalImg = document.getElementById('img01');
+        // 鼠标点击模型外区域关闭登录框
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+            if (menupos == 'left')
+                return true;
+            if (event.target == social) {
+                social.style.display = "none";
+            }
+        }
+    }
+
+</script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+<script>
+    //寻找所有code标签，加复制按钮鸭！(行内代码除外)
+    var codes = document.getElementsByTagName('code');
+    if (codes.length) {
+        for (var i = 0; i < codes.length; i++) {
+            //高度/行高=文本行数
+            // var rowNum=Math.round(codes[i].height()/parseFloat(codes[i].css('line-height')));
+            // console.log("当前有"+rowNum+"行");
+            var code_id = "code_id_" + i;
+            codes[i].setAttribute("id", code_id);
+            var ci = "#" + code_id;
+            var codedot = $(ci);
+            var rowNum = Math.round(codedot.height() / parseFloat(codedot.css('line-height')));
+            if (rowNum <= 1) continue;
+            var btn = document.createElement("button");
+            btn.setAttribute("class", "copybt");
+            btn.setAttribute("data-clipboard-target", "#" + code_id);
+            btn.innerHTML = '复制代码';
+            codes[i].parentNode.insertBefore(btn, codes[i]);
+        }
+    };
+    var cop = new ClipboardJS('.copybt');
+    cop.on('success', function (e) {
+        e.trigger.innerHTML = "复制成功~"
+        e.trigger.style.background = "#894e54"
+        e.clearSelection();
+    });
+    cop.on('error', function (e) {
+        e.clearSelection();
+    });
+</script>
+
+<script type="text/javascript">
+    var message_Path = '/live2d/'
+    var home_Path = document.getElementById("domainname").innerHTML + "/"; //此处修改为你的域名，必须带斜杠
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/js/live2d.js"></script>
+<script type="text/javascript" src="https://chuzihang714.github.io/media/live2d/js/message.js"></script>
+<script type="text/javascript">
+    loadlive2d("live2d", "https://chuzihang714.github.io/media/live2d/assets/tororo.model.json");
+</script>
+
+<script>
+    $(function () {
+        $('.toggleContainer').click(function () {
+            $('html,body').animate({
+                scrollTop: '0px'
+            }, 800);
+        });
+        $(window).scroll(function () {
+            var st = $(window).scrollTop();
+            if (st > 30) {
+                $(".toggleContainer").fadeIn(400);
+            } else {
+                $(".toggleContainer").fadeOut(100);
+            }
+        });
+    });
+</script>
 
 <script>
     var bgchoice = $('#bgchoice').html();
@@ -1478,16 +1595,112 @@
         for (var i = 0; i < 3; i++)
             bgurl = bgurl.replace("\\", "/");
     bg.css("background", "url('" + bgurl + "')");
+</script>
 
+
+<script src="https://chuzihang714.github.io/media/js/index.js"></script>
+
+
+
+<!-- 动态更改上(下)一篇博客图片框长宽 -->
+<script>
+    npcontainer = document.querySelector('#npcontainer');
+    npstyle = window.getComputedStyle(npcontainer, null);
+    npwidth = npstyle.width;
+    npheight = 0.6 * Number(npwidth.replace("px", ""));
+    npheight = npheight.toString() + "px";
+    var op = $(".opimg");
+    op.css("height", npheight);
+</script>
+
+<script src="https://chuzihang714.github.io/media/share/dist/Share.js"></script>
+
+<script>
+    var avatarSrc = $(".avatar").attr("src");
+    var dp = document.getElementsByClassName("describtion")[0].innerHTML;
+</script>
+
+
+<script>
+    var title = document.getElementById("texttitle").getElementsByTagName("h2");
+
+    var share = new Share('.share', {
+        title: title[0].innerHTML,
+        initialized: true,
+        //默认获取网站描述
+        description: dp,
+        //网站图片默认获取的是设置的用户头像
+        image: avatarSrc,
+        //激活的分享网站
+        sites: ["weibo", "qq", "wechat", "douban", "qzone", "facebook", "twitter", "google"],
+        //微信分享PC端会生成二维码分享,移动端如果可以唤起微信最好
+        wechatQrcodeTitle: "微信扫一扫：分享", // 微信二维码提示文字
+        wechatQrcodeHelper: '<p>微信里扫一下二维码</p><p>便可将本文分享至朋友圈。</p>',
+        //关闭的网站分享
+        disabled: ['google', 'linkedin'],
+        wechatQrcodePosition: 'bottom'
+    });
+
+    //点击分享按钮展现出分享icons
+    var sharebtnTag = false;
+    $(".sharebtn").click(function () {
+        if (!sharebtnTag) {
+            $(".share").show();
+            sharebtnTag = true;
+        }
+        else {
+            $(".share").hide();
+            sharebtnTag = false;
+        }
+    })
+
+    var donatebtnTag = false;
+    $(".donateImg").click(function () {
+        if (!donatebtnTag) {
+            $(".donate").show();
+            donatebtnTag = true;
+        }
+        else {
+            $(".donate").hide();
+            donatebtnTag = false;
+        }
+    })
+
+    //加载后的事件同步（阅读量、移动端评论等
     window.onload = function () {
+        getHotnum();
+        var sharepc = $(".share").eq(0).html();
+        $(".share").eq(1).html(sharepc);
+        document.getElementById("veditor").setAttribute("placeholder", jrsc);
         aplayerbtnInit();
     }
 </script>
-<!-- 页内pjax刷新 -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery.pjax/2.0.1/jquery.pjax.js"></script>
 
-        <script src="https://chuzihang714.github.io/media/js/index.js"></script>
-        
-</body>
-</html>
+
+<script>
+    jQuery(document).ready(function ($) {
+        function lazyload() {
+            var oLazyload = $("img.lazyload"),
+                fLazyload = function (hLazyload) {
+                    var nLazyload = $(window).height() + $(document).scrollTop();
+                    oLazyload.each(function () {
+                        $(this).offset().top < nLazyload && ($(this).trigger("appear"), oLazyload =
+                            oLazyload.not(this));
+                    }), 0 == oLazyload.length && $(window).unbind("scroll", fLazyload);
+                };
+            oLazyload.each(function () {
+                $(this).one("appear", function () {
+                    $(this).attr("src", $(this).attr("data-original"));
+                    $(this).fadeIn(500);
+                });
+            }), $(window).bind("scroll", fLazyload), fLazyload();
+        }
+        lazyload();
+        refreshImg("lazyload");
+    });
+</script>
+
+<!-- <script src="https://chuzihang714.github.io/media/js/av-min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@3.13.0/dist/av-min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.6.1/dist/av-live-query-min.js"></script> -->
+
