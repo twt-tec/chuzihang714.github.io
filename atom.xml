@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://chuzihang714.github.io</id>
     <title>chuzihang714&apos;s blog</title>
-    <updated>2021-06-02T23:52:45.259Z</updated>
+    <updated>2021-06-04T04:50:13.194Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://chuzihang714.github.io"/>
     <link rel="self" href="https://chuzihang714.github.io/atom.xml"/>
@@ -780,8 +780,7 @@ signed main()
 <p>那就是 逆元+快速幂解法。<br>
 思路：现在目标是求C(n, m) %p，p为素数（经典p=1e9+7）。<br>
 虽然有C(n, m) = n! / [m! (n - m)!]，但由于取模的性质对于除法不适用，则有<br>
-![]<br>
-(https://img-blog.csdnimg.cn/20190513133335648.png)<br>
+<img src="https://img-blog.csdnimg.cn/20190513133335648.png" alt="" loading="lazy"><br>
 所以需要利用逆元把“除法”转换成“乘法”，才能借助取模的性质计算组合数。<br>
 求解 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi><mo>(</mo><mi>n</mi><mo separator="true">,</mo><mi>m</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">C(n, m)%p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span> 的步骤：</p>
 <ol>
