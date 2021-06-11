@@ -314,7 +314,7 @@
                         src='https://chuzihang714.github.io/media/images/music.png' alt="音乐播放器" class="musicbtn"></i></a>
         </div>
         <div class="avatar-border">
-            <img src="https://chuzihang714.github.io/images/avatar.png?v=1622780770506" class="avatar">
+            <img src="https://chuzihang714.github.io/images/avatar.png?v=1623417480139" class="avatar">
         </div>
         <div class="sitename">chuzihang714&#39;s blog</div>
         <span class="description" data-text='["At its summit goodbye."]'>&nbsp;</span>
@@ -552,6 +552,13 @@
     
     <script>let postsnum = 0;</script>
     <div id="side-posttitle" style="display: none;">
+    
+    
+    【OI】计算几何相关
+    <script>
+        postsnum += 1
+    </script>
+    
     
     
     【OI】字符串相关
@@ -1158,7 +1165,7 @@ menulist.eq(i).show();
             </div>
             <div class="postinfo-detail">
                 <div class="postdate"><i class="fa fa-calendar"></i>2021-05-11</div>
-                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 8 min read</div>
+                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 9 min read</div>
                 <div class="posttag">
                     
                     <a data-pjax href="https://chuzihang714.github.io/tag/gdmiEn7kC/" class="postlink">
@@ -1463,6 +1470,54 @@ int main()
 }
 
 </code></pre>
+<hr>
+<h2 id="关于最小生成树">关于最小生成树</h2>
+<p>有 kruskal 和 prim 两种算法<br>
+前：</p>
+<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+const int N = 2e5+10;
+int n,m,fa[N],cnt,ans,u1,v1;
+struct Edge
+{
+        int u,v,w;
+};
+Edge e[N];
+bool cmp(Edge x, Edge y)
+{
+        return x.w&lt;y.w;
+}
+int find(int x)
+{
+        while (x!=fa[x]) x=fa[x]=fa[fa[x]];
+        return x;
+}
+void kruskal()
+{
+        sort(e+1,e+m+1,cmp);
+        for (int i=1; i&lt;=m; i++)
+        {
+                u1=find(e[i].u),v1=find(e[i].v);
+                if (u1==v1) continue;
+                ans+=e[i].w;
+                fa[v1]=u1;
+                if (++cnt==n-1) break;
+        }
+}
+int main()
+{
+        cin &gt;&gt; n &gt;&gt; m;
+        for (int i=1; i&lt;=n; i++) fa[i]=i;
+        for (int i=1; i&lt;=m; i++)
+                cin &gt;&gt; e[i].u &gt;&gt; e[i].v &gt;&gt; e[i].w;
+        kruskal();
+        cout &lt;&lt; ans;
+        return 0;
+}
+
+</code></pre>
+<p>后：</p>
+<pre><code class="language-c++"></code></pre>
 
             </div>
             <hr style="width: 80%;">
@@ -1558,6 +1613,7 @@ int main()
 </ul>
 </li>
 <li><a href="#%E5%85%B3%E4%BA%8E%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F">关于拓扑排序</a></li>
+<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91">关于最小生成树</a></li>
 </ul>
 </li>
 </ul>
